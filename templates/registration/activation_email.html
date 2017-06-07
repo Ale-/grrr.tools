@@ -1,0 +1,11 @@
+{% load i18n %}
+{% blocktrans %}
+    Alguien ha registrado un usuario/a en la plataforma 'grrr.tools' usando este correo.
+    Si eres tú, visita este enlace para activar la cuenta haciendo login con los datos
+    que has registrado:
+        http://{{ site }}/activate/{{ activation_key }}
+
+{% endblocktrans %}
+{% blocktrans %}
+  Este enlace es válido por {{ expiration_days }} días.
+{% endblocktrans %}

@@ -1,0 +1,26 @@
+{# Template to render a formfield #}
+
+{% with field.name|slugify as fieldname %}
+
+<div class="field--{{ fieldname }} {% if field.field.required %}required{% endif %}">
+    <p class="field__label--{{ fieldname }}">
+        {{ field.label }}
+    </p>
+    <p class="field__help--{{ fieldname }}">
+        {{ field.help_text | safe }}
+    </p>
+    {% if field.errors %}
+    <ul class="field__errors--{{ fieldname }}">
+        {% for error in field.errors %}
+          <li class="field__error--{{ fieldname }}">
+              {{ error }}
+          </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <p class="field__widget--{{ fieldname }}">
+        {{ field }}
+    </p>
+</div>
+
+{% endwith %}
