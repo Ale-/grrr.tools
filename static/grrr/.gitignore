@@ -1,0 +1,5 @@
+# Ignore css
+css/
+
+# Ignore sass-cache
+.sass-cache/

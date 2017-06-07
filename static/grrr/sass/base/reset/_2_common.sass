@@ -1,0 +1,51 @@
+@import compass/css3/transition
+@import compass/css3/opacity
+@import compass/css3/transform
+@import compass/css3/animation
+@import grid_system
+
+// Classes
+
+.container-fixed
+  +container-fixed
+
+.container-fluid
+  +container-fluid
+
+.clickable:hover
+  cursor: pointer
+
+.hidden
+  display: none
+
+
+// Link style mixins
+
+=links_normal
+  a
+    +transition(color .1s ease)
+    &:link, &:visited
+      color: #555
+      border-bottom: 1px dotted #555
+    &:hover
+      color: #777
+    &:active
+      color: #555
+
+// Animations
+
++keyframes(showup)
+  0%
+    +opacity(0)
+    +transform( translate(0, 100px) )
+  100%
+    +opacity(1)
+    +transform( translate(0, 0) )
+
++keyframes(hideup)
+  0%
+    +opacity(1)
+  33%
+    +opacity(1)
+  100%
+    +opacity(0)
