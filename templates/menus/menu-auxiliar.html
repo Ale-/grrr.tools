@@ -1,0 +1,10 @@
+{# Auxiliar menu #} {% load i18n static %}
+
+<div class="auxiliar-menu">
+    {% if user.is_anonymous %}
+        <a class="login-link" href="/login" title="{% trans 'Haz login en el sitio' %}">
+            {% trans 'Login' %}
+        </a>
+    {% endif %}
+    {% include 'blocks/lang-switcher.html' %}
+</div>

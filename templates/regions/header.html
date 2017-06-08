@@ -1,3 +1,14 @@
-{# Header region #} {% extends 'regions/region-base.html' %}
+{# Site header region #} {% extends 'regions/region-base.html' %} {% load i18n %}
 
-{% block region_content %}{% endblock %}
+{% block region_content %}
+    <div class="region-header__left">
+        {% include 'blocks/site-branding.html' %}
+    </div>
+    <div class="region-header__right">
+        {% include 'menus/menu-auxiliar.html' %}
+        <span class="trigger-navigation">
+            {% trans 'Menú' %}
+        </span>
+        {% include 'menus/menu-main.html' %}
+    </div>
+{% endblock %}

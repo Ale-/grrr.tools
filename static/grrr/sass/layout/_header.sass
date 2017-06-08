@@ -1,0 +1,26 @@
+// Region
+// Site Header
+
+@if $header
+  #{$header}
+    height: $header_height
+    padding: $header_padding
+
+.logged-in .region-header
+  margin-top: $toolbar_height
+
+.region-header__left
+  +column(3, 'sm', 20px)
+.region-header__right
+  +column(9, 'sm', 20px)
+
+.region-header__right
+  text-align: right
+  +transition(background-color .1s ease)
+
+.region-header--unfolded
+  height: 100vh
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 10000

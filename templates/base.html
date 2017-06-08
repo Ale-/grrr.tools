@@ -22,7 +22,7 @@
         <link href="humans.txt" rel="author">
 
         {# Favicons #}
-        <link href="{% img 'favicon.ico' %}" rel="icon" type="image/png">
+        <link href="{% img 'favicon--grrr-tools.ico' %}" rel="icon" type="image/png">
 
         {# Styles #}
         <link href="{% css 'style.css' %}" rel="stylesheet">
@@ -31,7 +31,10 @@
         {% block page_header %}{% endblock %}
     </head>
 
-    <body class="{% if user.is_authenticated %}logged-in{% endif %} {% if user.is_staff %}staff-user{% endif %} {% block body_classes %}{% endblock %} {% block layout_classes %}{% endblock %}">
+    <body class="{% if user.is_authenticated %}logged-in toolbar{% endif %}
+                 {% if user.is_staff %}staff-user{% endif %}
+                 {% block body_classes %}{% endblock %}
+                 {% block layout_classes %}{% endblock %}">
 
         {# Toolbar #}
         {% include 'regions/toolbar.html' with region_name="toolbar" html_container="div" layout="fluid" %}
@@ -43,6 +46,7 @@
         {% block layout %}{% endblock %}
 
         {# Scripts #}
+        <script type="text/javascript" src="{% js 'main.js' %}"></script>
         {% block page_scripts %}{% endblock %}
     </body>
 </html>

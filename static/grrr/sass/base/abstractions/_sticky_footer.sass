@@ -1,0 +1,19 @@
+// Sticky footer
+
+=sticky_footer
+  #{$content}
+    @if $header
+      @if $footer
+        min-height: calc(100vh - #{$footer_height + $header_height})
+      @else
+        min-height: calc(100vh - #{$header_height})
+    @else if $footer
+      min-height: calc(100vh - #{$footer_height})
+  .toolbar #{$content}
+    @if $header
+      @if $footer
+        min-height: calc(100vh - #{$footer_height + $header_height + $toolbar_height})
+      @else
+        min-height: calc(100vh - #{$header_height + $toolbar_height})
+    @else if $footer
+      min-height: calc(100vh - #{$footer_height + $toolbar_height})

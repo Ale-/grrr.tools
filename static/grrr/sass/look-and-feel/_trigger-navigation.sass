@@ -1,0 +1,13 @@
+// Navigation trigger (to open it with js)
+// regions/header.html
+
+.trigger-navigation
+  +button_headers
+  position: fixed
+  top: $m
+  right: $m
+  z-index: 200
+
+@media all and (min-width: #{$menu_breakpoint})
+  .trigger-navigation
+    display: none

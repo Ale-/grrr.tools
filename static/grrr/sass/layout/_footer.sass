@@ -1,0 +1,14 @@
+// Site footer
+// regions/footer.html
+
+@if $footer
+  #{$footer}
+    height: $footer_height
+    padding: $footer_padding
+
+.region-footer__left,
+.region-footer__right,
+  +column(6, 'sm', 20px)
+
+.region-footer__right
+  text-align: right

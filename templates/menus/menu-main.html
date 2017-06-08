@@ -1,0 +1,48 @@
+{# Main menu of the site #} {% load i18n static %}
+
+<div class="menu-main hidden-xs" id="menu-main">
+    <ul class="menu-main__links">
+        <li class="menu-main__link">
+            <a href="{% url 'front' %}"
+               title="{% trans 'Sección informativa del sitio' %}">
+                {% trans 'Acerca' %}
+            </a>
+        </li>
+        <li class="menu-main__link">
+            <a href="{% url 'front' %}"
+               title="{% trans 'Recursos legales y documentales sobre la reutilización' %}">
+                {% trans 'Recursos' %}
+            </a>
+        </li>
+        <li class="menu-main__link">
+            <a href="{% url 'front' %}"
+               title="{% trans 'Lista de materiales subidos a la plataforma' %}">
+                {% trans 'Materiales' %}
+            </a>
+        </li>
+        <li class="menu-main__link">
+            <a href="{% url 'front' %}"
+               title="{% trans 'Nodos de la red GRRR' %}">
+                {% trans 'Nodos' %}
+            </a>
+        </li>
+        <li class="menu-main__link">
+            <a href="{% url 'front' %}"
+               title="{% trans 'Ejemplos de reutilización según los valores de la plataforma' %}">
+                {% trans 'Reusos' %}
+            </a>
+        </li>
+        <li class="menu-main__link">
+            <a href="{% url 'front' %}"
+               title="{% trans 'Blog del colectivo que impulsa este proyecto' %}">
+                {% trans 'Blog' %}
+            </a>
+        </li>
+        <li class="menu-main__link menu-main__link--login">
+            <a href="{% url 'auth_login' %}"
+               title="{% trans 'Haz login en el site' %}">
+                {% trans 'Login' %}
+            </a>
+        </li>
+    </ul>
+</div>

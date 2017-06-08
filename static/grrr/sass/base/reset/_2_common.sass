@@ -2,6 +2,7 @@
 @import compass/css3/opacity
 @import compass/css3/transform
 @import compass/css3/animation
+@import compass/css3/inline-block
 @import grid_system
 
 // Classes
@@ -31,6 +32,58 @@
       color: #777
     &:active
       color: #555
+
+=links_footer
+  a
+    +transition(color .1s ease)
+    &:link, &:visited
+      color: white
+      border-bottom: 1px dashed #555
+    &:hover
+      color: $palette_yellow
+    &:active
+      color: white
+
+=links_header
+  a, a:link, a:visited, a:hover
+    color: $color_text
+
+=links_header_bar
+  +links_header
+  a:after
+    content: " "
+    position: absolute
+    border-bottom: 4px solid rgba($color_text, 0.75)
+    width: 0
+    left: 0
+    bottom: -$m/4
+    visibility: hidden
+    +transition(width .2s ease-out)
+  a:hover
+    &::after
+      visibility: visible
+      width: 100%
+  a.active
+    &::after
+      visibility: visible
+      width: 100%
+      border-bottom: 4px solid $color_text
+
+
+=button_headers
+  +h(5)
+  text-transform: uppercase
+  border: 1px solid #333
+  top: 2px
+  padding: $m/8 $m/4
+  margin-bottom: $m/2
+  +transition(background-color .15s ease)
+  &, &:link, &:visited, &:hover
+    color: $color_text
+  &:hover
+    background-color: rgba(black, .05)
+    border-color: transparent
+    cursor: pointer
 
 // Animations
 

@@ -1,0 +1,7 @@
+{# Block that renders the site brand: a logo linked to home  #}{% load static i18n utils %}
+
+<div class="site-branding">
+    <a href="{% url 'front' %}">
+        <img class="site-branding__logo" src="{% img 'site-logo--grrr-tools.png' %}" alt="{% trans 'Logo del GRRR' %}" />
+    </a>
+</div>

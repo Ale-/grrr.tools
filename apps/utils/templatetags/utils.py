@@ -29,3 +29,9 @@ def fake_breadcrumb(text="Volver a la página anterior"):
 def limited_choices_select(choices=None, select_name=None, select_class=None, all=False, multiple=False):
     options = [{ 'name' : option[1], 'id' : option[0] } for option in choices ]
     return  { 'options' : options, 'select_name' : select_name, 'select_class' : select_class, 'all' : all, 'multiple' : multiple}
+
+@register.filter(name='remove_i18n_prefix')
+def remove_i18n_prefix(value):
+    if value.startswith('/en') or value.startswith('/es'):
+        value = value[3::]
+    return value

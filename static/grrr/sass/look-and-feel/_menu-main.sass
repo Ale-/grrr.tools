@@ -1,0 +1,35 @@
+// Main menu
+// menus/menu-main.html
+
+.menu-main
+  +links_header_bar
+  margin-top: $m
+
+.menu-main__link
+  +h(5)
+  display: inline
+  margin-left: $m/2
+  text-transform: uppercase
+  position: relative
+
+.menu-main__link--login
+  display: none
+
+@media all and (max-width: #{$menu_breakpoint})
+  .menu-main
+    display: none
+    margin-top: $m*2
+    padding: $m
+    text-align: left
+  .menu-main__link
+    display: block
+    text-align: center
+    margin: $m 0
+    font-size: 1.5em
+    border-bottom: 1px dashed rgba(black, .25)
+  .menu-main__link--login
+    display: block
+
+.region-header--unfolded
+  .menu-main
+    display: block

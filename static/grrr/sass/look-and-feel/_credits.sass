@@ -1,0 +1,31 @@
+// Site credits
+// blocks/site-credits.html
+
+@import compass/css3/inline-block
+@import compass/css3/transition
+@import compass/css3/opacity
+
+.site-credits__section
+  +inline-block
+  margin-left: $m
+  vertical-align: top
+
+.site-credits__section-name
+  display: block
+  margin-bottom: $m/2
+  text-transform: uppercase
+  font-weight: bold
+  font-size: $size_small
+  border-bottom: 1px solid white
+
+.site-credits__section-item
+  display: inline
+
+.site-credits__logo
+  +inline-block
+  margin-right: $m/2
+  max-height: 75px
+  width: auto
+  +transition(opacity .15s ease)
+  &:hover
+    +opacity(.8)

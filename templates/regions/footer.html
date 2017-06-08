@@ -1,3 +1,11 @@
-{# Toolbar region #} {% extends 'regions/region-base.html' %} {% load utils static i18n %}
+{# Site footer region #} {% extends 'regions/region-base.html' %} {% load utils static i18n %}
 
-{% block region_content %}{% endblock %}
+{% block region_content %}
+    <div class="region-footer__left">
+        {% include 'blocks/site-branding--secondary.html' %}
+        {% include 'menus/menu-secondary.html' %}
+    </div>
+    <div class="region-footer__right">
+        {% include 'blocks/site-credits.html' %}
+    </div>
+{% endblock %}

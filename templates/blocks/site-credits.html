@@ -1,0 +1,45 @@
+{# site-credits of the site #} {% load i18n static utils %}
+
+<div class="site-credits">
+    <div class="site-credits__section">
+        <p class="site-credits__section-name">
+            {% trans 'Un proyecto de' %}
+        </p>
+        <ul class="site-credits__section-items">
+            <li class="site-credits__section-item">
+                <a href="https://arquitecturascolectivas.net" target="_blank"
+                   title="{% trans 'Ir a la página de la red de Arquitecturas Colectivas' %}">
+                    <img class="site-credits__logo"
+                         src="{% img 'grrr-credits--aacc.png' %}"
+                         alt="{% trans 'Logo de Arquitecturas Colectivas' %}"
+                    />
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="site-credits__section">
+        <p class="site-credits__section-name">
+            {% trans 'Apoyado por' %}
+        </p>
+        <ul class="site-credits__section-items">
+            <li class="site-credits__section-item">
+                <a href="https://culturalfoundation.eu" target="_blank"
+                   title="{% trans 'Ir a la página de la European Culture Foundation' %}">
+                    <img class="site-credits__logo"
+                         src="{% img 'grrr-credits--ecf.png' %}"
+                         alt="{% trans 'Logo de la European Culture Foundation' %}"
+                    />
+                </a>
+            </li>
+            <li class="site-credits__section-item">
+                <a href="http://www.barcelona.cat/es/" target="_blank"
+                   title="{% trans 'Ir a la página del Ayuntamiento de Barcelona' %}">
+                    <img class="site-credits__logo"
+                         src="{% img 'grrr-credits--bcn.png' %}" %}
+                         alt="{% trans 'Logo del Ayuntamiento de Barcelona' %}"
+                    />
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+{# Secondary menu of the site #} {% load i18n static %}
+
+<div class="menu-secondary" id="menu-secondary">
+    <ul class="menu-secondary__links">
+        <li class="menu-secondary__link">
+            <a title="{% trans 'Página sobre el sitio' %}" href="{% url 'front' %}">
+                {% trans 'Acerca' %}
+            </a>
+        </li>
+        <li class="menu-secondary__link">
+            <a title="{% trans 'Contacta con los responsables del sitio' %}" href="{% url 'front' %}">
+                {% trans 'Contacta' %}
+            </a>
+        </li>
+        <li class="menu-secondary__link">
+            <a title="{% trans 'Repositorio donde se aloja el código del sitio' %}" href="https://github.com/Ale-/grrr.tools">
+                {% trans 'Github' %}
+            </a>
+        </li>
+    </ul>
+</div>

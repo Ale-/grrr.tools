@@ -4,6 +4,7 @@
 
 @import compass/css3/text-shadow
 @import text_to_header
+@import sticky_footer
 
 *
   box-sizing: border-box
@@ -54,7 +55,7 @@ a
   text-decoration: none !important
 a:focus
   outline: 0
-  
+
 // RESET FORM DEFAULT STYLES
 input,
 select,
@@ -68,9 +69,6 @@ textarea
     outline : 0
 
 select
-  // &:-moz-focusring
-  //   color: transparent
-  //   +text-shadow(0 0 0 black)
   &:hover
     cursor: pointer
 
@@ -79,3 +77,8 @@ select
 ::selection
   background: $color_selection_background
   color     : $color_selection_text
+
+// Sticky footer
+@if $apply_sticky_footer
+  body
+    +sticky_footer
