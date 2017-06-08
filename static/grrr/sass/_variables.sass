@@ -62,7 +62,8 @@ $color_selection_text       : $color_text
 //
 
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,800')
-+font-face('grrr_icons', font-files("grrr_icons.woff", "grrr_icons.ttf", "grrr_icons.eot", "grrr_icons.svg"))
+$icons: "grrr_icons/grrr_icons"
++font-face('grrr_icons', font-files("#{$icons}.woff", "#{$icons}.ttf", "#{$icons}.eot", "#{$icons}.svg"))
 $font_text           : 'Raleway', sans-serif
 $font_headers        : 'Raleway', sans-serif
 $font_icons          : 'grrr_icons'
