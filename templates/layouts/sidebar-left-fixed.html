@@ -1,0 +1,22 @@
+{# Renders a template with a single column of fixed with #}
+{% extends 'base.html' %} {% block layout_classes %}sidebar-left-fixed{% endblock %}
+
+{% block layout %}
+
+    {% include 'regions/header.html' with region_name='header' html_container='header' layout='fixed' %}
+
+    <div class="region-content">
+        <div class="container-fixed">
+            <aside class="layout-sidebar">
+                {% block sidebar %}{% endblock %}
+            </aside>
+            <main class="layout-main">
+                {% block main %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+
+    {% include 'regions/footer.html' with region_name='footer' html_container='footer' layout='fixed' %}
+
+{% endblock %}
