@@ -1,21 +1,10 @@
-{# Extend basic page #}
-{% extends 'layouts/single-fixed-column.html' %} {% load i18n %}
+{# Login page #} {% extends 'layouts/single-fixed-column--no-footer.html' %} {% load i18n utils %}
 {% block body_classes %}login{% endblock %} {% block htmltitle %}Signup/Login{% endblock %}
-
 
 {# Content #}
 {% block main %}
-
-    {% if user.is_authenticated %}
-        <p class="form-errors">
-            {% blocktrans trimmed %}
-                Ya estás autenticado en la plataforma.
-            {% endblocktrans %}
-        </p>
-    {% endif %}
-
-    {% include 'blocks/page-title.html' with title='' %}
-
+    {% fake_breadcrumb %}
+    {% trans 'Login' as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="upload" %}
     {% include 'forms/regular-form.html' with form_title="Login" form=form form_class="login" submit_text="Accede" %}
-
+    {% include 'menus/menu-registration.html' %}
 {% endblock %}

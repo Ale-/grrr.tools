@@ -1,0 +1,69 @@
+{# Login page #} {% extends 'layouts/single-fixed-column--no-footer.html' %} {% load static i18n utils %}
+{% block body_classes %}ethic-code-page{% endblock %} {% block htmltitle %}{% trans 'Código ético' %}{% endblock %}
+
+
+{# Content #}
+{% block main %}
+    {% fake_breadcrumb %}
+    {% trans 'Código ético' as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="grrr" %}
+    <div class="ethic-code">
+        <p class="ethic-code__text"> {% blocktrans trimmed %}
+            El acceso al intercambio, cesión y reutilización de materiales por
+            particulares y/o colectivos cumplirán con las siguientes pautas para la
+            certificación social. Este código es un espacio ético para la generación
+            de valor social y medioambiental:
+        {% endblocktrans %} </p>
+        <ul class="ethic-code__principles">
+            <li class="ethic-code__principle">
+                <object class="ethic-code__principle-icon" type="image/svg+xml" data="{% img '/ethic-code/interes-social.svg' %}"></object>
+                <h3 class="ethic-code__principle-name">
+                    {% trans 'Interés social' %}
+                </h3>
+                <p class="ethic-code__principle-description">
+                    <ul>
+                        <li> {% blocktrans trimmed %}
+                            Los recursos de esta herramienta quieren promover proyectos
+                            o procesos sin ánimo de lucro, que refuercen las
+                            intervenciones de regeneración de los bienes comunes
+                            urbanos o a entidades educativas y pedagógicas de
+                            ámbito público.
+                        {% endblocktrans %} </li>
+                    </ul>
+                </p>
+            </li>
+            <li class="ethic-code__principle">
+                <object class="ethic-code__principle-icon" type="image/svg+xml" data="{% img '/ethic-code/retornos-colectivos.svg' %}"></object>
+                <h3 class="ethic-code__principle-name">
+                    {% trans 'Retornos colectivos' %}
+                </h3>
+                <p class="ethic-code__principle-description">
+                    <ul>
+                        <li> {% blocktrans trimmed %}
+                            Generación de fichas de uso, documentación y bitácora de
+                            los materiales reutilizados.
+                        {% endblocktrans %} </li>
+                        <li> {% blocktrans trimmed %}
+                            Referenciación de la procedencia de los materiales y
+                            coste real de los mismos.
+                        {% endblocktrans %} </li>
+                    </ul>
+                </p>
+            </li>
+            <li class="ethic-code__principle">
+                <object class="ethic-code__principle-icon" type="image/svg+xml" data="{% img '/ethic-code/destinatarios.svg' %}"></object>
+                <h3 class="ethic-code__principle-name">
+                    {% trans 'Destinatarios' %}
+                </h3>
+                <p class="ethic-code__principle-description">
+                    {% blocktrans trimmed %}
+                    Los destinatarios de los recursos movilizados a través de
+                    la plataforma han de ser particulares o colectivos que describen
+                    y declaran estar inmersos en un proyecto y/o proceso de gestión
+                    cooperativa/colectiva/ comunitaria orientado al cuidado y la
+                    regeneración de los bienes comunes urbanos.
+                    {% endblocktrans %}
+                </p>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

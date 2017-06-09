@@ -1,16 +1,21 @@
-{# Extend basic page #}
-{% extends 'layouts/single-fixed-column.html' %} {% load i18n static %}
-{% block body_classes %}registration{% endblock %}
+{# Login page #} {% extends 'layouts/single-fixed-column--no-footer.html' %} {% load i18n utils %}
+{% block body_classes %}signin{% endblock %} {% block htmltitle %}Signup{% endblock %}
+
 
 {# Content #}
 {% block main %}
-    {% if user.is_authenticated %}
-        <p class="form-errors">
-            {% blocktrans trimmed %}
-                Ya estás autenticado en la plataforma.
-            {% endblocktrans %}
-        </p>
-    {% endif %}
-    {% include 'pages/title.html' with title="Signin" %}
-    {% include 'forms/regular-form.html' with form_title="Sign up" form=form form_class="registration" submit_text="Crea un usuari@  " %}
+    {% fake_breadcrumb %}
+    {% trans 'Regístrate' as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="user" %}
+    {% url 'ethic-code' as ethic_code_link %}
+    {% trans 'Leer el código ético de la platforma' as ethic_code_title %}
+    <div class="register-instructions">
+        {% blocktrans trimmed %}
+            Tras enviar este formulario recibirás en el correo electrónico
+            instrucciones para activar tu cuenta.
+            ¿Has leído el <a href="{{ ethic_code_link }}" title="{{ ethic_code_title }}">
+            código ético</a> de la plataforma?
+        {% endblocktrans %}
+    </div>
+    {% include 'forms/regular-form.html' with form_title="Login" form=form form_class="signin" submit_text="Dame de alta" %}
+    {% include 'menus/menu-registration.html' %}
 {% endblock %}
