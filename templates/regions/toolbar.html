@@ -1,3 +1,7 @@
 {# Toolbar region #} {% extends 'regions/region-base.html' %} {% load utils static i18n %}
 
-{% block region_content %}{% endblock %}
+{% block region_content %}
+    <div class="region-toolbar__right">
+        {% include 'menus/menu-user.html' %}
+    </div>
+{% endblock %}
