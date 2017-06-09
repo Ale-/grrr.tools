@@ -1,0 +1,41 @@
+{# Extend basic page #}
+{% extends 'layouts/sidebar-left-fixed.html' %} {% load i18n utils %}
+{% block body_classes %}dashboard{% endblock %}
+
+{% block breadcrumb %}
+    {% include 'blocks/breadcrumb.html' %}
+{% endblock %}
+
+{# Sidebar #}
+{% block sidebar %}
+    <div class="userprofile">
+        <div class="userprofile__field">
+            <p class="userprofile-field-date">
+                {% trans 'Te diste de alta el '%}{{ date_joined|date:'d/m/Y' }}
+            </p>
+        </div>
+        <div class="userprofile__field">
+            <label class="userprofile__field-label">
+                <span class="icon-mail"></span>{% trans 'Email' %}
+            </label>
+            <span class="userprofile__field-value">
+                {{ email }}
+            </span>
+        </div>
+        <div class="userprofile__field">
+            <label class="userprofile__field-label">
+                <span class="icon-lock"></span>{% trans 'Contraseña' %}
+            </label>
+            <a class="userprofile__button" href="{% url 'auth_password_change' %}">
+                {% trans 'Cambiar' %}
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{# Content #}
+{% block main %}
+    {% fake_breadcrumb %}
+    {% include 'blocks/page-title.html' with text=username icon="user" %}
+    {% lorem %}
+{% endblock %}
