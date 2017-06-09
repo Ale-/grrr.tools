@@ -18,12 +18,12 @@
     {% endfor %}
 {% endif %}
 
-<form enctype="multipart/form-data" action="{{ action }}" method="post" class="form form--{{ form_class }}">
+<form enctype="multipart/form-data" action="{{ action }}" method="post" class="form--{{ form_class }}">
     {% csrf_token %}
     <div class="inner">
-        {% with 'forms/fields-'|add:form_class|add:'.html' as fields %}
-            {% include fields with form_class=form_class %}
-        {% endwith %}
+        {% for field in form %}
+            {% include 'forms/field.html' with field=field form_class=form_class %}
+        {% endfor %}
         <input class="form__submit" type="submit" value="{{ submit_text }}" />
-    </div>
+    <div>
 </form>

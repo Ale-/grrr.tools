@@ -2,23 +2,23 @@
 
 {% with field.name|slugify as fieldname %}
 
-<div class="field--{{ fieldname }} {% if field.field.required %}required{% endif %}">
-    <p class="field__label--{{ fieldname }}">
+<div class="field field--{{ fieldname }} {% if field.field.required %}required{% endif %}">
+    <p class="field__label field__label--{{ fieldname }}">
         {{ field.label }}
     </p>
-    <p class="field__help--{{ fieldname }}">
+    <p class="field__help field__help--{{ fieldname }}">
         {{ field.help_text | safe }}
     </p>
     {% if field.errors %}
-    <ul class="field__errors--{{ fieldname }}">
+    <ul class="field__errors field__errors--{{ fieldname }}">
         {% for error in field.errors %}
-          <li class="field__error--{{ fieldname }}">
+          <li class="field__error field__error--{{ fieldname }}">
               {{ error }}
           </li>
         {% endfor %}
     </ul>
     {% endif %}
-    <p class="field__widget--{{ fieldname }}">
+    <p class="field__widget field__widget--{{ fieldname }}">
         {{ field }}
     </p>
 </div>

@@ -1,31 +1,33 @@
-{# Template to render a modelform #} {% load i18n %}
+{# Template to display a form that renders fields sequentially in a same container #} {% load i18n %}
 
-{% if form.errors and not form.non_field_errors %}
-    <p class="form-errors">
-        {% if form.errors.items|length == 1 %}
-            {% trans "Parece que hay un error en el formulario. Revísalo, por favor." %}
-        {% else %}
-            {% trans "Parece que hay errores en el formulario. Revísalo, por favor.." %}
+<div class="form form--{{ form_class }}">
+    <div class="form__errors form__errors--{{ form_class }}">
+        {% if form.errors and not form.non_field_errors %}
+            <p class="form__error form__error--{{ form_class }}">
+                {% if form.errors.items|length == 1 %}
+                    {% trans "Parece que hay un error en el formulario. Revísalo, por favor." %}
+                {% else %}
+                    {% trans "Parece que hay errores en el formulario. Revísalo, por favor.." %}
+                {% endif %}
+            </p>
         {% endif %}
-    </p>
-{% endif %}
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class="form__error form__error--{{ form_class }}">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        {% endif %}
+    </div>
 
-{% if form.non_field_errors %}
-    {% for error in form.non_field_errors %}
-        <p class="form-errors">
-            {{ error }}
-        </p>
-    {% endfor %}
-{% endif %}
-
-<form enctype="multipart/form-data" action="{{ action }}" method="post" class="form--{{ form_class }}">
-    {% csrf_token %}
-    {% with 'forms/fields-'|add:form_class|add:'.html' as fields %}
-        <div class="form-fields--{{ form_class }}">
+    <form class="form__form form__form--{{ form_class }}"
+          enctype="multipart/form-data" action="{{ action }}" method="post" >
+        {% csrf_token %}
+        <div class="inner">
             {% for field in form %}
                 {% include 'forms/field.html' with field=field form_class=form_class %}
             {% endfor %}
+            <input class="form__submit form__submit--{{ form_class }}" type="submit" value="{{ submit_text }}" />
         </div>
-    {% endwith %}
-    <input class="form__submit" type="submit" value="{{ submit_text }}" />
-</form>
+    </form>
+</div>
