@@ -7,7 +7,7 @@
 
         {# Title and description #}
         <title>
-            {% if page__title %} {% block page__title %}{% endblock %} | {{ document_title }}
+            {% if htmltitle %} {% block htmltitle %}{% endblock %} | {{ document_title }}
             {% else %} {{ document_title }} {% endif %}
         </title>
 
@@ -37,7 +37,9 @@
                  {% block layout_classes %}{% endblock %}">
 
         {# Toolbar #}
-        {% include 'regions/toolbar.html' with region_name="toolbar" html_container="div" layout="fluid" %}
+        {% if user.is_authenticated %}
+            {% include 'regions/toolbar.html' with region_name="toolbar" html_container="div" layout="fluid" %}
+        {% endif %}
 
         {# Site messages #}
         {% include 'regions/messages.html' with region_name="messages" html_container="div" layout="fixed" %}
