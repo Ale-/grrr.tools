@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.views.generic.base import TemplateView
+from apps.users import views as userviews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -12,7 +13,14 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(
-    url(r'^$', TemplateView.as_view(template_name="pages/front.html"), name='front')
+    url(r'^$', TemplateView.as_view(template_name="pages/front.html"), name='front'),
+
+    # User urls
+    url(r'^mi-cuenta$', userviews.UserAccount.as_view(), name='dashboard'),
+
+    # Registration urls
+    url(r'', include('registration.backends.default.urls')),
+    url(r'^codigo-etico$', TemplateView.as_view(template_name="registration/ethic-code.html"), name='ethic-code'),
 )
 
 if settings.DEBUG == True:
