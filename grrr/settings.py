@@ -24,12 +24,13 @@ MAINTENANCE_IGNORE_URLS = (
     r'^/login$',
 )
 LOGIN_URL = '/login'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/mi-cuenta'
 LOGOUT_URL = '/logout'
 LOGOUT_REDIRECT_URL = '/'
 
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_OPEN = True
+REGISTRATION_AUTO_LOGIN = True
 
 # Name of site in the document title
 DOCUMENT_TITLE = 'GRRR Tools'
