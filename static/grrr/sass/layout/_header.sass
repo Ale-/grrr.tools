@@ -6,9 +6,6 @@
     height: $header_height
     padding: $header_padding
 
-.logged-in .region-header
-  margin-top: $toolbar_height
-
 .region-header__left
   +column(3, 'sm', 20px)
 .region-header__right
@@ -24,3 +21,10 @@
   top: 0
   width: 100%
   z-index: 10000
+
+.toolbar
+  .region-header
+    margin-top: $toolbar_height
+  .region-header--unfolded
+    top: $toolbar_height
+    margin-top: 0

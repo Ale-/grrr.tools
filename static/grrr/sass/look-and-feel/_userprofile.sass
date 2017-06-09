@@ -1,0 +1,24 @@
+.userprofile
+  font-family: $font_text
+  padding: $m
+  background: #eee
+  +links_normal
+
+.userprofile__field
+  line-height: $m*2
+  [class*='icon']
+    margin-right: $m/2
+
+.userprofile__field-label
+  +h(5)
+  margin-right: $m/2
+
+.userprofile__button
+  background-color: rgba(black, .1)
+  padding: $m/3
+  +border-radius(4px)
+  +transition(background-color .1s ease)
+  text-transform: uppercase
+  font-size: $size_small
+  &:hover
+    background-color: rgba(black, .05)

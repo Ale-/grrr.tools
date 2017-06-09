@@ -1,0 +1,27 @@
+// Registration menu
+// menus/menu-registration.html
+
+.menu-registration
+  text-align: center
+  margin-top: $m
+  text-transform: uppercase
+  font-size: $size_small
+  +links_normal
+
+.menu-registration__link
+  margin: $m/2 0
+  &:before
+    content: "»"
+    margin-right: $m/2
+
+body.login
+  .menu-registration__link--login
+    display: none
+
+body.signin
+  .menu-registration__link--signin
+    display: none
+
+body.password-recovery
+  .menu-registration__link--pass-recovery
+    display: none

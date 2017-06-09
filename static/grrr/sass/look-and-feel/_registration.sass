@@ -1,0 +1,72 @@
+// Registration styles
+// registration/login.html
+// registration/password-reset-form.html
+// registration/registration-form.html
+
+@import compass/css3/border-radius
+@import compass/css3/animation
+@import compass/css3/inline-block
+@import compass/css3/border-radius
+
+body.login,
+body.signin,
+body.password-recovery,
+  background-color: $palette-yellow
+  .page-title
+    text-align: center
+
+.form--login,
+.form--signin,
+.form--pass-recovery
+  max-width: 480px
+  margin: 0 auto
+  background: rgba(black, .05)
+  padding: $m
+  +border-radius(10px)
+  +animation(showup 1s 1)
+
+  .field
+    margin: $m 0 $m
+  .field:first-child
+    margin: $m/2 0 $m
+  .field__label
+    display: block
+    margin-bottom: $m/3
+    text-transform: uppercase
+    +h(6)
+  .field__help,
+  .field__help + ul
+    font-size: .9em
+    color: rgba(black, .8)
+    margin-bottom: $m/3
+    & li::before
+      content: "· "
+  .form__submit
+    display: block
+    +button(rgba(black, .75), rgba(black, .85), white, 40px)
+    padding: 0 $m
+    margin: 0 auto
+    text-transform: uppercase
+    font-weight: 600
+    +border-radius(4px)
+  .form__error,
+  .field__error
+    color: $color_danger
+
+  input[type=text],
+  input[type=password],
+  input[type=email]
+    border: 1px dotted rgba(black, .25)
+    border-width: 0 0 1px 0
+    background: none
+    width: 100%
+
+
+.password-reset-instructions,
+.register-instructions
+  +links_normal
+  max-width: 480px
+  font-size: 1.25em
+  color: rgba(black, .75)
+  margin: $m*2 auto
+  +animation(showup 1s 1  )

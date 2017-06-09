@@ -1,0 +1,10 @@
+// Layouts with sidebar
+// layouts/sidebar-left-fixed
+// layouts/sidebar-right-fixed
+
+.sidebar-left-fixed,
+.sidebar-right-fixed
+  .layout-main
+    +column(8, 'sm', $m*2)
+  .layout-sidebar
+    +column(4, 'sm', $m*2)

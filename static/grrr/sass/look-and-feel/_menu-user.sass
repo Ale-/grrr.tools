@@ -1,0 +1,43 @@
+// User menu
+// menus/menu-user.html
+
+@import compass/css3/border-radius
+
+.menu-user
+  width: $m*10
+
+.menu-user:hover
+  .menu-user__links
+    display: block
+
+.menu-user__links
+  display: none
+  position: absolute
+  right: $m/2
+  z-index: 99999
+  background: #222
+  padding: $m/3
+  text-align: left
+  font-size: $size_small
+  text-transform: uppercase
+  +links_footer
+  +border-radius(4px)
+
+.menu-user__links::before
+  content: "▲"
+  position: absolute
+  top: -$m*1.2
+  right: $m/2
+  font-size: 1.25em
+  color: #222
+
+.menu-user__link
+  line-height: $m*1.5
+  clear: both
+
+  [class^="icon-"]
+    color: #999
+    margin-right: $m/3
+  &:hover
+    [class^="icon-"]
+      color: $palette_yellow
