@@ -1,0 +1,55 @@
+{# User menu #} {% load i18n static %}
+
+<div class="menu-user">
+    <p class="trigger-usermenu">
+        {% trans 'Hola' %},
+        <span class="trigger-usermenu__username">{{ user.username }}</span>
+        <span class="icon-user"></span>
+    </p>
+    <ul class="menu-user__links">
+        <li class="menu-user__link">
+            <span class="icon-user"></span>
+            <a href="{% url 'dashboard' %}">
+                {% trans 'Tu cuenta' %}
+            </a>
+        </li>
+        <li class="menu-user__link">
+            <span class="icon-square-plus"></span>
+            <a href="{% url 'front' %}">
+                {% trans 'Crea un nodo' %}
+            </a>
+        </li>
+        <li class="menu-user__link">
+            <span class="icon-square-plus"></span>
+            <a href="{% url 'front' %}">
+                {% trans 'Registra un lote' %}
+            </a>
+        </li>
+        <li class="menu-user__link">
+            <span class="icon-square-plus"></span>
+            <a href="{% url 'front' %}">
+                {% trans 'Publica un reuso' %}
+            </a>
+        </li>
+        <li class="menu-user__link">
+            <span class="icon-mail"></span>
+            <a href="{% url 'front' %}">
+                {% trans 'Manda un mensaje' %}
+            </a>
+        </li>
+        {% if user.is_staff %}
+            <li class="menu-user__link">
+                <span class="icon-cog"></span>
+                <a href="/admin">
+                    {% trans 'Administra' %}
+                </a>
+            </li>
+        {% endif %}
+        <li class="menu-user__link">
+            <span class="icon-open"></span>
+            <a href="{% url 'auth_logout' %}">
+                Logout
+            </a>
+        </li>
+    </ul>
+</div>

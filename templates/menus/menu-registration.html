@@ -1,0 +1,24 @@
+{# Registration links #} {% load i18n static %}
+
+<div class="menu-registration" id="menu-registration">
+    <ul class="menu-registration__links">
+        <li class="menu-registration__link menu-registration__link--pass-recovery">
+            <a href="{% url 'auth_password_reset' %}"
+               title="{% trans 'Recupera tu contraseña' %}">
+                {% trans '¿Olvidaste el nombre de usuari@ o contraseña?' %}
+            </a>
+        </li>
+        <li class="menu-registration__link menu-registration__link--login">
+            <a href="{% url 'auth_login' %}"
+               title="{% trans 'Entra en la plataforma' %}">
+                {% trans 'Login' %}
+            </a>
+        </li>
+        <li class="menu-registration__link menu-registration__link--signin">
+            <a href="{% url 'registration_register' %}"
+               title="{% trans 'Accede al formulario de registro del site' %}">
+                {% trans 'Regístrate en la plataforma' %}
+            </a>
+        </li>
+    </ul>
+</div>
