@@ -115,7 +115,10 @@ class PictureWithPreviewWidget(forms.widgets.ClearableFileInput):
 
     def render(self, name, value, attrs=None):
         """Render widget"""
-
+        if attrs:
+            attrs['accept'] = "image/*"
+        else:
+            attrs = { 'accept' : "image/*" }
         parent_widget = super(PictureWithPreviewWidget, self).render(name, value, attrs )
         picture_preview = render_to_string("picture-preview-widget.html", {
             'id'            : attrs['id'],
