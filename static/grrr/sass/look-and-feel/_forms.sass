@@ -1,0 +1,47 @@
+@import compass/css3/animation
+@import compass/css3/filter
+
+.form--node
+  +generic_form
+  +animation(showup 1s 1)
+
+.field__widget--picture-preview,
+.field__widget--video
+  svg
+    display: block
+    margin: $m/2 auto
+    padding: $m
+    width: 200px
+  #inner
+    fill: rgba(black, .15)
+  #frame
+    fill: none
+    stroke: rgba(black, .15)
+    stroke-width: 10px
+
+.field__widget--picture-preview
+  img
+    margin-top: $m
+
+.geocode-widget
+  .leaflet-container
+    margin: $m 0
+    min-height: 400px
+  .leaflet-tile
+    +filter(grayscale(100%))
+  .leaflet-control-zoom-out.leaflet-bar-part
+    display: none
+  .geocode-widget__geometry
+    display: none
+.geocode-widget__geocode-submit
+  +button_headers
+  width: 200px
+  text-align: center
+  float: right
+
+.modelform .page-title
+  border-bottom: 2px solid $color_text
+  margin-bottom: $m*2
+
+.modelform .field
+  padding: 0 $m

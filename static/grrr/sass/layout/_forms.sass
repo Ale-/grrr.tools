@@ -1,0 +1,31 @@
+@import compass/css3/inline-block
+@import clearfix
+@import compass/css3/flexbox
+
+.modelform
+  .layout-main
+    width: 960px
+    max-width: 100%
+    margin: 0 auto
+
+.fieldset--two-col
+  +clearfix
+
+.fieldset__left--two-col,
+.fieldset__right--two-col
+  +column(6, 'sm', $m*2)
+
+.fieldset__left--two-col
+  padding: 0 $m/2 0 0
+.fieldset__right--two-col
+  padding: 0 0 0 $m/2
+.fieldset__full--two-col
+  clear: both
+
+.fieldset--inline
+  +display-flex
+  +flex-direction(column)
+  +breakpoint('sm')
+    +flex-direction(row)
+  > div
+    +flex(1 0)

@@ -63,20 +63,23 @@
     > div:not(:last-child)
       border-right: 1px solid #ddd
 
+  .field
+    margin-bottom: $m
+
   //Field labels
   [class^='field__label']
     +h(5)
     text-transform: uppercase
-    font-size: .85em
   .required [class^='field__label']:before
     content: "*"
     display: inline
-    font-size: 1em
+    font-size: 1.25em
     color: #d00
     margin-right: $m/4
 
   //Field help texts
-  [class^='field__help']
+  [class^='field__help'],
+  .textarea-counter
     color: lighten($color_text, 20%)
     font-size: $size_small
 
@@ -99,7 +102,7 @@
   textarea,
   select
     padding: $m/2
-    margin: $m/2 0
+    margin: $m/2
     &:hover
       border-color: #aaa
 
