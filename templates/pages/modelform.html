@@ -1,0 +1,31 @@
+{# Modelform page #} {% extends 'layouts/single-fixed-column.html' %} {% load static i18n utils leaflet_tags %}
+{% block body_classes %}modelform{% endblock %} {% block htmltitle %}Añade contenido{% endblock %}
+
+{# Form dependencies #}
+{% block page_header %}
+    {% leaflet_css plugins="forms" %}
+{% endblock %}
+
+{# Main content #}
+{% block main %}
+    {% trans 'Cancelar' as breadcrumb_text %} {% fake_breadcrumb breadcrumb_text %}
+    {% trans title as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="square-plus" %}
+    {% if explanation %}
+        <div class="action">
+          <i class="action__icon">ℹ</i>
+          <div class="action__tooltip">
+              <div class="tip tip--form">
+                  <p class="tip__text">
+                      {{ explanation }}
+                  </p>
+              </div>
+          </div>
+        </div>
+    {% endif %}
+    {% include "forms/form.html" with form=form form_class=form__html_class submit_text=submit_text %}
+{% endblock %}
+
+{% block page_scripts %}
+  {{ form.media }}
+  {% leaflet_js plugins="forms" %}
+{% endblock %}
