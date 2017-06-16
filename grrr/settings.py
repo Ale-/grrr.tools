@@ -76,7 +76,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'grrr.middleware.sqlite_settings_middleware.sqliteSettings' # To faster I/O in sqLite
 ]
 
 ROOT_URLCONF = 'grrr.urls'
