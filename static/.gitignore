@@ -1,0 +1,6 @@
+# Ignore assets provided by apps
+admin/
+autocomplete_light/
+ckeditor/
+leaflet/
+utils/
