@@ -22,7 +22,9 @@ def img(file):
     return  settings.STATIC_URL + settings.PROJECT_STATIC_FOLDER + '/img/' + file
 
 @register.inclusion_tag('fake-breadcrumb.html')
-def fake_breadcrumb(text="Volver a la página anterior"):
+def fake_breadcrumb(text):
+    if not text:
+        text = _('Volver a la página anterior')
     return { 'text' : text }
 
 @register.inclusion_tag('limited-choices-select.html')
