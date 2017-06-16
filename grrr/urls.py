@@ -21,6 +21,9 @@ urlpatterns += i18n_patterns(
     # Registration urls
     url(r'', include('registration.backends.default.urls')),
     url(r'^codigo-etico$', TemplateView.as_view(template_name="registration/ethic-code.html"), name='ethic-code'),
+
+    # Models urls
+    url(r'', include('apps.models.urls', namespace='models')),
 )
 
 if settings.DEBUG == True:
