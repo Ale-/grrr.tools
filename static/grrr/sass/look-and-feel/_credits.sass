@@ -6,8 +6,10 @@
 @import compass/css3/opacity
 
 .site-credits__section
-  +inline-block
-  margin-left: $m
+  margin: $m
+  +breakpoint('sm')
+    +inline-block
+    margin: 0 0 0 $m
   vertical-align: top
 
 .site-credits__section-name

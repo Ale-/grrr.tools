@@ -6,11 +6,14 @@
   position: fixed
   top: $m
   right: $m
-  z-index: 200
+  z-index: 90000
+  background-color: $palette_yellow
 
 .toolbar
   .trigger-navigation
-    top: $m + $toolbar_height
+    top: $m/3
+    left: $m
+    right: inherit
 
 @media all and (min-width: #{$menu_breakpoint})
   .trigger-navigation
