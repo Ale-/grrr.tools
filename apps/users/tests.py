@@ -19,7 +19,7 @@ class UserTest(TestCase):
         }, follow=True)
         self.assertEqual(register_response.status_code, 200)
         user = User.objects.get(username='test')
-        self.assertFalse(user)
+        self.assertTrue(user)
 
         """
         Test login view
