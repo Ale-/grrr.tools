@@ -21,10 +21,10 @@ def angular(file):
 def img(file):
     return  settings.STATIC_URL + settings.PROJECT_STATIC_FOLDER + '/img/' + file
 
+fake_breadcrumb_default_text = _('Volver a la página anterior')
+
 @register.inclusion_tag('fake-breadcrumb.html')
-def fake_breadcrumb(text):
-    if not text:
-        text = _('Volver a la página anterior')
+def fake_breadcrumb(text=fake_breadcrumb_default_text):
     return { 'text' : text }
 
 @register.inclusion_tag('limited-choices-select.html')
