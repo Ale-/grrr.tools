@@ -22,9 +22,9 @@ generic_template = 'pages/modelform.html'
 #
 
 node_explanation = ("Los nodos son los agentes miembros de la red del GRRR. "
-                       "Un nodo puede ser una asociación, un colectivo, un proyecto"
-                       "cultural o artístico, una institución... Las ofertas "
-                       "y demandas de materiales se asocian a nuestros nodos.")
+                    "Un nodo puede ser una asociación, un colectivo, un proyecto "
+                    "cultural o artístico, una institución... Las ofertas "
+                    "y demandas de materiales se asocian a nuestros nodos.")
 
 
 class NodeCreate(GenericCreate):
@@ -48,6 +48,7 @@ class NodeCreate(GenericCreate):
   def get_context_data(self, **kwargs):
     context = super(NodeCreate, self).get_context_data(**kwargs)
     context['submit_text'] = _('Crea tu nodo')
+    context['explanation'] = self.explanation
     return context
 
   def get_success_url(self):
@@ -76,6 +77,7 @@ class NodeEdit(GenericUpdate):
   def get_context_data(self, **kwargs):
     context = super(GenericUpdate, self).get_context_data(**kwargs)
     context['title'] = self.title + (' ') + self.object.name
+    context['explanation'] = self.explanation
     return context
 
 class NodeDelete(GenericDelete):

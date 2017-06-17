@@ -5,22 +5,13 @@
 {% block page_header %}
     {% leaflet_css plugins="forms" %}
 {% endblock %}
-
+ℹ
 {# Main content #}
 {% block main %}
     {% trans 'Cancelar' as breadcrumb_text %} {% fake_breadcrumb breadcrumb_text %}
     {% trans title as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="square-plus" %}
     {% if explanation %}
-        <div class="action">
-          <i class="action__icon">ℹ</i>
-          <div class="action__tooltip">
-              <div class="tip tip--form">
-                  <p class="tip__text">
-                      {{ explanation }}
-                  </p>
-              </div>
-          </div>
-        </div>
+        {% include 'blocks/explanation.html' with icon='ℹ' classname='modelform' text=explanation %}
     {% endif %}
     {% include "forms/form.html" with form=form form_class=form__html_class submit_text=submit_text %}
 {% endblock %}

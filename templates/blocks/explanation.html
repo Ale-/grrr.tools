@@ -1,0 +1,16 @@
+{# Renders a explanation block #}
+
+<div class="explanation explanation--{{ classname }}">
+    <p class="explanation__icon explanation__icon--{{ classname }}">
+        {% if icon %}
+            {{ icon }}
+        {% endif %}
+    </p>
+    <div class="explanation__tooltip explanation__tooltip--{{ classname }}">
+        <div class="inner">
+            <p class="explanation__tooltip-text explanation__tooltip-text--{{ classname }}">
+                {{ text }}
+            </p>
+        </div>
+    </div>
+</div>
