@@ -161,6 +161,7 @@ CKEDITOR_CONFIGS = {
 }
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_JQUERY_URL  = "/static/admin/js/vendor/jquery/jquery.min.js"
 
 #
 # Import private settings
