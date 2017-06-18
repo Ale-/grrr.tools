@@ -1,21 +1,25 @@
-{% load i18n utils %}
+{# Share widget #} {% load i18n utils %}
+
+{% trans 'Comparte en Twitter'  as twitter_text %}
+{% trans 'Comparte en Facebook' as facebook_text %}
+{% trans 'Comparte en Google'   as google_text %}
 
 <div class="share">
     <p class="share__label">{% trans 'Comparte' %}</p>
     <ul class="share__links">
         <li class="share__link share__link--twitter">
             <a href="http://twitter.com/intent/tweet?text={{ title }}&url={{ url }}&hashtags=GRRR" target="_blank">
-                {% icon 'twitter' 'Comparte en Twitter' %}
+                {% icon 'twitter' twitter_text %}
             </a>
         </li>
         <li class="share__link share__link--facebook">
             <a href="http://facebook.com/sharer/sharer.php?u={{ url }}" target="_blank">
-                {% icon 'facebook' 'Comparte en Facebook' %}
+                {% icon 'facebook' facebook_text %}
             </a>
         </li>
         <li class="share__link share__link--google">
             <a href="http://plus.google.com/share?url={{ url }}" target="_blank">
-                {% icon 'google' 'Comparte en Google +' %}
+                {% icon 'google' google_text %}
             </a>
         </li>
     </ul>

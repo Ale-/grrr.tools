@@ -27,6 +27,10 @@ fake_breadcrumb_default_text = _('Volver a la página anterior')
 def fake_breadcrumb(text=fake_breadcrumb_default_text):
     return { 'text' : text }
 
+@register.inclusion_tag('views/view.html')
+def view(view_class=None, items='object_list', template='views/item.html'):
+    return locals()
+
 @register.inclusion_tag('limited-choices-select.html')
 def limited_choices_select(choices=None, select_name=None, select_class=None, all=False, multiple=False):
     options = [{ 'name' : option[1], 'id' : option[0] } for option in choices ]
@@ -37,3 +41,19 @@ def remove_i18n_prefix(value):
     if value.startswith('/en') or value.startswith('/es'):
         value = value[3::]
     return value
+
+@register.inclusion_tag("share.html")
+def share(title, url):
+    return({ "title" : title, "url" : url })
+
+@register.inclusion_tag("icon.html")
+def icon(icon, text):
+    return({ "icon" : icon, "text" : text })
+
+@register.filter(name='has_permissions')
+def has_permissions(user, node):
+    return node.edit_permissions(user)
+
+@register.simple_tag
+def jquery():
+    return  mark_safe("<script type='text/javascript' src='" + settings.STATIC_URL + "/admin/js/vendor/jquery/jquery.min.js'></script>")
