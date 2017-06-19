@@ -1,0 +1,18 @@
+{# Node actions block #} {% load utils i18n %}
+
+{% if user.is_authenticated and user|has_permissions:item  %}
+    {% with edit='models:edit_'|add:model delete='models:delete_'|add:model %}
+        <ul class="node-actions">
+            <li class="node-actions__action">
+                <a href="{% url edit item.id %}">
+                    {% icon 'cog' 'Editar' %}
+                </a>
+            </li>
+            <li class="node-actions__action">
+                <a href="{% url delete item.id %}">
+                    {% icon 'cross' 'Eliminar' %}
+                </a>
+            </li>
+        </ul>
+    {% endwith %}
+{% endif %}
