@@ -1,3 +1,74 @@
+# Import generic python packages
+import json
+# Import django packages
+from django.test import Client
 from django.test import TestCase
+from django.urls import reverse
+# Import contrib apps
+from model_mommy import mommy
+# Import site apps
+from apps.models import models
 
-# Create your tests here.
+class ViewsTest(TestCase):
+    """ Test access to views """
+
+    def test_front(self):
+        """
+        Checks front
+        """
+        c = Client()
+        response = c.get(reverse('front'))
+        # Check empty view
+        self.assertEqual(response.status_code, 200)
+
+    def test_blog_view(self):
+        """
+        Checks Blog section
+        """
+        c = Client()
+        response = c.get(reverse('blog'))
+        # Check empty view
+        self.assertEqual(response.status_code, 200)
+        # Check prepopulated view
+        self.test_post = mommy.make("models.Post", wysiwyg="Lorem ipsum.")
+        response = c.get(reverse('blog'))
+        content = response.context['object_list']
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(content.count(), 1)
+
+    def test_blog_item_view(self):
+        """
+        Checks a single blogpost view
+        """
+        self.test_post = mommy.make("models.Post", wysiwyg="Lorem ipsum.")
+        c = Client()
+        response = c.get(reverse('blogpost', kwargs={'slug': self.test_post.slug}))
+        # Check view
+        self.assertEqual(response.status_code, 200)
+
+    def test_nodes_view(self):
+        """
+        Checks front
+        """
+        c = Client()
+        response = c.get(reverse('nodes'))
+        # Check empty view
+        self.assertEqual(response.status_code, 200)
+        # Check prepopulated view
+        self.test_post = mommy.make("models.Node")
+        response = c.get(reverse('nodes'))
+        content = response.context['object_list']
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(content.count(), 1)
+
+    def test_node_item_view(self):
+        """
+        Checks a single node view
+        """
+        self.test_post = mommy.make("models.Node")
+        print(self.test_post.name)
+        print(self.test_post.slug)
+        c = Client()
+        response = c.get(reverse('node', kwargs={'slug': self.test_post.slug}))
+        # Check view
+        self.assertEqual(response.status_code, 200)

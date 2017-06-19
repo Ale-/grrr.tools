@@ -35,4 +35,4 @@ class NodesView(ListView):
 class NodeItemView(DetailView):
     """View of a blog model instance."""
 
-    model = models.Post
+    model = models.Node
