@@ -1,0 +1,29 @@
+// Share widget
+// apps/utils/templates/share.html
+
+@import compass/css3/inline-block
+
+.share
+  margin: $m*2 0
+
+.share__label
+  text-transform: uppercase
+  font-size: $size_small
+  letter-spacing: 1px
+  border-bottom: 1px dotted $color_text
+
+.share__links
+  padding: $m/3 0
+  text-align: center
+
+.share__link
+  +inline-block
+  font-size: 2em
+  width: 32%
+
+.share__link--twitter
+  +links(#555, #1DA1F2, .15 ease)
+.share__link--facebook
+  +links(#555, #3B5998, .15 ease)
+.share__link--google
+  +links(#555, #DB4437, .15 ease)

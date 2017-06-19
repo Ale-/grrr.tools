@@ -1,12 +1,21 @@
+// Form styles
+// forms/form.html
+// forms/fields-*.html
+
 @import compass/css3/animation
 @import compass/css3/filter
 
-.form--node
+
+.form--node,
+.form--blogpost
   +generic_form
   +animation(showup 1s 1)
 
 .field__widget--picture-preview,
 .field__widget--video
+  text-align: center
+  .placeholder
+    text-align: center
   svg
     display: block
     margin: $m/2 auto
@@ -43,5 +52,7 @@
   border-bottom: 2px solid $color_text
   margin-bottom: $m*2
 
-.modelform .field
-  padding: 0 $m
+.fieldset--one-col
+  .django-ckeditor-widget
+    margin: $m
+    width: calc(100% - #{$m*2})

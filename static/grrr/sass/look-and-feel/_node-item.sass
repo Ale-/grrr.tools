@@ -1,0 +1,44 @@
+// View of node
+// views/node-item.hml
+
+.view-item--node
+  .inner
+    +clearfix
+    padding: $m
+    background-color: #eee !important
+    margin-bottom: $m
+  .inner__left
+    +column(2, 'sm', 20px)
+    border-right: 1px solid #555
+  .inner__center
+    +column(8, 'sm', 20px)
+  .inner__right
+    +column(2, 'sm', 20px)
+    border-left: 1px solid #555
+
+.view-item__field--activated,
+.view-item__field--recovered,
+.view-item__field--members
+  +column(4, 'sm', 20px)
+  text-align: center
+  text-transform: uppercase
+
+.view-item__field-value--activated,
+.view-item__field-value--recovered,
+.view-item__field-value--members
+  +h(1)
+.view-item__field-label--activated,
+.view-item__field-label--recovered,
+.view-item__field-label--members
+  font-size: .75em
+
+.view-item--node .inner__center
+  .icon-personas:before
+    display: block
+    font-size: $m*3
+  .icon-recuperados:before
+    display: block
+    font-size: $m*3
+  .icon-activados:before
+    display: block
+    font-size: $m*3

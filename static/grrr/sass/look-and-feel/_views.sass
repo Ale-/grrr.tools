@@ -1,0 +1,160 @@
+// General styles in views
+// views/views.html
+
+@import compass/css3/transition
+@import compass/css3/opacity
+
+.view-item
+  padding: $m
+
+.view-item__field--title
+  text-transform: uppercase
+  padding-bottom: 0
+  margin: 0
+  a
+    +transition(background-color .15s ease)
+  a:hover
+    background-color: $palette_yellow
+
+.view-item__field--date
+  text-transform: uppercase
+  font-size: .8em
+  line-height: 2rem
+  margin-bottom: 0
+
+.view__node__inner
+  padding-bottom: $m/2
+
+.view__node--new
+  .view__node__inner
+    padding-bottom: 0
+
+.view__field--title,
+.view__field--see-more,
+  a
+    +transition(background-color .15s ease)
+  a:hover
+    background-color: $palette_yellow
+
+.view__content .icon:before
+  font-size: $m*1.25
+.view__content .icon
+  float: right
+
+.view__field
+  padding: 0 $m
+  margin-bottom: $m/2
+.view__field--see-more
+  margin-bottom: 0
+.view__field--image
+  padding: 0
+
+.view__field--title
+  text-transform: uppercase
+  margin: 0
+  padding-top: 0
+
+
+
+.view__field--classification
+  border-bottom: 1px #555 dotted
+  margin-bottom: 0
+
+.view__node--date
+  float: left
+  font-size: .85em
+  text-transform: uppercase
+
+.view__field--classification
+  padding: $m/4
+  .id
+    text-transform: uppercase
+
+.view__field--see-more
+  text-align: right
+  font-weight: bold
+  font-size: $m
+  padding: $m/2
+
+.node__field--project-image
+  margin: $m
+  img
+    width: 100px
+    height: 100px
+    +border-radius(50%)
+
+.node__field-group--project
+  margin-top: $m
+
+.node__field--project-map
+  border: 1px solid #eee
+  .leaflet-control
+    display: none
+
+.node__field--project-contact
+  text-align: right
+  padding-right: $m
+  +links_footer
+  a
+    background-color: #111
+    text-transform: uppercase
+    padding: $m/4
+    font-size: .75em
+
+.node__field--project-name
+  text-transform: uppercase
+
+.view__field--material__materials
+  margin: 0
+
+.view__field--material__material,
+.view__field--node
+  a
+    +transition(background-color .1s ease)
+    &:hover
+      background-color: #ff0
+
+.view__node label
+  +h(5)
+  text-transform: uppercase
+  font-size: .9em
+
+.view__node--blog
+  .media__left, .media__right
+    width: 50%
+
+.view__node--blog-featured
+  .view__field--title,
+  .view__field--date,
+  .view__field--summary
+    padding: 0
+  .view__field--date
+    margin-bottom: $m/2
+
+.view__node--offer--simple,
+.view__node--demand--simple,
+  .view__field--classification
+    margin-bottom: $m
+
+.view__node__details
+  padding: 0 $m $m $m
+
+.view__field--material__materials
+  text-transform: uppercase
+  font-size: .85rem
+
+.view__node--material
+  width: 33%
+  .inner
+    margin: $m/2
+    border: 1px dotted $color_text
+
+.view-item--blog
+  width: 100%
+  +breakpoint('sm')
+    width: 50%
+  +breakpoint('md')
+    width: 33%
+
+.view-item--unpublished
+  +opacity(.75)

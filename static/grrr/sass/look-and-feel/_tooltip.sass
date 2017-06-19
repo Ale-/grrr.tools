@@ -1,0 +1,16 @@
+// Icon tooltips
+// apps/utils/templates/icon.html
+
+.action__tooltip
+  font-size: .75rem
+  text-transform: uppercase
+  visibility: hidden
+  position: absolute
+  background: #222
+  color: white !important
+  margin-left: $m/3
+  z-index: 1000
+  padding: $m/3
+  +inline-block
+.action__icon:hover + .action__tooltip
+  visibility: visible

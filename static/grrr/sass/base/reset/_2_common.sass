@@ -22,6 +22,16 @@
 
 // Link style mixins
 
+=links($normal, $hover, $transition)
+  a
+    +transition( #{$transition} )
+    &:link, &:visited
+      color: $normal
+    &:hover
+      color: $hover
+    &:active
+      color: $normal
+
 =links_normal
   a
     +transition(color .1s ease)
@@ -38,7 +48,6 @@
     +transition(color .1s ease)
     &:link, &:visited
       color: white
-      border-bottom: 1px dashed #555
     &:hover
       color: $palette_yellow
     &:active
@@ -53,15 +62,13 @@
   a:after
     content: " "
     position: absolute
-    border-bottom: 4px solid rgba($color_text, 0.75)
+    border-bottom: 2px solid $color_text
     width: 0
     left: 0
     bottom: -$m/4
-    visibility: hidden
-    +transition(width .2s ease-out)
+    +transition(width .4s ease)
   a:hover
     &::after
-      visibility: visible
       width: 100%
   a.active
     &::after
