@@ -4,7 +4,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.views.generic.base import TemplateView
+
 from apps.users import views as userviews
+from apps.views import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -13,7 +15,7 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(
-    url(r'^$', TemplateView.as_view(template_name="pages/front.html"), name='front'),
+    url(r'^$', views.FrontView.as_view(), name='front'),
 
     # User urls
     url(r'^mi-cuenta$', userviews.UserAccount.as_view(), name='dashboard'),
@@ -24,6 +26,15 @@ urlpatterns += i18n_patterns(
 
     # Models urls
     url(r'', include('apps.models.urls', namespace='models')),
+
+    # General views
+    url(r'^blog$', views.BlogView.as_view(), name='blog'),
+    url(r'^blog/(?P<slug>.+)$', views.BlogItemView.as_view(), name="blog_item"),
+    url(r'^nodos$', views.NodesView.as_view(), name='nodes'),
+    url(r'^nodo/(?P<slug>.+)$', views.NodeItemView.as_view(), name="node"),
+
+    # API services
+    url(r'^api/', include('apps.api.urls', namespace='api')),
 )
 
 if settings.DEBUG == True:
