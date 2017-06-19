@@ -27,6 +27,9 @@ urlpatterns += i18n_patterns(
     # Models urls
     url(r'', include('apps.models.urls', namespace='models')),
 
+    # Static pages
+    url(r'^acerca$', TemplateView.as_view(template_name="pages/about.html"), name='about'),
+
     # General views
     url(r'^blog$', views.BlogView.as_view(), name='blog'),
     url(r'^blog/(?P<slug>.+)$', views.BlogItemView.as_view(), name="blogpost"),
