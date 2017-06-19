@@ -1,0 +1,89 @@
+{# Glossary section #} {% extends 'layouts/sidebar-left-fixed.html' %} {% load i18n utils %}
+{% block body_classes %}glossary{% endblock %} {% block htmltitle %}{% trans 'Glosario' %}{% endblock %}
+
+{# Sidebar #}
+{% block sidebar %}
+    {# Title #}
+    {% trans 'Glosario' as page_title %}
+    {% include 'blocks/page-title.html' with text=page_title icon="glosario" %}
+    <p class="glossary-placeholder"></p> {# to keep dimensions despite fixed position #}
+    <div class="glossary-nav">
+        <h4 class="glossary-nav__label">
+            {% trans 'Términos sobre construcción' %}
+        </h4>
+        <ul class="glossary-nav__terms"> {% for item in glossary.construction %}
+            <li class="glossary-nav__term">
+                <a href="#{{item.term | slugify}}">{{item.term}}</a>
+            </li>
+        {% endfor %} </ul>
+        <h4 class="glossary-nav__label">
+            {% trans 'Términos sobre principios' %}
+        </h4>
+        <ul class="glossary-nav__terms"> {% for item in glossary.commons %}
+            <li class="glossary-nav__term">
+                <a href="#{{item.term | slugify}}">{{item.term}}</a>
+            </li>
+        {% endfor %} </ul>
+    </div>
+{% endblock %}
+
+{# Main content #}
+{% block main %}
+    <section class="glossary">
+        <h2 class="glossary__title">
+            {% trans 'Términos sobre construcción' %}
+        </h2>
+         <ul class="glossary__terms"> {% for item in glossary.construction %}
+            <li id="{{ item.term | slugify }}" class="glossary__term">
+              <label class="glossary__term-label">
+                  {{ item.term }}
+              </label>
+              <p class="glossary__term-definition">
+                  {{ item.text }}
+              </p>
+            <li>
+        {% endfor %} </ul>
+        <h2 class="glossary__title">
+            {% trans 'Términos sobre principios' %}
+        </h2>
+        <p>{% blocktrans trimmed %}
+            Complementariamente, presentamos otro glosario en torno a los bienes comunes,
+            la producción cooperativa y la colaboración distribuida entre administraciones,
+            entidades privadas y sociedad civil para la producción de modelos
+            cooperativos de propiedad, producción y gobernanza.
+        {% endblocktrans %}</p>
+        <ul class="glossary__terms"> {% for item in glossary.commons %}
+           <li id="{{ item.term | slugify }}" class="glossary__term">
+             <label class="glossary__term-label">
+                 {{ item.term }}
+             </label>
+             <p class="glossary__term-definition">
+                 {{ item.text }}
+             </p>
+           <li>
+        {% endfor %} </ul>
+    </section>
+{% endblock %}
+
+
+{% block page_scripts %}
+    {% jquery %}
+    <script type="text/javascript">
+        $(document).ready( function(){
+            $('.glossary-nav__term').click( function(e){
+                e.preventDefault();
+                $('body, html').animate({
+                  scrollTop: $( $('a', this).attr("href") ).offset().top - 75
+                }, '2s');
+            })
+            $(window).scroll( function(){
+                if( $(window).scrollTop() + 48 > $('.layout-sidebar').offset().top + 107){
+                    $('.glossary-nav').addClass('fixed');
+                } else {
+                    console.log("yeah");
+                    $('.glossary-nav').removeClass('fixed');
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,37 @@
+// Glossary section
+// pages/glossary.html
+
+.glossary__title
+  border-bottom: 2px solid $color_text
+
+.glossary__term
+  margin-top: $m
+  ul
+    margin-left: $m
+
+.glossary__term-label
+  +h(4)
+  text-transform: uppercase
+
+.glossary-nav
+  margin-bottom: $m
+
+.glossary-nav.fixed
+  +breakpoint('sm')
+    position: fixed
+    top: $m*1.5
+
+.glossary-nav__term
+  +links_remarked
+  margin: 0
+  margin-left: $m/4
+  text-transform: uppercase
+  font-size: .75em
+  &::before
+    content: "> "
+    a
+      border-bottom: 1px dotted $color_text
+
+.glossary-placeholder
+  height: 1px
+  width: 100%

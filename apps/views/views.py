@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # Import site apps
 from apps.models import models
-
+from apps.views import glossary as glossary_terms
 
 class FrontView(View):
     """View of frontpage."""
@@ -32,7 +32,7 @@ class ResourcesView(View):
               'label' : _('Acuerdos'),
           },
           {
-              'url'  : reverse('front'),
+              'url'  : reverse('glossary'),
               'icon' : 'icon-glosario',
               'label' : _('Glosario'),
           },
@@ -43,6 +43,13 @@ class ResourcesView(View):
           },
       ]
       return render(request, 'pages/resources.html', locals())
+
+class GlossaryView(View):
+  """View of the site Glossary."""
+
+  def get(self, request):
+    glossary = glossary_terms.get()
+    return render(request, 'pages/glossary.html', locals())
 
 class BlogView(ListView):
     """View of the blog model instances."""
