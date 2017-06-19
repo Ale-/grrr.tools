@@ -1,0 +1,15 @@
+{# Blog page #} {% extends 'layouts/single-fixed-column.html' %} {% load i18n static utils %}
+{% block body_classes %}blog-item{% endblock %}{% block htmltitle %}{% trans 'Blog' %}{% endblock %}
+
+{# Content #}
+{% block main %}
+    {% trans 'Blog' as title_text %}
+    {% include 'blocks/page-title.html' with text=title_text icon="speech-bubble" %}
+    {% view view_class="blog" items=object_list template="blog-item" %}
+{% endblock %}
+
+{# Scripts #}
+{% block page_scripts %}
+    {% jquery %}
+    {% include 'scripts/masonry.html' with grid_class='view__content--blog' item_class='view-item--blog' %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{# Views of existing nodes in the GRRR network #} {% extends 'layouts/single-fixed-column--map.html' %} {% load i18n static leaflet_tags utils %}
+{% block body_classes %}dashboard{% endblock %}{% block htmltitle %}{% trans 'Nodos' %}{% endblock %}
+
+{% block page_header %}
+     {% leaflet_css %}
+{% endblock %}
+
+{% block main %}
+    <div class="container-fixed">
+        {% trans 'Nodos' as pagetitle %}
+        {% include 'blocks/page-title.html' with text=pagetitle icon='nodos' %}
+        {% view view_class="nodes" items=object_list template="node-item" %}
+    </div>
+{% endblock %}
+
+{% block page_scripts %}
+    {% leaflet_js  %}
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+    <script type="text/javascript" src="{% js 'nodes-map.js' %}"></script>
+{% endblock %}
