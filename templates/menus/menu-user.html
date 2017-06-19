@@ -39,6 +39,12 @@
         </li>
         {% if user.is_staff %}
             <li class="menu-user__link">
+                <span class="icon-square-plus"></span>
+                <a href="{% url 'models:create_post' %}">
+                    {% trans 'Publica en el blog' %}
+                </a>
+            </li>
+            <li class="menu-user__link">
                 <span class="icon-cog"></span>
                 <a href="/admin">
                     {% trans 'Administra' %}
