@@ -29,7 +29,7 @@ urlpatterns += i18n_patterns(
 
     # General views
     url(r'^blog$', views.BlogView.as_view(), name='blog'),
-    url(r'^blog/(?P<slug>.+)$', views.BlogItemView.as_view(), name="blog_item"),
+    url(r'^blog/(?P<slug>.+)$', views.BlogItemView.as_view(), name="blogpost"),
     url(r'^nodos$', views.NodesView.as_view(), name='nodes'),
     url(r'^nodo/(?P<slug>.+)$', views.NodeItemView.as_view(), name="node"),
 

@@ -5,13 +5,13 @@
         {% include 'views/item-actions.html' with slug=item.slug model='post' %}
         {% if item.image %}
             <div class="view-item__field view-item__field--image">
-                <a href="{% url 'blog_item' item.slug %}">
+                <a href="{% url 'blogpost' item.slug %}">
                     {% thumbnail '400x' item.image %}
                 </a>
             </div>
         {% endif %}
         <h4 class="view-item__field view-item__field--title">
-          <a href="{% url 'blog_item' item.slug %}">{{ item.title }}</a>
+          <a href="{% url 'blogpost' item.slug %}">{{ item.title }}</a>
         </h4>
         <div class="view-item__field view-item__field--date">
           <p>{{ item.creation_date }}</p>
