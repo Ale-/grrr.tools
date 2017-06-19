@@ -25,8 +25,19 @@
 
 {# Sidebar #}
 {% block sidebar %}
-  <h3>
-      {% trans 'Arquitecturas Colectivas' noop %}
-  </h3>
-  {% include 'blocks/twitter--aacc.html' with height=1600 %}
+    <h3>
+        {% trans 'Arquitecturas Colectivas' noop %}
+    </h3>
+    {% include 'blocks/twitter--aacc.html' with height=1600 %}
+{% endblock %}
+
+{# page scripts #}
+{% block page_scripts %}
+    {# Adjusts twitter widget height to content's height #}
+    <script type="text/javascript">
+        var content_height = document.querySelector('.layout-main').clientHeight;
+        var twitter_widget = document.querySelector('.twitter-timeline');
+        console.log(twitter_widget);
+        twitter_widget.setAttribute('data-height', content_height - 180);
+    </script>
 {% endblock %}
