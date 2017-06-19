@@ -1,0 +1,19 @@
+{# Block to implement Masonry in a page #}
+
+<script type="text/javascript" src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+<script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready( function(){
+          var $grid = $('.{{ grid_class }}').imagesLoaded(
+              function() {
+                  $grid.masonry({
+                      itemSelector    : '.{{ item_class }}',
+                      percentPosition : true,
+                      columnWidth     : '.{{ item_class }}',
+                  });
+              }
+          );
+    });
+</script>
