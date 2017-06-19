@@ -1,0 +1,186 @@
+{# About section #}
+{% extends 'layouts/sidebar-right-fixed.html' %} {% load i18n static utils %}
+{% block htmltitle %}{% trans 'Acerca' %}{% endblock %}
+{% block body_classes %}{% trans 'Acerca' %}{% endblock %}
+
+{# Breadcrumb #}
+
+{# Content #}
+{% block main %}
+    {# Title #}
+    {% trans 'Acerca' as page_title %}
+    {% include 'blocks/page-title.html' with text=page_title icon="grrr" %}
+
+    <section class="grrr-description">
+        <h2 class="grrr-description__title">
+            {% trans 'Qué es' %}
+        </h2>
+        <p class="grrr-description__text">{% blocktrans trimmed %}
+          Desde el Grupo de Reutilización y Redistribución de Recursos queremos
+          convertir los recursos materiales en desuso (<sc>RMD</sc>) en oportunidades
+          que proporcionar a las iniciativas de interés público e incentivar a la
+          administración pública a desarrollar buenas prácticas para la gestión
+          eficiente de los recursos. Creemos en la necesidad de construir masa
+          crítica y empoderamiento para la gestión de recursos, en las prácticas
+          cooperativas y colaborativas, en la gestión compartida y en el retorno
+          al común.
+        {% endblocktrans %}</p>
+    </section>
+    <section class="grrr-objectives">
+        <h3 class="grrr-objectives__title">
+            {% trans 'Objetivos' %}
+        </h3>
+        <ol class="grrr-objectives__items">
+            <li class="grrr-objectives__item">{% blocktrans trimmed %}
+                Incentivar y dotar de herramientas (políticas públicas) a la
+                administración pública, a entidades privadas y ciudadanos o
+                colectivos sociales para el desarrollo de buenas prácticas que
+                conlleven la gestión eficiente de los <sc>RMD</sc>.
+            {% endblocktrans %}</li>
+            <li class="grrr-objectives__item">{% blocktrans trimmed %}
+                Proporcionar a colectivos e iniciativas sociales los instrumentos
+                necesarios para activar los <sc>RMD</sc> de origen público/privado.
+            {% endblocktrans %}</li>
+            <li class="grrr-objectives__item">{% blocktrans trimmed %}
+                Convertir los <sc>RMD</sc> ya sean públicos o privados en un bien
+                común, cambiando su valor de uso económico por capital social.
+            {% endblocktrans %}</li>
+            <li class="grrr-objectives__item">{% blocktrans trimmed %}
+                Reconducir el mal uso y/o abandono de los recursos materiales en
+                proyectos de interés social a través del desarrollo de colaboraciones
+                de carácter no autoritario entre ciudadanos/colectivos sociales
+                y administración pública/entidades privadas.
+            {% endblocktrans %}</li>
+        </ol>
+    </section>
+    <section class="grrr-principles">
+        <h2 class="grrr-principles__title">
+            {% trans 'Principios' %}
+        </h2>
+        <p class="grrr-principles__text">{% blocktrans trimmed %}
+            Los principios del proyecto se basan en los valores de:
+            <strong>Colaboración</strong> (pactos mediados entre ciudananía,
+            administraciones o entidades privadas para el cuidado y regeneración
+            de los bienes comunes urbanos); <strong>Responsabilidad</strong>
+            (elemento central en las relaciones entre los diferentes agentes así
+            como condición indispensable para que la colaboración resulte
+            efectivamente enfocada a la producción de resultados útiles) e
+            <strong>Inclusión</strong> (las intervenciones de cuidado y regeneración
+             de los bienes comunes urbanos habrán de organizarse de tal manera
+             que permitan que otros ciudadanos interesados puedan participar en
+             las actividades en cualquier momento).
+        {% endblocktrans %}</p>
+        <ul class="grrr-principles__items">
+            <li class="grrr-principles__item">
+                <figure class="grrr-principles__item-icon">
+                    <img data-scroll-animation src="{% img '/ethic-code/bienes-comunes-urbanos.png' %}"/>
+                </figure>
+                <h4 class="grrr-principles__item-name">
+                    {% trans 'Bienes comunes urbanos' %}
+                </h4>
+                <p class="grrr-principles__item-text">{% blocktrans trimmed %}
+                    Aquellos bienes materiales, inmateriales y/o digitales, que
+                    los ciudadanos y la Administración, incluidos aquellos
+                    realizados a través de procedimientos participativos y
+                    deliberativos, reconocen como funcionales para el bienestar
+                    individual y colectivo.
+                {% endblocktrans %}</p>
+            </li>
+            <li class="grrr-principles__item">
+                <figure class="grrr-principles__item-icon">
+                    <img data-scroll-animation src="{% img '/ethic-code/economia-circular.png' %}" />
+                </figure>
+                <h4 class="grrr-principles__item-name">
+                    {% trans 'Economía circular' %}
+                </h4>
+                <p class="grrr-principles__item-text">{% blocktrans trimmed %}
+                    El paso de la gestión de residuos convencional a un enfoque
+                    centrado en el residuo cero (reducir, reciclar, reutilizar,
+                    redistribuir). La economía circular es la intersección de
+                    los aspectos ambientales y económicos en la eficiencia del
+                    uso de los recursos.
+                {% endblocktrans %}</p>
+            </li>
+            <li class="grrr-principles__item">
+                <figure class="grrr-principles__item-icon">
+                    <img data-scroll-animation src="{% img '/ethic-code/produccion-p2p.png' %}" />
+                </figure>
+                <h4 class="grrr-principles__item-name">
+                    {% trans 'Producción <sc>P2P</sc>' %}
+                </h4>
+                <p class="grrr-principles__item-text">{% blocktrans trimmed %}
+                    Ciudadanos que producen bienes colectivamente a través de la
+                    participación voluntaria en un sistema productivo descentralizado
+                    y cooperativo, en red. Una coordinación social y abierta
+                    para el aprovisionamiento y producción de valor social.
+                {% endblocktrans %}</p>
+            </li>
+            <li class="grrr-principles__item">
+                <figure class="grrr-principles__item-icon">
+                    <img data-scroll-animation src="{% img '/ethic-code/regeneracion-bcu.png' %}" />
+                </figure>
+                <h4 class="grrr-principles__item-name">
+                    {% trans 'Regeneración de los <sc>BCU</sc>' %}
+                </h4>
+                <p class="grrr-principles__item-text">{% blocktrans trimmed %}
+                    Trabajos de restauración, transformación e innovación
+                    de los bienes comunes, integrados con procesos sociales,
+                    económicos, culturales, tecnológicos y ambientales, que en
+                    su conjunto tienen un impacto en la mejora de la calidad de
+                    vida del habitat urbano y los ciudadanos.
+                {% endblocktrans %}</p>
+            </li>
+            <li class="grrr-principles__item">
+                <figure class="grrr-principles__item-icon">
+                    <img data-scroll-animation src="{% img '/ethic-code/confianza-apoyo.png' %}" />
+                </figure>
+                <h4 class="grrr-principles__item-name">
+                    {% trans 'Confianza y apoyo mutuo' %}
+                </h4>
+                <p class="grrr-principles__item-text">{% blocktrans trimmed %}
+                    Sin perjuicio de las prerrogativas de supervisión pública,
+                    planificación y verificación, la Administración y los ciudadanos
+                    abordarán su relación desde la confianza, el apoyo mutuo y
+                    asumiendo que la respectiva cooperación voluntaria se orienta
+                    a la consecución de fines de interés general.
+                {% endblocktrans %}</p>
+            </li>
+            <li class="grrr-principles__item">
+                <figure class="grrr-principles__item-icon">
+                    <img data-scroll-animation src="{% img '/ethic-code/transparencia.png' %}" />
+                </figure>
+                <h4 class="grrr-principles__item-name">
+                    {% trans 'Transparencia y gestión compartida' %}
+                </h4>
+                <p class="grrr-principles__item-text">{% blocktrans trimmed %}
+                    Se reconocerá la transparencia como el instrumento para garantizar
+                    la igualdad en las relaciones y la gestión en aquellas
+                    regeneraciones de los BCU realizadas conjuntamente por los
+                    ciudadanos y la Administración con carácter de continuidad e
+                    inclusión.
+                {% endblocktrans %}</p>
+            </li>
+        </ul>
+    </section>
+{% endblock %}
+
+{% block sidebar %}
+    <section class="grrr-seal">
+        <figure class="grrr-seal__icon">
+            <object type="image/svg+xml"
+                data="{% img '/ethic-code/sello-calidad-grrr.svg' %}">
+            </object>
+        </figure>
+        <h3 class="grrr-seal__title">
+            {% trans 'Sello de calidad' %}
+        </h3>
+        <p class="grrr-seal__text">{% blocktrans trimmed %}
+            Este sello de calidad es un indentificador propio de la plataforma.
+            Funciona como un mecanismo de autoregulación cuyo fin es analizar,
+            verificar y garantizar que los flujos de materiales y los retornos
+            colectivos obtienen la máxima optimización. Es una certificación de los
+            casos representativos de eficacia y eficiencia para que sirvan como
+            referentes para otros casos de intercambio entre los usuari-s del sistema
+        {% endblocktrans %}</p>
+    </section>
+{% endblock %}

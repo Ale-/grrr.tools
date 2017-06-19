@@ -21,6 +21,15 @@ class ViewsTest(TestCase):
         # Check empty view
         self.assertEqual(response.status_code, 200)
 
+    def test_about(self):
+        """
+        Checks about
+        """
+        c = Client()
+        response = c.get(reverse('about'))
+        # Check empty view
+        self.assertEqual(response.status_code, 200)
+
     def test_blog_view(self):
         """
         Checks Blog section
@@ -66,8 +75,6 @@ class ViewsTest(TestCase):
         Checks a single node view
         """
         self.test_post = mommy.make("models.Node")
-        print(self.test_post.name)
-        print(self.test_post.slug)
         c = Client()
         response = c.get(reverse('node', kwargs={'slug': self.test_post.slug}))
         # Check view

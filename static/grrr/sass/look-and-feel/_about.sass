@@ -1,0 +1,38 @@
+// About page
+// pages/about.html
+
+@import compass/css3/transition
+@import compass/css3/opacity
+@import fixed_height_grid
+@import clearfix
+
+.grrr-principles
+  +clearfix
+
+.grrr-objectives__item
+  &::before
+    content: "■"
+    margin-right: $m/2
+    font-size: 10px
+    color: $palette_yellow
+
+.grrr-principles__item-icon
+  text-align: center
+  position: relative
+  min-height: 150px
+  margin: 0
+
+.grrr-principles__item-icon img
+  width: 75%
+  height: auto
+
+.grrr-principles__items
+  margin-top: $m
+  +fixed_height_grid(1, 1, 2, 3, 'grrr-principles__item', 550px)
+
+.grrr-seal
+  font-family: $font_text
+
+.grrr-seal__icon object
+  width: 100%
+  height: auto
