@@ -30,6 +30,15 @@ class ViewsTest(TestCase):
         # Check empty view
         self.assertEqual(response.status_code, 200)
 
+    def test_resources(self):
+        """
+        Check resources section
+        """
+        c = Client()
+        response = c.get(reverse('resources'))
+        # Check empty view
+        self.assertEqual(response.status_code, 200)
+
     def test_blog_view(self):
         """
         Checks Blog section

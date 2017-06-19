@@ -29,6 +29,7 @@ urlpatterns += i18n_patterns(
 
     # Static pages
     url(r'^acerca$', TemplateView.as_view(template_name="pages/about.html"), name='about'),
+    url(r'^recursos$', views.ResourcesView.as_view(), name='resources'),
 
     # General views
     url(r'^blog$', views.BlogView.as_view(), name='blog'),

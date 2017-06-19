@@ -1,0 +1,31 @@
+// Displays the Menu for the Resources section
+// pages/resources.html
+
+@import compass/css3/transition
+
+.resources-menu
+  +links_remarked
+
+.resources-menu__item
+  display: block
+  +column(3, 'sm', $m/4)
+  text-align: center
+  border: $m/2 solid white
+  height: 300px
+  background-color: #eee
+
+.resources-menu__icon
+  display: block
+  font-size: $m*6
+  line-height: 150px
+  margin-top: $m
+
+.resources-menu__label
+  +h(4)
+  text-transform: uppercase
+
+.resources-menu__icon.icon-glosario
+  font-size: $m*5
+
+.resources-menu__icon.icon-link
+  font-size: $m*4

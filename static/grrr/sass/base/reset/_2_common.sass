@@ -76,6 +76,17 @@
       width: 100%
       border-bottom: 4px solid $color_text
 
+=links_remarked
+  a
+    +transition(background-color .1s ease)
+    &:link, &:visited
+      color: $color_text
+    &:hover
+      color: $color_text
+      background-color: $palette_yellow
+    &:active
+      color: $color_text
+
 =button_simple
   border: none
   background: none

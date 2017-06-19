@@ -1,6 +1,17 @@
-{# Site front page #} {% extends 'layouts/single-fluid-column.html' %} {% load static utils %}
+{# Site front page #} {% extends 'layouts/single-fixed-column--map.html' %} {% load static utils leaflet_tags %}
 {% block body_classes %}front{% endblock %}
 
-{% block page_header %}{% endblock %}
+{% block page_header %}
+     {% leaflet_css %}
+{% endblock %}
 
-{% block main %}{% endblock %}
+{% block main %}
+    {% include 'views/view.html' with content=blog_posts view_class="blog" template="blog-item" %}
+{% endblock %}
+
+{% block page_scripts %}
+    {% leaflet_js  %}
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+    <script type="text/javascript" src="{% js 'nodes-map.js' %}"></script>
+{% endblock %}

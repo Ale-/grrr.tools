@@ -1,0 +1,18 @@
+{# Resources section #} {% extends 'layouts/single-fixed-column.html' %} {% load i18n static %}
+{% block body_classes %}resources{% endblock %}{% block htmltitle %}{% trans 'Recursos' %}{% endblock %}
+
+{# Content #}
+{% block main %}
+    {# Title #}
+    {% trans 'Recursos para la reutilización' as page_title %}
+    {% include 'blocks/page-title.html' with text=page_title icon="folder" %}
+
+    <div class="resources-menu">
+        {% for resource in resources %}
+            <a class="resources-menu__item" href="{{ resource.url }}">
+                <p class="resources-menu__icon {{ resource.icon }}"></p>
+                <p class="resources-menu__label">{{ resource.label }}</p>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
