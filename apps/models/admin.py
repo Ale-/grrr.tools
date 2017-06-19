@@ -3,3 +3,4 @@ from leaflet.admin import LeafletGeoAdmin
 from . import models
 
 admin.site.register(models.Node, LeafletGeoAdmin)
+admin.site.register(models.Post)

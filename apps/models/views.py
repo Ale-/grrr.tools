@@ -45,6 +45,10 @@ class NodeCreate(GenericCreate):
         'manager' : self.request.user
     }
 
+  def form_valid(self, form):
+    form.instance.manager = self.request.user
+    return super(NodeCreate, self).form_valid(form)
+
   def get_context_data(self, **kwargs):
     context = super(NodeCreate, self).get_context_data(**kwargs)
     context['submit_text'] = _('Crea tu nodo')
@@ -52,8 +56,8 @@ class NodeCreate(GenericCreate):
     return context
 
   def get_success_url(self):
-    return reverse('node', args=(self.object.slug,))
-
+    #return reverse('node', args=(self.object.slug,))
+    return reverse('front')
 
 class NodeEdit(GenericUpdate):
   """ Modelform view to edit a Project object"""
@@ -91,6 +95,56 @@ class NodeDelete(GenericDelete):
     if not self.object.edit_permissions( self.request.user ):
       raise PermissionDenied
     return self.initial
+
+  def get_success_url(self):
+    return reverse('nodes')
+
+
+#
+# Project Views
+#
+
+post_explanation = "Los posts son los artículos que nutren el Blog de la plataforma."
+
+class PostCreate(GenericCreate):
+  """ Modelform view to create Blog posts"""
+
+  title = _('Publica un post')
+  form_class = forms.PostForm
+  model = models.Post
+  template_name = generic_template
+  form__html_class = 'blogpost'
+
+  def get_context_data(self, **kwargs):
+    context = super(PostCreate, self).get_context_data(**kwargs)
+    context['submit_text'] = _('Publica este post')
+    context['explanation'] = _(post_explanation)
+    return context
+
+  def get_success_url(self):
+    return reverse('front')
+
+class PostEdit(GenericUpdate):
+  """ Modelform view to edit a Project object"""
+
+  title = _('Edita el post')
+  form_class = forms.PostForm
+  model = models.Post
+  template_name = generic_template
+  form__html_class = 'blogpost'
+
+  def get_context_data(self, **kwargs):
+    context = super(GenericUpdate, self).get_context_data(**kwargs)
+    context['title'] = self.title + (' ') + self.object.title
+    context['explanation'] = _(post_explanation)
+    context['submit_text'] = _('Edita este post')
+    return context
+
+class PostDelete(GenericDelete):
+  """ Modelform view to delete a Project object"""
+
+  title = _('Borra este post')
+  model = models.Post
 
   def get_success_url(self):
     return reverse('nodes')

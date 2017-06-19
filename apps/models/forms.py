@@ -37,3 +37,17 @@ class NodeUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         node_users = kwargs['initial'].pop('project_users')
         super(NodeUpdateForm, self).__init__(*args, **kwargs)
+
+class PostForm(forms.ModelForm):
+    """Form to create/update Blog posts"""
+
+    class Meta:
+        model   = models.Post
+        exclude = ('author'),
+        widgets = {
+            'image'   : utils.PictureWithPreviewWidget(),
+            'summary' : utils.LimitedTextareaWidget(limit=500),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
