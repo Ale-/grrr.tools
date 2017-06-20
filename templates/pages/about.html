@@ -3,7 +3,10 @@
 {% block htmltitle %}{% trans 'Acerca' %}{% endblock %}
 {% block body_classes %}{% trans 'Acerca' %}{% endblock %}
 
-{# Breadcrumb #}
+{# Preface #}
+{% block preface %}
+    {% breadcrumb %}
+{% endblock %}
 
 {# Content #}
 {% block main %}

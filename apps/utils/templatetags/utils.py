@@ -57,3 +57,9 @@ def has_permissions(user, node):
 @register.simple_tag
 def jquery():
     return  mark_safe("<script type='text/javascript' src='" + settings.STATIC_URL + "/admin/js/vendor/jquery/jquery.min.js'></script>")
+
+@register.inclusion_tag("breadcrumb.html")
+def breadcrumb(url_2=None, txt_2=None, txt_3=None):
+    return {
+        'url_2' : url_2, 'txt_2' : txt_2, 'txt_3' : txt_3
+    }

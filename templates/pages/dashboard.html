@@ -2,8 +2,9 @@
 {% extends 'layouts/sidebar-left-fixed.html' %} {% load i18n utils %}
 {% block body_classes %}dashboard{% endblock %}
 
-{% block breadcrumb %}
-    {% include 'blocks/breadcrumb.html' %}
+{# Preface #}
+{% block preface %}
+    {% breadcrumb %}
 {% endblock %}
 
 {# Sidebar #}

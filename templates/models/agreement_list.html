@@ -1,6 +1,14 @@
 {% extends 'layouts/single-fixed-column.html' %} {% load static i18n utils %}
 {% block body_classes %}agreements{% endblock %} {% block htmltitle %}{% trans 'Acuerdos' %}{% endblock %}
 
+{# Preface #}
+{% block preface %}
+    {% url 'resources'  as url_2 %}
+    {% trans 'Recursos' as txt_2 %}
+    {% trans 'Acuerdos' as txt_3 %}
+    {% breadcrumb url_2 txt_2 txt_3 %}
+{% endblock %}
+
 {# Main #}
 {% block main %}
     {# Title #}

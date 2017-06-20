@@ -5,6 +5,12 @@
 
     {% include 'regions/header.html' with region_name='header' html_container='header' layout='fixed' %}
 
+    <div class="region-preface">
+        <div class="container-fixed">
+            {% block preface %}{% endblock %}
+        </div>
+    </div>
+
     <div class="region-content">
         <div class="container-fixed">
             <aside class="layout-sidebar">

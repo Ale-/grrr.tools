@@ -1,5 +1,10 @@
-{# Resources section #} {% extends 'layouts/single-fixed-column.html' %} {% load i18n static %}
+{# Resources section #} {% extends 'layouts/single-fixed-column.html' %} {% load i18n static utils %}
 {% block body_classes %}resources{% endblock %}{% block htmltitle %}{% trans 'Recursos' %}{% endblock %}
+
+{# Preface #}
+{% block preface %}
+    {% breadcrumb  %}
+{% endblock %}
 
 {# Content #}
 {% block main %}

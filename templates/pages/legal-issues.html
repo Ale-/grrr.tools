@@ -1,6 +1,14 @@
 {# Glossary section #} {% extends 'layouts/sidebar-right-fixed.html' %} {% load i18n static utils %}
 {% block body_classes %}legal-issues{% endblock %} {% block htmltitle %}{% trans 'Glosario' %}{% endblock %}
 
+{# Preface #}
+{% block preface %}
+    {% url 'resources'  as url_2 %}
+    {% trans 'Recursos' as txt_2 %}
+    {% trans 'Aspectos legales' as txt_3 %}
+    {% breadcrumb url_2 txt_2 txt_3 %}
+{% endblock %}
+
 {% block main %}
     {# Title #}
     {% trans 'Aspectos legales' as page_title %}

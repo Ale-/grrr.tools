@@ -5,6 +5,11 @@
      {% leaflet_css %}
 {% endblock %}
 
+{# Preface #}
+{% block preface %}
+    {% breadcrumb %}
+{% endblock %}
+
 {% block main %}
     <div class="container-fixed">
         {% trans 'Nodos' as pagetitle %}

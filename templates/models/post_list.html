@@ -1,5 +1,10 @@
 {# Blog page #} {% extends 'layouts/single-fixed-column.html' %} {% load i18n static utils %}
-{% block body_classes %}blog-item{% endblock %}{% block htmltitle %}{% trans 'Blog' %}{% endblock %}
+{% block body_classes %}blog{% endblock %}{% block htmltitle %}{% trans 'Blog' %}{% endblock %}
+
+{# Preface #}
+{% block preface %}
+    {% breadcrumb  %}
+{% endblock %}
 
 {# Content #}
 {% block main %}

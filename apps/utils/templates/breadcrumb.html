@@ -1,0 +1,22 @@
+{# Breadcrumbs #} {% load i18n %}
+
+<ul class="breadcrumb">
+    <li class="breadcrumb__item">
+        <a class="breadcrumb__link" href="{% url 'front' %}">
+            {% trans 'Inicio' %}
+        </a>
+    </li>
+    {% if url_2 and txt_2 %}
+    <li class="breadcrumb__item">
+        <a class="breadcrumb__link" href="{{ url_2 }}">
+            {{ txt_2 }}
+        </a>
+    </li>
+    {% endif %} {% if txt_3 %}
+    <li class="breadcrumb__item">
+        <span>
+            {{ txt_3 }}
+        </span>
+    </li>
+    {% endif %}
+</ul>

@@ -4,11 +4,19 @@
 {% block layout %}
 
     {% include 'regions/header.html' with region_name='header' html_container='header' layout='fixed' %}
+
     <div class="region-map">
         <div class="container-fluid">
               <div id="map-header"></div>
         </div>
     </div>
+
+    <div class="region-preface">
+        <div class="container-fixed">
+            {% block preface %}{% endblock %}
+        </div>
+    </div>
+    
     <div class="region-content">
         <div class="container-fixed">
             <main class="layout-main">

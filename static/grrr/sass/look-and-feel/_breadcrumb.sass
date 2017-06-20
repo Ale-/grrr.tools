@@ -1,0 +1,20 @@
+// Regular breadcrumbs
+// apps/utils/templates/breadcrumb.html
+
+
+.breadcrumb
+  font-family: $font_text
+  text-transform: uppercase
+  +links_remarked
+  font-size: $size_small
+  padding: 0 $m
+
+.breadcrumb__item
+  display: inline
+  &::before
+    content: " » "
+    margin: 0 $m/3
+
+.breadcrumb__link
+  border-bottom: 1px dotted $color_text
+  font-weight: bold
