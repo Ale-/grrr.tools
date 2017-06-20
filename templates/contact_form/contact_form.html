@@ -1,0 +1,9 @@
+{# Login page #} {% extends 'layouts/single-fixed-column--no-footer.html' %} {% load i18n utils %}
+{% block body_classes %}contact{% endblock %} {% block htmltitle %}Contacta{% endblock %}
+
+{# Content #}
+{% block main %}
+    {% fake_breadcrumb %}
+    {% trans 'Contacta' as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="grrr" %}
+    {% include 'forms/regular-form.html' with form_title="contact" form=form form_class="contact" submit_text="Manda el mensaje" %}
+{% endblock %}

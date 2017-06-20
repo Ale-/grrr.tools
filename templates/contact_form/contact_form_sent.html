@@ -1,0 +1,20 @@
+{# Login page #} {% extends 'layouts/single-fixed-column--no-footer.html' %} {% load i18n utils %}
+{% block body_classes %}contact{% endblock %} {% block htmltitle %}Contacta{% endblock %}
+
+{# Preface #}
+{% block preface %}
+    {% breadcrumb %}
+{% endblock %}
+
+{# Content #}
+{% block main %}
+    {% trans 'Gracias!' as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="grrr" %}
+        <div class="contact-sent">{% blocktrans trimmed %}
+            Gracias por contactar con nosotr-s.
+            Te hemos enviado un correo de confirmación. ¡Gracias por el interés!
+        {% endblocktrans %}
+        <p class="contact-sent__exit">
+           <a href="#" onclick="history.go(-2)">{% trans 'Volver' %}</a>
+        <p>
+    </div>
+{% endblock %}

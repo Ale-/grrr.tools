@@ -43,6 +43,9 @@ urlpatterns += i18n_patterns(
 
     # API services
     url(r'^api/', include('apps.api.urls', namespace='api')),
+
+    # Contact form
+    url(r'^contacta/', include('contact_form.urls')),
 )
 
 if settings.DEBUG == True:

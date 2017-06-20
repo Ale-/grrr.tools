@@ -36,12 +36,16 @@ REGISTRATION_AUTO_LOGIN = True
 DOCUMENT_TITLE = 'GRRR Tools'
 DOCUMENT_DESCRIPTION = _('Grupo para la reutilización y redistribución de recursos.')
 
+# Sites ID
+SITE_ID = 1
+
 #
 # Application definition
 #
 
 CONTRIB_APPS = [
     'django.contrib.admin',
+    'django.contrib.sites',
     'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
