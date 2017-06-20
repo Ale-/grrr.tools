@@ -1,0 +1,23 @@
+{% extends 'layouts/single-fixed-column.html' %} {% load static i18n utils %}
+{% block body_classes %}references{% endblock %} {% block htmltitle %}{% trans 'Referencias' %}{% endblock %}
+
+{# Main #}
+{% block main %}
+    {# Title #}
+    {% trans 'Referencias' as page_title %}
+    {% include 'blocks/page-title.html' with text=page_title icon="link" %}
+
+    <p class="page-explanation">
+        {% blocktrans trimmed %}
+            Algunas experiencias interesantes por su cercanía al objetivo
+            del GRRR de generar espacios para la reutilización de recursos.
+        {% endblocktrans %}
+    </p>
+
+    {% view view_class="references" items=object_list template="reference-item" %}
+{% endblock %}
+
+{# Scripts #}
+{% block page_scripts %}
+    {% include 'scripts/masonry.html' with grid_class='view__content--references' item_class='view-item--reference' %}
+{% endblock %}

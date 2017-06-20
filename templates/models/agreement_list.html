@@ -1,0 +1,22 @@
+{% extends 'layouts/single-fixed-column.html' %} {% load static i18n utils %}
+{% block body_classes %}agreements{% endblock %} {% block htmltitle %}{% trans 'Acuerdos' %}{% endblock %}
+
+{# Main #}
+{% block main %}
+    {# Title #}
+    {% trans 'Acuerdos' as page_title %}
+    {% include 'blocks/page-title.html' with text=page_title icon="acuerdos" %}
+
+    <div class="page-explanation">{% blocktrans trimmed %}
+        En esta página puedes encontrar modelos de convenios de cesión que puedes
+        utilizar como base para generar los tuyos propios.
+        Puedes adjuntar a tus reusos los documentos de cesión que hayas utilizado
+        en ellos.
+    {% endblocktrans %}</div>
+    {% view view_class="agreements" items=object_list template="agreement-item" %}
+{% endblock %}
+
+{# Scripts #}
+{% block page_scripts %}
+    {% include 'scripts/masonry.html' with grid_class='view__content--blog' item_class='view-item--blog' %}
+{% endblock %}

@@ -1,0 +1,154 @@
+{# Glossary section #} {% extends 'layouts/sidebar-right-fixed.html' %} {% load i18n static utils %}
+{% block body_classes %}legal-issues{% endblock %} {% block htmltitle %}{% trans 'Glosario' %}{% endblock %}
+
+{% block main %}
+    {# Title #}
+    {% trans 'Aspectos legales' as page_title %}
+    {% include 'blocks/page-title.html' with text=page_title icon="normativas" %}
+
+    {% url 'glossary' as glossary_url %}
+    {% url 'agreements' as agreements_url %}
+    {% static 'grrr/docs/Decreto__89-2010_29_jun__Generalitat_Catalunya__es.pdf' as progroc_url %}
+    <div class="resources-legal"> {% blocktrans trimmed %}
+        <p>En este artículo quisiéramos ofrecer una rápida mirada sobre el panorama
+        jurídico al que nos enfrentamos a la hora de desarrollar el proyecto <sc>GRRR</sc>.
+        Para familiarizarse con la terminología técnica que, en mayor o menor medida,
+        nos servirá para referirnos a distintos conceptos relacionados con la
+        reutilización y la gestión de recursos, recomendamos leer el
+        <a target="_blank" href="{{ glossary_url }}">Glosario</a> que hemos
+        publicado en paralelo.</p>
+        <p>La gestión de recursos para su reutilización y redistribución
+        puede verse condicionada por diversos aspectos legales y diferentes
+        ámbitos normativos. Desde el <sc>GRRR</sc> venimos trabajando esta
+        cuestión desde que comenzamos nuestras actividades,constatando que es
+        un campo complejo en el que siempre podremos aprender o idear algo nuevo.</p>
+        <p>La complejidad mencionada procede de distintos frentes:</p>
+        - En primer lugar es debida a la multiplicidad de temáticas relacionadas,
+        de las cuales podríamos destacar la normativa sobre prevención y gestión
+        de residuos (<em>Ley Sectorial</em>), por un lado, y la legislación que
+        regula las formas de contratación del sector público (<em>Ley Sustantiva</em>),
+        por otro.</p>
+        - En segundo lugar el hecho de que las leyes y normativas tienen un
+        determinado ámbito geográfico de aplicación, existiendo directivas europeas,
+        normativa de carácter estatal, normativa autonómica y ordenanzas municipales,
+        que lógicamente llegan a variar de población en población.</p>
+        <p>GRRR apuesta por la reutilización de recursos materiales útiles procedentes
+        de distintas fuentes (por ejemplo productos de desmontaje, deconstrucción,
+        excedentes o subproductos), abogando por su puesta en recirculación antes
+        de llegar a ser considerados residuos. <sc>GRRR</sc> trabaja a la vez en
+        la prevención de residuos y en la redistribución de recursos hacia formas
+        solidarias de economía y de desarrollo de proyectos de interés social.</p>
+        <p>Desde el punto de vista de la <em>Ley Sectorial</em> (en nuestro caso
+        principalmente la prevención de residuos) existe numerosa normativa,
+        desplegada en varios niveles y referida a diferentes temas. Sirva la
+        siguiente ilustración, creada a partir de títulos de leyes y decretos,
+        para dar una primera idea de la amplitud del panorama:</p>
+        {% endblocktrans %}
+        <img class="tagcloud tagcloud--legal" src="{% img 'assets/normativa_tag-cloud.jpg' %}" />
+        <p class="footnote footnote--legal">{% blocktrans trimmed %}
+            Ilustración que representa la diversidad temática de la normativa
+            relacionada con la prevención residuos
+        <p>{% endblocktrans %}
+        {% blocktrans trimmed %}
+        <p>A modo de ejercicio y ejemplo, desde el <sc>GRRR</sc> hemos realizado
+        un resumen del Decreto por el cual se aprueba el Programa de gestión de
+        residuos de la construcción de Cataluña (<sc>PROGROC</sc>),
+        <a href="{{ progroc_url }}" target="_blank">
+        que se puede encontrar aquí</a>. Es nuestra intención continuar en
+        el análisis y resumen de normativa con el fin de allanar el terreno
+        a los fines del <sc>GRRR</sc>.</p>
+        <p>Por otro lado, desde el punto de vista de la Ley Sustantiva o De Fondo,
+        que regula las relaciones entre los distintos operadores implicados en
+        los procesos de gestión y redistribución, destacamos la necesidad de
+        conocer la Ley de Contratos del Sector Público que regulará las transferencias
+        de recursos siempre que intervenga al menos un operador público y la
+        conveniencia de encauzar las relaciones para la gestión y la distribución
+        entre particulares a través de contratos privados que determinen el
+        alcance de los derechos y obligaciones de cada operador, evitando malentendidos.</p>
+        <p>En este sentido hemos recopilado una serie de esquemas protocolarios posibles
+        —<em>ver columna de la derecha</em>—, siendo los más complejos aquellos
+        en los que interviene la Administración Pública, por la propia incidencia
+        de la Ley de Contratos. En este resumen tipológico hemos intentado dibujar
+        casos que podrían darse entre distintos tipos de operadores, e insinuar
+        cómo podría ser la regulación de las relaciones entre ellos, desde el
+        simple contrato de cesión entre particulares a la compleja situación de
+        proceso concurrente para la cesión de una importante partida de recursos públicos.</p>
+        <p> Para ampliar el punto anterior, en la propia herramienta web se recopilan
+        algunos <a href="{{ agreements_url }}" target="_blank"> casos de contratos</a> así como una
+        plantilla de convenio de cesión en el espíritu del <sc>GRRR</sc>,
+        que incorpora algunos requisitos que emanan del código ético de este grupo de trabajo.</p>
+        <p>Estos contratos/acuerdos pueden ser extendidos por los usuari@s de la plataforma,
+        adjuntándolos a los casos de reutilización donde éstas cesiones se han producido.</p>
+        <p>Quisiéramos despedir este pequeño artículo recordando que el <sc>GRRR</sc>
+        es un trabajo en curso, relacionado además con casos prácticos de
+        redistribución de recursos, lo que implica que tenemos previsto ir ampliando
+        esta información relativa a los aspectos legales en fases posteriores
+        del proyecto.</p>
+    {% endblocktrans %}</div>
+{% endblock %}
+
+{% block sidebar %}
+    <section class="protocol-list">
+    <h2 class="protocol-list__title">
+        {% trans 'Esquemas de cesión' %}
+    </h2>
+    <div class="protocol-list__item">
+        <object class="protocol-list__diagram" type="image/svg+xml" data="{% img '/agreements/agreement_1.svg' %}"></object>
+        <h4 class="protocol-list__name">
+            {% trans 'Transferencia entre particulares' %}
+        </h4>
+        <p class="protocol-list__text">{% blocktrans trimmed %}
+          Se rige por un contrato redactado entre las partes. Casos posibles:
+            - Unidireccional (cesión/donación)
+            - Bidireccional (intercambio/trueque)
+        {% endblocktrans %}</p>
+    </div>
+    <div class="protocol-list__item">
+        <object class="protocol-list__diagram" type="image/svg+xml" data="{% img '/agreements/agreement_2.svg' %}"></object>
+        <h4 class="protocol-list__name">
+            {% trans 'Protocolos de cesión entre varios particulares' %}
+        </h4>
+        <p class="protocol-list__text">{% blocktrans trimmed %}
+            Caso: un poseedor privado decide segmentar un paquete de recursos
+            en paquetes más pequeños y establecer los tratos de cesión y transferencia
+            de responsabilidades directamente con los usuarios finales.
+            El protocolo se regula por contratos entre particulares que,
+            lógicamente pueden establecer las condiciones o requisitos que se
+            acuerden entre las partes. Este caso no se diferencia sustancialmente de
+            la simple transferencia entre dos particulares
+        {% endblocktrans %}</p>
+    </div>
+    <div class="protocol-list__item">
+        <object class="protocol-list__diagram" type="image/svg+xml" data="{% img '/agreements/agreement_3.svg' %}"></object>
+        <h4 class="protocol-list__name">
+            {% trans 'Protocolos de cesión mediada de un particular a varios particulares' %}
+        </h4>
+        <p class="protocol-list__text">{% blocktrans trimmed %}
+            Caso: un poseedor privado decide ceder un paquete importante de
+            recursos mediante la intervención de un Órgano Gestor (en este
+            caso el GRRR). Todo el protocolo se regula por contratos entre
+            particulares. El primer contrato entre el productor o poseedor
+            original de los recursos regula la transferencia de los recursos
+            y la responsabilidad sobre ellos al Órgano Gestor de forma
+            centralizada. Los contratos siguientes regulan la transferencia
+            de paquetes de recursos y su responsabilidad asociada del Órgano
+            Gestor a los destinatarios finales.
+        {% endblocktrans %}</p>
+    </div>
+    <div class="protocol-list__item">
+        <object class="protocol-list__diagram" type="image/svg+xml" data="{% img '/agreements/agreement_4.svg' %}"></object>
+        <h4 class="protocol-list__name">
+            {% trans 'Protocolos de cesión mediada de una administración pública a varios particulares ' %}
+        </h4>
+        <p class="protocol-list__text">{% blocktrans trimmed %}
+          Caso: una Administración Pública decide ceder un paquete de recursos.
+          El procedimiento de cesión dependerá del valor económico del mismo:
+              - Las partidas valorizables en cantidades inferiores 18 000 euros,
+              se pueden adjudicar mediante aprobación directa de la junta de gobierno.
+              - Las partidas entre 18 000 y 50 000 euros implican un procedimiento negociado.
+              - Las partidas mayores a 50 000 euros implican un proceso de
+              concurso público y necesitan de un informe autonómico de valoración
+              patrimonial.
+        {% endblocktrans %}</p>
+    </div>
+{% endblock %}

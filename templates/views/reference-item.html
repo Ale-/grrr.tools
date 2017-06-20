@@ -1,0 +1,15 @@
+{# Render an Agreement in a view #} {% load i18n %}
+
+<div class="view-item view-item--reference">
+    <a class="inner" href="{{ item.link }}" target="_blank">
+        <p class="view-item__field view-item__field--image">
+            <img src="{{ item.thumbnail.url }}" />
+        </p>
+        <h4 class="view-item__field view-item__field--name">
+            {{ item.name }}
+        </h4>
+        <p class="view-item__field view-item__field--summary">
+            {{ item.summary }}
+        </p>
+    </a>
+</div>

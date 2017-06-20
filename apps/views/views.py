@@ -22,12 +22,12 @@ class ResourcesView(View):
     def get(self, request):
       resources = [
           {
-              'url'  : reverse('front'),
+              'url'  : reverse('legal-issues'),
               'icon' : 'icon-normativas',
               'label' : _('Aspectos legales'),
           },
           {
-              'url'  : reverse('front'),
+              'url'  : reverse('agreements'),
               'icon' : 'icon-acuerdos',
               'label' : _('Acuerdos'),
           },
@@ -37,7 +37,7 @@ class ResourcesView(View):
               'label' : _('Glosario'),
           },
           {
-              'url'  : reverse('front'),
+              'url'  : reverse('references'),
               'icon' : 'icon-link',
               'label' : _('Referencias'),
           },
@@ -75,3 +75,13 @@ class NodeItemView(DetailView):
     """View of a blog model instance."""
 
     model = models.Node
+
+class AgreementsView(ListView):
+    """View of the Agreement model instances."""
+
+    model = models.Agreement
+
+class ReferencesView(ListView):
+    """View of the Agreement model instances."""
+
+    model = models.Reference

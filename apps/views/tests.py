@@ -39,12 +39,39 @@ class ViewsTest(TestCase):
         # Check empty view
         self.assertEqual(response.status_code, 200)
 
+    def test_legal_issues(self):
+        """
+        Check resources section
+        """
+        c = Client()
+        response = c.get(reverse('legal-issues'))
+        # Check empty view
+        self.assertEqual(response.status_code, 200)
+
+    def test_agreements(self):
+        """
+        Check resources section
+        """
+        c = Client()
+        response = c.get(reverse('agreements'))
+        # Check empty view
+        self.assertEqual(response.status_code, 200)
+
     def test_glossary(self):
         """
         Check resources section
         """
         c = Client()
         response = c.get(reverse('glossary'))
+        # Check empty view
+        self.assertEqual(response.status_code, 200)
+
+    def test_references(self):
+        """
+        Check resources section
+        """
+        c = Client()
+        response = c.get(reverse('references'))
         # Check empty view
         self.assertEqual(response.status_code, 200)
 

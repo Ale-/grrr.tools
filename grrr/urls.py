@@ -37,6 +37,9 @@ urlpatterns += i18n_patterns(
     url(r'^blog/(?P<slug>.+)$', views.BlogItemView.as_view(), name="blogpost"),
     url(r'^nodos$', views.NodesView.as_view(), name='nodes'),
     url(r'^nodo/(?P<slug>.+)$', views.NodeItemView.as_view(), name="node"),
+    url(r'^aspectos-legales$', TemplateView.as_view(template_name="pages/legal-issues.html"), name='legal-issues'),
+    url(r'^acuerdos$', views.AgreementsView.as_view(), name='agreements'),
+    url(r'^referencias$', views.ReferencesView.as_view(), name='references'),
 
     # API services
     url(r'^api/', include('apps.api.urls', namespace='api')),

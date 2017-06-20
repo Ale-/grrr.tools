@@ -1,0 +1,18 @@
+// Displays a Reference in views
+// views/reference-item.html
+
+@import compass/css3/filter
+
+.view-item--reference
+  +links_remarked
+  +breakpoint('sm')
+    width: 50%
+  +breakpoint('md')
+    width: 33%
+
+.view-item--reference .inner
+  padding: $m
+  display: block
+
+.view-item--reference img
+  +filter( grayscale(100%) )
