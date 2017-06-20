@@ -1,15 +1,21 @@
+# Import python packages
 import time
 from datetime import date
 
+# Import django packages
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
+# Import contrib apps
 from djgeojson.fields import PointField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from ckeditor_uploader.fields import RichTextUploadingField
+
+# Import site apps
+from apps.models import categories
 
 class Node(models.Model):
     """Nodes of the GRRR network, participated by users."""
@@ -85,3 +91,48 @@ class Post(models.Model):
     def edit_permissions(self, user):
         """Returns users allowed to edit an instance of this model."""
         return user.is_staff
+
+
+class Agreement(models.Model):
+    """Agreement documents"""
+
+    title         = models.CharField(_("Título"), max_length=128,
+                    help_text=_("Un título significativo para el documento."))
+    creation_date = models.DateField(editable=False)
+    category      = models.CharField(_("Tipo de acuerdo"), max_length=2, choices=categories.AGREEMENT_CATEGORIES, default='me',
+                    help_text=_("Entre qué entidades se ha firmado el acuerdo."))
+    summary       = models.TextField(_("Resumen"), blank=False,
+                    help_text=_("Resume en uno o dos párrafos el contenido del acuerdo."))
+    language      = models.CharField(_("Idioma"), max_length=2, choices=categories.AGREEMENT_LANGUAGES, default='ES',
+                    help_text=_("¿En qué idioma en que está redactado el documento? Si crees necesario añadir algún idioma contacta con nosotras."))
+    document      = models.FileField(_("Documento"), upload_to='documents',
+                    help_text=_("Adjunta el documento en PDF o ODT preferentemente."))
+
+    def __str__(self):
+        """String representation of model instances."""
+        return self.title
+
+    def save(self, *args, **kwargs):
+        """Custom save functions that populates automatically 'slug' field"""
+        # Set creation date only when node is saved and hasn't an ID yet, therefore
+        if not self.id:
+            self.creation_date = date.today()
+        super(Agreement, self).save(*args, **kwargs)
+
+
+class Reference(models.Model):
+    """References linked to site's goals"""
+
+    name      = models.CharField(_("Título"), max_length=128,
+                help_text=_("Nombre de la referencia."))
+    summary   = models.TextField(_("Resumen"), blank=False,
+                help_text=_("Resume en uno o dos párrafos la referencia."))
+    image     = models.ImageField(_("Imagen"), blank=True, upload_to="images/blog/",
+                help_text="Una imagen representativa de la referencia.")
+    thumbnail = ImageSpecField(source="image", processors=[ResizeToFill(480, 480)], format='JPEG', options={'quality': 85})
+    link      = models.URLField(_("Enlace"), blank=False,
+                help_text=_("Enlace para ampliar la información sobre la referencia"))
+
+    def __str__(self):
+        """String representation of model instances."""
+        return self.name

@@ -4,3 +4,5 @@ from . import models
 
 admin.site.register(models.Node, LeafletGeoAdmin)
 admin.site.register(models.Post)
+admin.site.register(models.Agreement)
+admin.site.register(models.Reference)

@@ -1,25 +1,19 @@
-from django.test import TestCase
-from apps.models import models
-from djgeojson.fields import PointField
-from django.utils.text import slugify
+# Import generic python packages
 from datetime import date
+# Import django packages
+from django.test import TestCase
+from django.utils.text import slugify
+# Import contrib apps
+from model_mommy import mommy
+from djgeojson.fields import PointField
+# Import site apps
+from apps.models import models
 
 class NodeTest(TestCase):
-
-    """ Create a node """
-    def create_node(self):
-        return models.Node.objects.create(
-            name         = "Test node",
-            description  = "Lorem ipsum",
-            place        = "Test place",
-            address      = "Test address",
-            geom         = "POINT (0.0 0.0)",
-            members      = 0
-        )
-
     """ Test node creation """
+
     def test_node_creation(self):
-        node = self.create_node()
+        node = mommy.make("models.Node")
         # Check string representation
         self.assertTrue(isinstance(node, models.Node))
         # Check fields
@@ -28,21 +22,34 @@ class NodeTest(TestCase):
         self.assertEqual(node.creation_date, date.today())
 
 class PostTest(TestCase):
-
-    """ Create a node """
-    def create_post(self):
-        return models.Post.objects.create(
-            title   = "Test node",
-            summary = "Lorem ipsum",
-            wysiwyg = "Lorem ipsum. Lorem ipsum.",
-        )
-
     """ Test node creation """
+
     def test_post_creation(self):
-        post = self.create_post()
+        post = mommy.make("models.Post", wysiwyg="Lorem ipsum.")
         # Check string representation
         self.assertTrue(isinstance(post, models.Post))
         # Check fields
         self.assertTrue(post.__str__, post.title)
         self.assertEqual(post.slug, slugify(post.title))
         self.assertEqual(post.creation_date, date.today())
+
+class AgreementTest(TestCase):
+    """ Test node creation """
+
+    def test_post_creation(self):
+        post = mommy.make("models.Agreement")
+        # Check string representation
+        self.assertTrue(isinstance(post, models.Agreement))
+        # Check fields
+        self.assertTrue(post.__str__, post.title)
+
+
+class ReferenceTest(TestCase):
+    """ Test node creation """
+
+    def test_post_creation(self):
+        post = mommy.make("models.Reference")
+        # Check string representation
+        self.assertTrue(isinstance(post, models.Reference))
+        # Check fields
+        self.assertTrue(post.__str__, post.name)
