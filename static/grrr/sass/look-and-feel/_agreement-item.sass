@@ -3,7 +3,10 @@
 
 .view-item--agreement
   text-align: center
-  width: 33%
+  +breakpoint('sm')
+    width: 50%
+  +breakpoint('md')
+    width: 33%
   +links_remarked
 
 .view-item--agreement > .inner
