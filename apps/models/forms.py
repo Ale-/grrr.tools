@@ -38,6 +38,20 @@ class NodeUpdateForm(forms.ModelForm):
         node_users = kwargs['initial'].pop('project_users')
         super(NodeUpdateForm, self).__init__(*args, **kwargs)
 
+class MaterialForm(forms.ModelForm):
+    """Form to create/update Node objects"""
+
+    class Meta:
+        model   = models.Material
+        fields = '__all__'
+        widgets = {
+            'image'       : utils.PictureWithPreviewWidget(),
+            'description' : utils.LimitedTextareaWidget(limit=500),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(MaterialForm, self).__init__(*args, **kwargs)
+
 class PostForm(forms.ModelForm):
     """Form to create/update Blog posts"""
 

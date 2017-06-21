@@ -18,7 +18,7 @@ from apps.utils.views import GenericCreate, GenericUpdate, GenericDelete
 generic_template = 'pages/modelform.html'
 
 #
-# Project Views
+# Node
 #
 
 node_explanation = ("Los nodos son los agentes miembros de la red del GRRR. "
@@ -99,9 +99,36 @@ class NodeDelete(GenericDelete):
   def get_success_url(self):
     return reverse('nodes')
 
+#
+# Material
+#
+
+material_explanation = ("Los materiales nos ayudan a tener una librería de datos homogénea "
+                        "que nos sirva para documentar los lotes y hacer cálculos sobre las "
+                        "transacciones de materiales.")
+
+class MaterialCreate(GenericCreate):
+  """ Modelform view to create a Project object"""
+
+  title = _('Añade un material')
+  explanation = _(material_explanation)
+  form_class = forms.MaterialForm
+  model = models.Material
+  template_name = generic_template
+  form__html_class = 'material'
+
+  def get_context_data(self, **kwargs):
+    context = super(MaterialCreate, self).get_context_data(**kwargs)
+    context['submit_text'] = _('Registra este material')
+    context['explanation'] = self.explanation
+    return context
+
+  def get_success_url(self):
+    #return reverse('node', args=(self.object.slug,))
+    return reverse('materials')
 
 #
-# Project Views
+# Post
 #
 
 post_explanation = "Los posts son los artículos que nutren el Blog de la plataforma."

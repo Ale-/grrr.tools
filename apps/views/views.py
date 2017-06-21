@@ -81,6 +81,11 @@ class AgreementsView(ListView):
 
     model = models.Agreement
 
+class MaterialsView(ListView):
+    """View of the Material model instances."""
+
+    model = models.Material
+
 class ReferencesView(ListView):
     """View of the Agreement model instances."""
 

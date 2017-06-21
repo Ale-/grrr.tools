@@ -17,3 +17,19 @@ AGREEMENT_LANGUAGES = (
     ('FR', _('Francés')),
     ('OT', _('Otros'))
 )
+
+MATERIALS_BY_FAMILY = (
+    ('MAD', _('Madera')),
+    ('MET', _('Metal')),
+    ('PLA', _('Plástico')),
+    ('ELE', _('Electrónico')),
+    ('TEX', _('Textiles')),
+    ('OTR', _('Otros')),
+)
+
+MATERIALS_BY_FORM = (
+    ( 'LO', _('Longitudinales')),
+    ( 'SU', _('Superficiales')),
+    ( 'CO', _('Contenedores')),
+    ( 'OT', _('Otros')),
+)

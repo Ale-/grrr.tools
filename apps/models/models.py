@@ -92,6 +92,45 @@ class Post(models.Model):
         """Returns users allowed to edit an instance of this model."""
         return user.is_staff
 
+class Material(models.Model):
+    """Taxonomy terms to handle the materials that compose the batches."""
+
+    name          = models.CharField(_("Nombre"), max_length=128)
+    creation_date = models.DateField(editable=False, blank=True, null=True)
+    slug          = models.SlugField(editable=False, blank=True)
+    image         = models.ImageField(_("Imagen"), blank=True, upload_to="images/materials/")
+    thumbnail     = ImageSpecField(source='image', processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
+    family        = models.CharField(_("Familia"), max_length=3, choices=categories.MATERIALS_BY_FAMILY, default='MAD',
+                    help_text=_("Específica la familia del material."))
+    subfamily     = models.CharField(_("Tipo"), max_length=2, choices=categories.MATERIALS_BY_FORM, default='LO',
+                    help_text=_("Específica el tipo de material."))
+    description   = models.TextField(_("Descripción"), blank=True)
+    unit          = models.CharField(_("Unidad"), max_length=128, default="Unidades", blank=True,
+                    help_text=_("Especifica aquí opcionalmente la unidad a usar cuando se cuantifica este material. Por ejemplo 'metros cuadrados' o 'unidades'"))
+    weight        = models.PositiveIntegerField(_("Peso unitario"), blank=True, null=True,
+                    help_text=_("Especifica el peso por unidad en kilogramos de manera aproximada. Se usará para hacer cálculos de materiales recuperados y puestos en uso"))
+
+
+    def __str__(self):
+        """String representation of model instances."""
+        return self.name
+
+    def material_id(self):
+        """Returns the ID of the Material object formatted."""
+        return "%03d" % self.pk
+
+    def save(self, *args, **kwargs):
+        """Custom save functions that populates automatically 'slug' and 'creation_date' fields"""
+        self.slug = slugify(self.name)
+        # Set creation date only when node is saved and hasn't an ID yet, therefore
+        if not self.id:
+            self.creation_date = date.today()
+        super(Material, self).save(*args, **kwargs)
+
+    def edit_permissions(self, user):
+        """Returns users allowed to edit an instance of this model."""
+        return user.is_staff
+
 
 class Agreement(models.Model):
     """Agreement documents"""

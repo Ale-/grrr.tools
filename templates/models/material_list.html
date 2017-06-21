@@ -1,0 +1,46 @@
+{# Views of existing nodes in the GRRR network #} {% extends 'layouts/single-fixed-column.html' %} {% load i18n static utils %}
+{% block body_classes %}materials{% endblock %}{% block htmltitle %}{% trans 'Materiales' %}{% endblock %}
+
+{# Preface #}
+{% block preface %}
+    {% breadcrumb %}
+{% endblock %}
+
+{% block main %}
+    {% url 'contact_form' as contact_url %}
+    {% trans 'Materiales' as pagetitle %}
+    {% include 'blocks/page-title.html' with text=pagetitle icon='box' %}
+
+    <div class="page-explanation">{% blocktrans trimmed %}
+        Esta es la lista de los materiales añadidos hasta ahora a la base de
+        datos de la aplicación. Sólo el equipo de la plataforma puede editar o
+        borrar los materiales una vez creados. Si crees que algún cambio es
+        necesario <a href="{{ contact_url }}" target="_blank">coméntanoslo</a>.
+    {% endblocktrans %}</div>
+
+    {% regroup object_list by get_family_display as materials_by_family %}
+    <div class="view--material">
+        {% for family in materials_by_family %}
+            <h2 class="view--material__family-name">
+                {{ family.grouper }}
+            </h2>
+            {% regroup family.list by get_subfamily_display as materials_by_subfamily %}
+            {% for materials in materials_by_subfamily %}
+                <h3 class="view--material__subfamily-name">
+                    {{ materials.grouper }}
+                </h3>
+                <div class="materials">
+                    {% for material in materials.list %}
+                        {% include "views/material-item.html" with item=material %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{# Scripts #}
+{% block page_scripts %}
+    {% jquery %}
+    {% include 'scripts/masonry.html' with grid_class='materials' item_class='view-item--material' %}
+{% endblock %}

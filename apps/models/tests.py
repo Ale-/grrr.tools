@@ -21,6 +21,18 @@ class NodeTest(TestCase):
         self.assertEqual(node.slug, slugify(node.name))
         self.assertEqual(node.creation_date, date.today())
 
+class MaterialTest(TestCase):
+    """ Test material creation """
+
+    def test_node_creation(self):
+        node = mommy.make("models.Material")
+        # Check string representation
+        self.assertTrue(isinstance(node, models.Material))
+        # Check fields
+        self.assertTrue(node.__str__, node.name)
+        self.assertEqual(node.slug, slugify(node.name))
+        self.assertEqual(node.creation_date, date.today())
+
 class PostTest(TestCase):
     """ Test node creation """
 

@@ -17,4 +17,7 @@ urlpatterns = [
     # Remove project form
     url(r'^borra/post/(?P<pk>.+)$', views.PostDelete.as_view(), name="delete_post"),
 
+    # Add material form
+    url(r'^crea/material$', views.MaterialCreate.as_view(), name="create_material"),
+
 ]
