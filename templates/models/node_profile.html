@@ -1,0 +1,74 @@
+{# Auxiliar block that displays a node profile in node_detail.html #}
+{% load static i18n utils %}
+
+<div class="node-profile">
+    <div class="inner">
+        <div class="node-profile__field-image">
+            <img src="{{node.image.url}}" />
+        </div>
+        <div class="node-profile__field-description">
+            <p>{{ node.description }}</p>
+        </div>
+        <div class="node-profile__details">
+            <div class="node-profile__detail--date">
+                <p class="node-profile__detail-label--date">
+                    {% trans 'Fecha de alta' %}
+                </p>
+                <p class="node-profile__detail-value--date">
+                    {{ node.creation_date }}
+                </p>
+            </div>
+            <div class="node-profile__detail--members">
+                <div class="node-profile__detail-label--members">
+                    <span class="icon-personas"></span>
+                    <p>{% trans 'Miembros' %}</p>
+                </div>
+                <p class="node-profile__detail-value--members">
+                    {{ node.members }}
+                </p>
+            </div>
+            <div class="node-profile__detail--recovered">
+                <div class="node-profile__detail-label--recovered">
+                    <span class="icon-recuperados"></span>
+                    <p>{% trans 'Materiales recuperados' %}</p>
+                </div>
+                <p class="node-profile__detail-value--recovered">
+                    0 Tn.
+                </p>
+            </div>
+            <div class="node-profile__detail--activated">
+                <div class="node-profile__detail-label--activated">
+                    <span class="icon-activados"></span>
+                    <p>{% trans 'Materiales activados' %}</p>
+                </div>
+                <p class="node-profile__detail-value--activated">
+                    0 Tn.
+                </p>
+            </div>
+        </div>
+        <div class="node-profile__actions">
+            {% if user.is_authenticated and user|has_permissions:node %}
+            <p class="node-profile__action-edit">
+                <a href="{% url 'models:edit_node' node.pk %}">
+                  {% icon 'cog' 'Editar el perfil del nodo' %}
+                </a>
+            </p>
+            {% endif %}
+            {% if batches_number > 0 %}
+                <p class="node-profile__action-inventory">
+                    <a href="{% url 'front' %}">
+                      <span class="icon-box"></span> ({{batches_number}})
+                      <span class="tooltip">{% trans 'Ver inventario' %}</span>
+                    </a>
+                </p>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <p class="node-profile__action-sms">
+                <a href="{% url 'front' %}">
+                  {% icon 'mail' 'Mandar un mensaje' %}
+                </a>
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</div>

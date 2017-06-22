@@ -1,0 +1,79 @@
+// Profile for nodes
+// models/node_profile.sass
+
+.node-profile
+  background: #f5f5f5
+  padding: $m
+  text-transform: uppercase
+  font-size: .75em
+  text-align: center
+  +clearfix
+
+.node-info__detail
+  +clearfix
+  padding: $m/4 0
+
+.node-profile__detail-label--members,
+.node-profile__detail-label--recovered,
+.node-profile__detail-label--activated
+  float: left
+  text-align: center
+  width: 50%
+
+.node-profile__detail-value--members,
+.node-profile__detail-value--recovered,
+.node-profile__detail-value--activated
+  float: right
+  text-align: center
+  width: 50%
+  font-size: 2em
+  line-height: 100px
+
+.node-info__actions
+  text-align: center
+  background: #ddd
+  padding: $m/2 0
+  +links($color_text, white, .15s)
+
+.node-info__action
+  width: 30%
+  +inline-block
+  [class^="icon-"]
+    font-size: 2em
+    color: rgba(black, .75)
+
+.node-profile__details
+  +clearfix
+
+.node-profile__detail-label--members,
+.node-profile__detail-label--recovered,
+.node-profile__detail-label--activated
+  [class^='icon']::before
+    display: block
+    font-size: $m*3
+
+[class*='node-profile__detail']
+  margin: $m 0
+[class*='node-profile__detail-']
+  margin: 0
+[class*='node-profile__detail-label']
+  +h(6)
+  margin-bottom: 0
+
+.node-profile__field-description
+  text-align: justify
+  margin: $m 0
+
+.node-profile__actions
+  text-align: center
+  margin-top: $m*2
+  background: #ddd
+  padding: $m/2 0
+  +links($color_text, white, .15s ease)
+
+[class*="node-profile__action-"]
+  width: 30%
+  +inline-block
+  [class*="icon-"]
+    font-size: 2em
+    color: rgba(black, .75)

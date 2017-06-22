@@ -1,32 +1,22 @@
-{# Displays a Post instance #} {% extends 'layouts/sidebar-right-fixed.html' %} {% load i18n static utils %}
-{% block body_classes %}blog-item{% endblock %} {% block htmltitle %}{{ object.title }}{% endblock %}
+{# Displays a Post instance #} {% extends 'layouts/sidebar-left-fixed.html' %} {% load i18n static utils %}
+{% block body_classes %}node-item{% endblock %} {% block htmltitle %}{{ object.name }}{% endblock %}
+
+{# Preface #}
+{% block preface %}
+    {% url 'nodes' as url_2 %}
+    {% trans 'Nodos' as txt_2 %}
+    {% breadcrumb url_2 txt_2 node.name %}
+{% endblock %}
 
 {# Content #}
 {% block main %}
-    {% include 'blocks/page-title.html' with text=object.title icon="speech-bubble" %}
-    <div class="blog-item">
-        {% if object.image  %}
-            <figure class="blog-item__image">
-                <img src="{{ object.image.url }}" />
-            </figure>
-        {% endif %}
-        <div class="blog-item__summary">
-            {{ object.summary  }}
-        </div>
-        <p class="blog-item__date">
-            {{ object.creation_date }}
-        </p>
-        <div class="blog-item__body">
-            {{ object.wysiwyg | safe }}
-        </div>
-    </div>
-    {% share object.title|escape request.build_absolute_uri|urlencode  %}
+    {% include 'blocks/page-title.html' with text=node.name icon="nodos" %}
+    {% lorem %}
+
+    {# {% share object.title|escape request.build_absolute_uri|urlencode  %}#}
 {% endblock %}
 
 {# Sidebar #}
 {% block sidebar %}
-  <h3>
-      {% trans 'Arquitecturas Colectivas' noop %}
-  </h3>
-  {% include 'blocks/twitter--aacc.html' with height=1600 %}
+    {% include 'models/node_profile.html' with node=node user_has_permissions=user_has_permissions batches_number=batches_number %}
 {% endblock %}
