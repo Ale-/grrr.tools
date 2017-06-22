@@ -56,21 +56,21 @@ class NodeCreate(GenericCreate):
     return context
 
   def get_success_url(self):
-    #return reverse('node', args=(self.object.slug,))
-    return reverse('front')
+    return reverse('node', args=(self.object.slug,))
 
 class NodeEdit(GenericUpdate):
   """ Modelform view to edit a Project object"""
 
-  title = _('Editar')
+  title = _('Edita el nodo ')
   explanation = _(node_explanation)
-  form_class = forms.NodeUpdateForm
+  form_class = forms.NodeCreateForm
   dependencies = ['leaflet']
   model = models.Node
   template_name = generic_template
+  form__html_class = 'node'
 
   def get_initial(self):
-    super(ProjectEdit, self).get_initial()
+    super(NodeEdit, self).get_initial()
     return {
         'project_users' : self.object.users.all()
     }
@@ -82,6 +82,8 @@ class NodeEdit(GenericUpdate):
     context = super(GenericUpdate, self).get_context_data(**kwargs)
     context['title'] = self.title + (' ') + self.object.name
     context['explanation'] = self.explanation
+    context['form__html_class'] = 'node'
+    context['submit_text'] = _('Edita este nodo')
     return context
 
 class NodeDelete(GenericDelete):
