@@ -1,0 +1,20 @@
+{# Blog page #} {% extends 'layouts/single-fixed-column.html' %} {% load i18n static utils %}
+{% block body_classes %}reuses{% endblock %}{% block htmltitle %}{% trans 'Reusos' %}{% endblock %}
+
+{# Preface #}
+{% block preface %}
+    {% breadcrumb  %}
+{% endblock %}
+
+{# Content #}
+{% block main %}
+    {% trans 'Reusos' as title_text %}
+    {% include 'blocks/page-title.html' with text=title_text icon="repeat" %}
+    {% view view_class="reuse" items=object_list template="reuse-item" %}
+{% endblock %}
+
+{# Scripts #}
+{% block page_scripts %}
+    {% jquery %}
+    {% include 'scripts/masonry.html' with grid_class='view__content--reuse' item_class='view-item--reuse' %}
+{% endblock %}

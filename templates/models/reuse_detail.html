@@ -1,0 +1,42 @@
+{# Displays a Post instance #} {% extends 'layouts/sidebar-right-fixed.html' %} {% load i18n static utils %}
+{% block body_classes %}blog-item{% endblock %} {% block htmltitle %}{{ object.title }}{% endblock %}
+
+{# Content #}
+{% block main %}
+    <div class="item--reuse {% if not object.published %}unpublished{% endif %}">
+        {% if object.image  %}
+            <figure class="item--reuse__field-image">
+                <img src="{{ object.image.url }}" />
+            </figure>
+        {% endif %}
+        {% include 'blocks/page-title.html' with text=object.title %}
+        <div class="item--reuse__field-summary">
+            {{ object.summary  }}
+        </div>
+        <p class="item--reuse__field-date">
+            {{ object.creation_date }}
+        </p>
+        <div class="item--reuse__field-body">
+            {{ object.wysiwyg | safe }}
+        </div>
+    </div>
+    {% share object.title|escape request.build_absolute_uri|urlencode  %}
+{% endblock %}
+
+{# Sidebar #}
+{% block sidebar %}
+    <h3>
+        {% trans 'Arquitecturas Colectivas' noop %}
+    </h3>
+    {% include 'blocks/twitter--aacc.html' with height=1600 %}
+{% endblock %}
+
+{# page scripts #}
+{% block page_scripts %}
+    {# Adjusts twitter widget height to content's height #}
+    <script type="text/javascript">
+        var content_height = document.querySelector('.layout-main').clientHeight;
+        var twitter_widget = document.querySelector('.twitter-timeline');
+        twitter_widget.setAttribute('data-height', content_height - 180);
+    </script>
+{% endblock %}

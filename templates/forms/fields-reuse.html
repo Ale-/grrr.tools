@@ -1,0 +1,38 @@
+{# Template to render all fields in a form #}
+{# Not included in form.html to be reusable (in the context of a composed form, for instance) #}
+{% load i18n %}
+
+<div class="form-fields--{{ form_class }}">
+    <div class="fieldset--two-col">
+        <div class="fieldset__left--two-col">
+            {% include 'forms/field.html' with field=form.name %}
+        </div>
+        <div class="fieldset__right--two-col">
+            {% include 'forms/field.html' with field=form.date  %}
+        </div>
+    </div>
+    <div class="fieldset--two-col">
+        <div class="fieldset__left--two-col">
+            {% include 'forms/field.html' with field=form.image %}
+        </div>
+        <div class="fieldset__right--two-col">
+            {% include 'forms/field.html' with field=form.summary %}
+        </div>
+    </div>
+    <div class="fieldset--one-col">
+        {% include 'forms/field.html' with field=form.wysiwyg %}
+    </div>
+    <div class="fieldset--inline">
+        {% include 'forms/field.html' with field=form.place %}
+        {% include 'forms/field.html' with field=form.address %}
+    </div>
+    <div class="fieldset--one-col">
+        {% include 'forms/field.html' with field=form.nodes %}
+    </div>
+    <div class="fieldset--one-col">
+        {% include 'forms/field.html' with field=form.geom %}
+    </div>
+    <div class="fieldset--one-col">
+        {% include 'forms/field.html' with field=form.published  %}
+    </div>
+</div>

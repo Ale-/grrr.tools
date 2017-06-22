@@ -41,6 +41,8 @@ urlpatterns += i18n_patterns(
     url(r'^acuerdos$', views.AgreementsView.as_view(), name='agreements'),
     url(r'^materiales$', views.MaterialsView.as_view(), name='materials'),
     url(r'^referencias$', views.ReferencesView.as_view(), name='references'),
+    url(r'^reusos$', views.ReusesView.as_view(), name='reuses'),
+    url(r'^reuso/(?P<slug>.+)$', views.ReuseItemView.as_view(), name="reuse"),
 
     # API services
     url(r'^api/', include('apps.api.urls', namespace='api')),

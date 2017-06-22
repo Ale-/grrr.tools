@@ -100,6 +100,75 @@ class NodeDelete(GenericDelete):
     return reverse('nodes')
 
 #
+# Reuse
+#
+
+reuse_explanation = ("Los reusos cuentan cómo los nodos reutilizan los materiales. Pueden tener asociados los acuerdos "
+                     "de cesión que se usaron (y se reflejaran en la sección 'Acuerdos' automáticamente) y lotes de materiales "
+                     "que se contabilizarán como 'materiales activados' en las vistas de nodos. Intenta dar detalles que permitan "
+                     "replicar las cualidades positivas de tu reuso y evitar los errores que tuviste.")
+
+class ReuseCreate(GenericCreate):
+  """ Modelform view to create a Reuse object"""
+
+  title = _('Publica un reuso')
+  explanation = _(reuse_explanation)
+  form_class = forms.ReuseForm
+  dependencies = ['leaflet']
+  model = models.Reuse
+  template_name = generic_template
+  form__html_class = 'reuse'
+
+  def get_context_data(self, **kwargs):
+    context = super(ReuseCreate, self).get_context_data(**kwargs)
+    context['submit_text'] = _('Publica el reuso')
+    context['explanation'] = self.explanation
+    return context
+
+  def get_success_url(self):
+    return reverse('reuses')
+
+class ReuseEdit(GenericUpdate):
+  """ Modelform view to edit a Reuse object"""
+
+  title = _('Editar')
+  explanation = _(reuse_explanation)
+  form_class = forms.ReuseForm
+  dependencies = ['leaflet']
+  model = models.Reuse
+  template_name = generic_template
+
+  def get_success_url(self):
+    return reverse('reuse', args=(self.object.slug,))
+
+  def get_context_data(self, **kwargs):
+    context = super(GenericUpdate, self).get_context_data(**kwargs)
+    context['title'] = self.title + (' ') + self.object.name
+    context['explanation'] = self.explanation
+    return context
+
+class ReuseDelete(GenericDelete):
+  """ Modelform view to delete a Reuse object"""
+
+  title = _('Borra el reuso')
+  model = models.Reuse
+
+  def get_initial(self):
+    super(ReuseDelete, self).get_initial()
+    if not self.object.edit_permissions( self.request.user ):
+      raise PermissionDenied
+    return self.initial
+
+  def get_context_data(self, **kwargs):
+    context = super(GenericDelete, self).get_context_data(**kwargs)
+    context['title'] = self.title + (' ') + self.object.name
+    return context
+
+
+  def get_success_url(self):
+    return reverse('reuses')
+
+#
 # Material
 #
 

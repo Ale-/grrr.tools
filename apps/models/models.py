@@ -60,38 +60,6 @@ class Node(models.Model):
         return user in self.users.all() or user.is_staff
 
 
-class Post(models.Model):
-    """News about the GRRR project and the site."""
-
-    title         = models.CharField(_("Título"), max_length=128,
-                                     help_text=_("El titulo del post."))
-    slug          = models.SlugField(editable=False, blank=True)
-    creation_date = models.DateField(_("Fecha"), default=date.today,
-                    help_text=_("Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015."))
-    author        = models.ForeignKey(User, related_name="author", verbose_name=_("Autor-"), null=True, blank=False)
-    published     = models.BooleanField(_("Publicado"), default=True, blank=False,
-                    help_text=_("Sólo los contenidos publicados serán visibles. Desmarca esta casilla para generar un borrador que podrás publicar más adelante, cuando esté acabado."))
-    image         = models.ImageField(_("Imagen"), blank=True, upload_to="images/blog/",
-                                      help_text="Una imagen representativa para las vistas de contenido y para la cabecera de la vista del post completo.")
-    thumbnail     = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
-    summary       = models.TextField(_("Resumen"), blank=True,
-                    help_text=_("Un resumen de la noticia para las vistas de contenidos, si no lo usas se usará un recorte del cuerpo."))
-    wysiwyg       = RichTextUploadingField(_("Texto"), blank=False,
-                    help_text=_("El texto completo de la noticia."))
-
-    def __str__(self):
-        """Uses Material title as string representation of model instances."""
-        return self.title
-
-    def save(self, *args, **kwargs):
-        """Custom save functions that populates automatically 'slug' field"""
-        self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
-
-    def edit_permissions(self, user):
-        """Returns users allowed to edit an instance of this model."""
-        return user.is_staff
-
 class Material(models.Model):
     """Taxonomy terms to handle the materials that compose the batches."""
 
@@ -132,6 +100,38 @@ class Material(models.Model):
         return user.is_staff
 
 
+class Post(models.Model):
+    """News about the GRRR project and the site."""
+
+    title         = models.CharField(_("Título"), max_length=128,
+                                     help_text=_("El titulo del post."))
+    slug          = models.SlugField(editable=False, blank=True)
+    creation_date = models.DateField(_("Fecha"), default=date.today,
+                    help_text=_("Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015."))
+    author        = models.ForeignKey(User, related_name="author", verbose_name=_("Autor-"), null=True, blank=False)
+    published     = models.BooleanField(_("Publicado"), default=True, blank=False,
+                    help_text=_("Sólo los contenidos publicados serán visibles. Desmarca esta casilla para generar un borrador que podrás publicar más adelante, cuando esté acabado."))
+    image         = models.ImageField(_("Imagen"), blank=True, upload_to="images/blog/",
+                                      help_text="Una imagen representativa para las vistas de contenido y para la cabecera de la vista del post completo.")
+    thumbnail     = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
+    summary       = models.TextField(_("Resumen"), blank=True,
+                    help_text=_("Un resumen de la noticia para las vistas de contenidos, si no lo usas se usará un recorte del cuerpo."))
+    wysiwyg       = RichTextUploadingField(_("Texto"), blank=False,
+                    help_text=_("El texto completo de la noticia."))
+
+    def __str__(self):
+        """Uses Material title as string representation of model instances."""
+        return self.title
+
+    def save(self, *args, **kwargs):
+        """Custom save functions that populates automatically 'slug' field"""
+        self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
+
+    def edit_permissions(self, user):
+        """Returns users allowed to edit an instance of this model."""
+        return user.is_staff
+
 class Agreement(models.Model):
     """Agreement documents"""
 
@@ -158,6 +158,47 @@ class Agreement(models.Model):
             self.creation_date = date.today()
         super(Agreement, self).save(*args, **kwargs)
 
+class Reuse(models.Model):
+    """Cases of reuse done by projects of the nodes in the network."""
+
+    name      = models.CharField(_("Nombre"), max_length=128,
+                help_text=_("Ponle un nombre significativo al reuso."))
+    slug      = models.SlugField(editable=False, blank=True)
+    published = models.BooleanField(_("Publicado"), default=True, blank=False,
+                help_text=_("Sólo los contenidos publicados serán visibles. Desmarca esta casilla para generar un borrador que podrás publicar más adelante, cuando esté acabado."))
+    date      = models.DateField(_("Fecha del reuso"), default=date.today,
+                help_text=_("Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015."))
+    nodes     = models.ManyToManyField(Node, verbose_name="Nodos", blank=False, related_name="Nodos",
+                help_text=_("¿Qué nodos de la red han participado en el reuso? Mantén presionado 'Control' o 'Command' en un Mac, para seleccionar más de una opción."))
+    image     = models.ImageField(_("Imagen"), blank=False, upload_to="images/news/",
+                help_text=_("Una imagen significativa del reuso para las vistas de resúmenes de contenido y el encabezado de la vista completa. Puedes añadir más imágenes al texto completo del reuso."))
+    thumbnail = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
+    agreement = models.ManyToManyField(Agreement, verbose_name="Acuerdos", related_name="agreement", blank=True,
+                help_text=_("Puedes asociar documentos de acuerdos de cesión al reuso."))
+    wysiwyg   = RichTextUploadingField(_("Texto completo"), blank=False,
+                help_text=_("Cuerpo de texto del reuso."))
+    summary   = models.TextField(_("Resumen"), blank=False,
+                help_text=_("Un resumen de la noticia para las vistas de contenidos, si no lo usas se usará un recorte del cuerpo."))
+    place     = models.CharField(_("Localidad"), max_length=128, blank=True, null=True,
+                help_text=_("El nombre de la localidad —ciudad, pueblo, ámbito— donde se hizo el reuso. Aunque es opcional, esta información ayuda al resto de usuari@s a contextualizar la iniciativa rápidamente."))
+    address   = models.CharField(_("Dirección"), max_length=128, blank=True, null=True,
+                help_text=_("Dirección del nodo. No es necesario que incluyas la localidad anterior."))
+    geom      = PointField(_("Ubicación"), blank=False, null=True,
+                help_text=_("¿Dónde se hizo el reuso?"))
+
+    def __str__(self):
+        """String representation of model instances."""
+        return self.name
+
+    def save(self, *args, **kwargs):
+        """Custom save functions that populates automatically 'slug' field"""
+        self.slug = slugify(self.name)
+        super(Reuse, self).save(*args, **kwargs)
+
+    def edit_permissions(self, user):
+        """Returns users allowed to edit an instance of this model."""
+        user_in_groups = self.nodes.filter(users__in = [user]).count() > 0
+        return user_in_groups or user.is_staff
 
 class Reference(models.Model):
     """References linked to site's goals"""

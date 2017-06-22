@@ -90,3 +90,13 @@ class ReferencesView(ListView):
     """View of the Agreement model instances."""
 
     model = models.Reference
+
+class ReusesView(ListView):
+    """View of the Reuse model instances."""
+
+    model = models.Reuse
+
+class ReuseItemView(DetailView):
+    """View of a Reuse model instance."""
+
+    model = models.Reuse

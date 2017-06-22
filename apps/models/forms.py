@@ -65,3 +65,18 @@ class PostForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
+
+class ReuseForm(forms.ModelForm):
+    """Form to create/update Blog posts"""
+
+    class Meta:
+        model   = models.Reuse
+        fields = '__all__'
+        widgets = {
+            'geom'    : utils.GeocodedLeafletWidget(submit_text='Localiza el reuso', provider="google", sources="id_place id_address"),
+            'image'   : utils.PictureWithPreviewWidget(),
+            'summary' : utils.LimitedTextareaWidget(limit=500),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ReuseForm, self).__init__(*args, **kwargs)
