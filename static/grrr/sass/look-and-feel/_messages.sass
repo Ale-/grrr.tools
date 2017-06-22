@@ -1,0 +1,31 @@
+// Site messages
+// layouts/messages.html
+
+@import compass/css3/border-radius
+@import compass/css3/opacity
+
+.region-messages
+  font-family: $font_text
+
+[class*='site-messages__item']
+  color: white
+  padding: $m
+  list-style: none
+  text-align: center
+  text-transform: uppercase
+  +border-radius(4px)
+  +opacity(0.9)
+  +h(5)
+  +animation(hideup 1s 1 forwards)
+
+.site-messages__item--success
+  background-color: $color_success
+  &::before
+    content: "✓"
+    margin-right: $m/3
+
+.site-messages__item--warning
+  background-color: $color_warning
+
+.site-messages__item--error
+  background-color: $color_danger
