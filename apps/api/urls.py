@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
   url(r'^nodos$', views.nodes, name="nodes_service"),
+  url(r'^reusos$', views.reuses, name="reuses_service"),
 ]
