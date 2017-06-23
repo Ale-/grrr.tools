@@ -1,0 +1,18 @@
+{# Actions on model objects #} {% load i18n static utils %}
+
+{% if user.is_authenticated and user|has_permissions:object %}
+    {% with edit='models:edit_'|add:model delete='models:delete_'|add:model %}
+        <ul class="node-actions--{{model}}">
+            <li class="node-actions__action--{{model}}">
+                <a href="{% url delete object.pk %}">
+                    {% icon 'cross' 'Eliminar este contenido' %}
+                </a>
+            </li>
+            <li class="node-actions__action--{{model}}">
+                <a href="{% url edit object.pk %}">
+                    {% icon 'cog' 'Editar este contenido' %}
+                </a>
+            </li>
+        </ul>
+    {% endwith %}
+{% endif %}

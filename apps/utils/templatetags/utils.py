@@ -28,7 +28,9 @@ def fake_breadcrumb(text=fake_breadcrumb_default_text):
     return { 'text' : text }
 
 @register.inclusion_tag('views/view.html')
-def view(view_class=None, items='object_list', template='views/item.html'):
+def view(items=None, user=None):
+    view_class = items[0].__class__.__name__.lower()
+    template   = view_class + "-item"
     return locals()
 
 @register.inclusion_tag('limited-choices-select.html')
@@ -62,4 +64,12 @@ def jquery():
 def breadcrumb(url_2=None, txt_2=None, txt_3=None):
     return {
         'url_2' : url_2, 'txt_2' : txt_2, 'txt_3' : txt_3
+    }
+
+@register.inclusion_tag("user-actions.html")
+def user_actions(object, user):
+    return {
+        'object' : object,
+        'model'  : object.__class__.__name__.lower(),
+        'user'   : user
     }
