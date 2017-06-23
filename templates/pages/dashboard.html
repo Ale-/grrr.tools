@@ -10,6 +10,7 @@
 {# Sidebar #}
 {% block sidebar %}
     <div class="userprofile">
+        {% include 'blocks/page-title.html' with text=username icon="user" %}
         <div class="userprofile__field">
             <p class="userprofile-field-date">
                 {% trans 'Te diste de alta el '%}{{ date_joined|date:'d/m/Y' }}
@@ -27,16 +28,17 @@
             <label class="userprofile__field-label">
                 <span class="icon-lock"></span>{% trans 'Contraseña' %}
             </label>
-            <a class="userprofile__button" href="{% url 'auth_password_change' %}">
+            <a class="userprofile__button" href="{% url 'password_change' %}">
                 {% trans 'Cambiar' %}
             </a>
         </div>
     </div>
+    {% trans 'Tus nodos' as nodes_title %}
+    {% view items=nodes item_template_modifier="dashboard" title=nodes_title %}
 {% endblock %}
 
 {# Content #}
 {% block main %}
-    {% fake_breadcrumb %}
-    {% include 'blocks/page-title.html' with text=username icon="user" %}
-    {% lorem %}
+    <h3>{% trans 'Mensajes recibidos por tus nodos' %}</h3>
+    {% view items=sms user=request.user %}
 {% endblock %}
