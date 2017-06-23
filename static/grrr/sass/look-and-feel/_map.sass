@@ -1,0 +1,24 @@
+// General styles in maps
+// multiple
+
+@import compass/css3/border-radius
+
+#map-header
+  font-family: $font_text
+  +links_remarked
+  .leaflet-div-icon
+    border: 0
+    background: none
+  .leaflet-popup-content-wrapper
+    +border-radius(0)
+  .leaflet-popup-content
+    font-size: 1rem
+  h5
+    text-transform: uppercase
+  .leaflet-bar a
+    background-color: #f5e800
+    +border-radius(0)
+  .leaflet-control-attribution
+    +links($palette_yellow, white, .15s ease)
+    background-color: #111
+    color: white
