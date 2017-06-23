@@ -1,0 +1,23 @@
+{# Base view #} {% load i18n %}
+
+<div class="view {% if view_class %}view--{{ view_class }}{% endif %}">
+    {% if title %}
+        <h4 class="title {% if view_class %}view__title--{{ view_class }}{% endif %}">
+            {{ title }}
+        </h4>
+    {% endif %}
+
+    <div class="view__content {% if view_class %}view__content--{{ view_class }}{% endif %}">
+        {% with 'views/'|add:template|add:'.html' as template %}
+            {% for item in items %}
+                {% include template with item=item %}
+            {% empty %}
+                <div class="no-results">
+                    <p class="no-results__text">
+                        {% trans 'Todavía no se han subido a la plataforma contenidos de este tipo.' %}
+                    </p>
+                </div>
+            {% endfor %}
+        {% endwith %}
+    </div>
+</div>
