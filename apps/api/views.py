@@ -20,7 +20,7 @@ def nodes(request):
               item['lon']   =  node.geom['coordinates'][0]
               item['popup'] =  "<h5><a href='" + reverse('node', args=[node.slug]) + "'>" + node.name + "</a></h5>" + \
                                    "<p>" + node.description + "</p>"
-          jsondump.append(item)
+              jsondump.append(item)
       return HttpResponse(json.dumps(jsondump, indent=4), content_type="application/json")
   else:
       return HttpResponse("If a tree falls in the woods and nobody is there to hear it, does it make a sound?")
@@ -38,7 +38,7 @@ def reuses(request):
               item['lon']   =  node.geom['coordinates'][0]
               item['popup'] =  "<h5><a href='" + reverse('node', args=[node.slug]) + "'>" + node.name + "</a></h5>" + \
                                    "<p>" + node.summary + "</p>"
-          jsondump.append(item)
+              jsondump.append(item)
       return HttpResponse(json.dumps(jsondump, indent=4), content_type="application/json")
   else:
       return HttpResponse("If a tree falls in the woods and nobody is there to hear it, does it make a sound?")
