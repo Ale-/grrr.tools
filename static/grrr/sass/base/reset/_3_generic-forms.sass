@@ -130,6 +130,15 @@
     text-transform: normal
     font-size: 1em
     color: $color_text
+  input,
+  select,
+  textarea
+    &[disabled],
+    &[readonly]
+      background: none
+      border: 0
+      &:hover
+        cursor: inherit
 
 .form-errors,
 [class^='field__errors']
