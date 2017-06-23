@@ -40,3 +40,9 @@ MATERIAL_UNITS = (
     ( 'M2', _('Metros cuadrados')),
     ( 'M3', _('Metros cúbicos')),
 )
+
+MESSAGE_CATEGORIES = (
+    ('me', _('Quiero mandar un mensaje genérico')),
+    ('of', _('Quiero notificar al nodo que tengo materiales que puede querer')),
+    ('de', _('Tengo interés en materiales de este nodo')),
+)

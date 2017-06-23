@@ -38,7 +38,6 @@ class NodeCreate(GenericCreate):
   template_name = generic_template
   form__html_class = 'node'
 
-
   def get_initial(self):
     super(NodeCreate, self).get_initial()
     return {
@@ -270,3 +269,41 @@ class PostDelete(GenericDelete):
     context['submit_text'] = _('Borrar')
     context['form__html_class'] = 'blogpost'
     return context
+
+
+#
+# Mensaje
+#
+
+sms_explanation = ("Los mensajes son el canal de comunicación entre los nodos de la red.")
+
+class SmsCreate(GenericCreate):
+  """ Modelform view to create a Sms object"""
+
+  title = _('Envía un mensaje')
+  explanation = _(sms_explanation)
+  form_class = forms.SmsForm
+  model = models.Sms
+  template_name = generic_template
+  form__html_class = 'sms'
+
+  def get_initial(self):
+    super(SmsCreate, self).get_initial()
+    context = { 'user' : self.request.user }
+    if 'slug' in self.kwargs:
+        context['receiver'] = get_object_or_404(models.Node, slug=self.kwargs['slug'])
+    return context
+
+  def form_valid(self, form):
+    form.instance.author = self.request.user
+    form.instance.date   = date.today()
+    return super(SmsCreate, self).form_valid(form)
+
+  def get_context_data(self, **kwargs):
+    context = super(SmsCreate, self).get_context_data(**kwargs)
+    context['submit_text'] = _('Envía el mensaje')
+    context['explanation'] = self.explanation
+    return context
+
+  def get_success_url(self):
+    return reverse('dashboard')

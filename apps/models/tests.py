@@ -76,3 +76,13 @@ class ReferenceTest(TestCase):
         self.assertTrue(isinstance(post, models.Reference))
         # Check fields
         self.assertTrue(post.__str__, post.name)
+
+class SmsTest(TestCase):
+    """ Test node creation """
+
+    def test_node_creation(self):
+        node = mommy.make("models.Sms")
+        # Check string representation
+        self.assertTrue(isinstance(node, models.Sms))
+        # Check fields
+        self.assertTrue(node.__str__, "Mensaje de " + node.emissor.name + " a " + node.receiver.name + " del " + str(node.date))

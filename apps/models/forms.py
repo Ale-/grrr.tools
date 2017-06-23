@@ -80,3 +80,25 @@ class ReuseForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ReuseForm, self).__init__(*args, **kwargs)
+
+class SmsForm(forms.ModelForm):
+    """Sms modelforms"""
+
+    class Meta:
+        model   = models.Sms
+        fields = '__all__'
+        widgets = {
+            'body' : utils.LimitedTextareaWidget(limit=500),
+        }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs['initial']['user']
+        self.base_fields['emissor'].empty_label = None
+        self.base_fields['emissor'].queryset = models.Node.objects.filter(users__in=[user])
+        if 'receiver' in kwargs['initial']:
+            self.base_fields['receiver'].widget.attrs['disabled'] = True
+            self.base_fields['receiver'].widget.attrs['readonly'] = True
+        else:
+            self.base_fields['receiver'].empty_label = None
+            self.base_fields['receiver'].queryset = models.Node.objects.all().order_by('name')
+        super(SmsForm, self).__init__(*args, **kwargs)

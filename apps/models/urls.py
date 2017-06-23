@@ -27,4 +27,8 @@ urlpatterns = [
     # Add material form
     url(r'^crea/material$', views.MaterialCreate.as_view(), name="create_material"),
 
+    # Add SMS form
+    url(r'^envia/sms$', views.SmsCreate.as_view(), name="create_sms"),
+    # Add SMS form
+    url(r'^envia/sms/a/(?P<slug>.+)$$', views.SmsCreate.as_view(), name="send_sms_to"),
 ]

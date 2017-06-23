@@ -216,3 +216,21 @@ class Reference(models.Model):
     def __str__(self):
         """String representation of model instances."""
         return self.name
+
+class Sms(models.Model):
+    """Messages sent to nodes of the network"""
+
+    author   = models.ForeignKey(User, blank=True, null=True, editable=False)
+    date     = models.DateField(blank=True, editable=False)
+    category = models.CharField(_("Tipo de mensaje"), max_length=2, choices=categories.MESSAGE_CATEGORIES, default='me',
+               help_text=_("Elige el tipo de mensaje que quieres enviar."))
+    emissor  = models.ForeignKey(Node, verbose_name=_("Remitente"), related_name="emissor", null=True, blank=True,
+               help_text=_("Especifica el proyecto que quieres que aparezca como remitente. Esto es aconsejado si el mensaje se manda en relación a un lote."))
+    receiver = models.ForeignKey(Node, verbose_name=_("Destinatario"), related_name="receiver", null=True,
+               help_text=_("Nodo al que envias el mensaje"))
+    body     = models.TextField(_("Mensaje"), blank=False,
+               help_text=_("Texto del mensaje. No está permitido usar HTML. Las URLs se convertirán directamente en enlaces."))
+
+    def __str__(self):
+        """String representation of model instances."""
+        return "Mensaje de " + self.emissor.name + " a " + self.receiver.name + " del " + str(self.date)
