@@ -1,21 +1,21 @@
 {# Render a Node post in a view #} {% load utils i18n imagekit %}
 
-<div class="view-item view-item--node">
+<div class="blog-item">
     <div class="inner">
         <div class="inner__left">
-            <h3 class="view-item__field view-item__field--name">
+            <h4 class="blog-item__field-title">
                 <a href="{% url 'node' item.slug %}">{{ item.name }}</a>
-            </h3>
-            <p class="view-item__field view-item__field--creation-date">
-                <span class="view-item__field-label">
+            </h4>
+            <p class="blog-item__field-creation-date">
+                <p class="view-item__field-label">
                     {% trans 'Fecha de creación' %}
-                </span>
-                <span class="view-item__field-value">
+                </p>
+                <span class="blog-item__field-value">
                     {{ item.creation_date }}
                 </span>
             </p>
-            <p class="view-item__field view-item__field--manager">
-                <p class="view-item__field-label view-item__field-label--manager">
+            <p class="blog-item__field-manager">
+                <p class="blog-item__field-label">
                     <span class="icon-user"></span>
                     <span>{% trans 'Coordinador' %}</span>
                 </p>
@@ -23,8 +23,8 @@
             </p>
         </div>
         <div class="inner__center">
-            <div class="view-item__field view-item__field--members">
-                <p class="view-item__field-label view-item__field-label--members">
+            <div class="blog-item__field-members">
+                <p class="blog-item__field-label">
                     <span class="icon-personas"></span>
                     <span>{% trans 'Miembros' %}</span>
                 </p>
@@ -32,8 +32,8 @@
                     {{ item.members }}
                 </p>
             </div>
-            <div class="view-item__field view-item__field--recovered">
-                <p class="view-item__field-label view-item__field-label--recovered">
+            <div class="blog-item__field-recovered">
+                <p class="blog-item__field-label">
                     <span class="icon-recuperados"></span>
                     <span>{% trans 'Materiales recuperados' %}</span>
                 </p>
@@ -41,8 +41,8 @@
                     0 <small>tn.</small>
                 </p>
             </div>
-            <div class="view-item__field view-item__field--activated">
-                <p class="view-item__field-label view-item__field-label--activated">
+            <div class="blog-item__field-activated">
+                <p class="blog-item__field-label">
                     <span class="icon-activados"></span>
                     <span>{% trans 'Materiales activados' %}</span>
                 </p>
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="inner__right">
-            <p class="view-item__field view-item__field--collaborators">
+            <p class="blog-item__field-recovered">
                 <p class="view-item__field-label">
                     <span class="icon-user"></span>
                     <span>{% trans 'Colaboradores' %}</span>
