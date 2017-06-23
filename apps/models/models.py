@@ -73,8 +73,8 @@ class Material(models.Model):
     subfamily     = models.CharField(_("Tipo"), max_length=2, choices=categories.MATERIALS_BY_FORM, default='LO',
                     help_text=_("Específica el tipo de material."))
     description   = models.TextField(_("Descripción"), blank=True)
-    unit          = models.CharField(_("Unidad"), max_length=128, default="Unidades", blank=True,
-                    help_text=_("Especifica aquí opcionalmente la unidad a usar cuando se cuantifica este material. Por ejemplo 'metros cuadrados' o 'unidades'"))
+    unit          = models.CharField(_("Unidad"), max_length=2, choices=categories.MATERIAL_UNITS, default="Unidades", blank=True,
+                    help_text=_("Especifica la unidad a usar cuando se cuantifica este material."))
     weight        = models.PositiveIntegerField(_("Peso unitario"), blank=True, null=True,
                     help_text=_("Especifica el peso por unidad en kilogramos de manera aproximada. Se usará para hacer cálculos de materiales recuperados y puestos en uso"))
 

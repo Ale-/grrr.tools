@@ -33,3 +33,10 @@ MATERIALS_BY_FORM = (
     ( 'CO', _('Contenedores')),
     ( 'OT', _('Otros')),
 )
+
+MATERIAL_UNITS = (
+    ( 'UD', _('Unidades')),
+    ( 'ML', _('Metros lineales')),
+    ( 'M2', _('Metros cuadrados')),
+    ( 'M3', _('Metros cúbicos')),
+)
