@@ -110,7 +110,7 @@
 
 =view_item_normal
   width: 100%
-  padding: $m/2
+  +links_header
   +breakpoint('sm')
     width: 50%
   +breakpoint('md')
@@ -119,40 +119,46 @@
   [class*='field-title']
     text-transform: uppercase
     margin-bottom: $m/2
+    border-bottom: 2px solid #111
     +links_remarked
   [class*='field-date'],
   [class*='field-creation-date']
+    float: left
     text-transform: uppercase
     font-size: $size_small
+    margin: 4px $m 4px 0
   &.unpublished
     +opacity(.75)
+  .inner
+    display: block
+    padding: $m
+    &:hover
+      outline: 2px solid #111
+  [class*='node-actions--']
+    position: absolute
+    background: white
+    right: $m
+    top: $m
+    padding: $m/4
+  [class*='node-actions__action--']
+    padding-left: $m/3
+    font-size: 1rem
 
 
 // Items (single model object view)
 
-= item_normal
-  // Displays a blog post in views
-  // views/blog-item.html
-
-  .blog-item__summary
+= detail_normal
+  [class$='__summary']
     font-size: 1.5em
     padding: $m/2 0
     border-top: 1px solid $color_text
     border-bottom: 1px solid $color_text
-
-  .blog-item__body
+  [class$='__body']
     margin-top: $m
     img
       max-width: 100% !important
       height: auto !important
       padding: $m
-
-  .view--blog__content .view__node
-    width: 33%
-    margin-bottom: 0
-  .view--blog__content .view__node__inner
-    margin: $m/2
-    border: 1px dotted $color_text
 
 
 // Animations
