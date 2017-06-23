@@ -1,0 +1,51 @@
+// Displays an Agreement in views
+// views/agreement-item.html
+
+.agreement-item
+  text-align: center
+  +breakpoint('sm')
+    width: 50%
+  +breakpoint('md')
+    width: 33%
+  +links_remarked
+
+.agreement-item > .inner
+  background: #eee
+  padding: $m/2
+  margin: $m/2 $m/2 $m/4
+
+.agreement-item__document
+  text-align: center
+  background: #eee
+  margin: 0 $m/2
+  padding: $m/2
+  font-size: .85em
+  +transition(background-color .15s ease)
+  li:before
+    content: ">"
+    margin-right: $m/4
+  &:hover
+    background-color: yellow
+
+.agreement-item__title
+  margin: $m/2 0
+
+.agreement-item__label,
+.agreement-item__language
+  font-size: $size_small
+  text-transform: uppercase
+
+.agreement-item__language
+  margin-top: $m/2
+
+.agreement-item
+  .icon-acuerdo:before
+    height: $m*5
+    display: block
+    font-size: $m*6
+    margin-bottom: $m
+
+.agreement-item
+  .icon-descarga:before
+    display: block
+    font-size: $m*2

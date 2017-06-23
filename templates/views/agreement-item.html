@@ -1,22 +1,22 @@
 {# Render an Agreement in a view #} {% load i18n %}
 
-<div class="view-item view-item--agreement">
+<div class="agreement-item">
     <div class="inner">
         <p class="icon-acuerdo"></p>
-        <p class="view-item__field view-item__field--label">
+        <p class="agreement-item__label">
             {{ item.get_category_display }}
         </p>
-        <h4 class="view-item__field view-item__field--title">
+        <h4 class="agreement-item__title">
             {{ item.title }}
         </h4>
-        <p class="view-item__field view-item__field--description">
+        <p class="agreement-item__description">
             {{ item.summary }}
         </p>
-        <p class="view-item__field view-item__field--language">
+        <p class="agreement-item__language">
             <label>{% trans 'Idioma' %}</label> {{ item.language }}
         </p>
     </div>
-    <div class="view-item__field view-item__field--document">
+    <div class="agreement-item__document">
         <a target="_blank" href="{{ item.document.url }}">
             {% trans 'Descarga' %}<span class="icon-descarga"></span>
         </a>

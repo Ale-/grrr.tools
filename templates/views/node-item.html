@@ -1,10 +1,12 @@
 {# Render a Node post in a view #} {% load utils i18n imagekit %}
 
 <div class="node-item">
-    <a class="inner" href="{% url 'node' item.slug %}">
+    <div class="inner">
         <div class="inner__left">
             <div class="node-item__field-thumbnail">
-                <img src="{{ item.thumbnail.url }}" />
+                <a href="{% url 'node' item.slug %}" title="{% trans 'Ir al perfil del nodo' %}">
+                    <img src="{{ item.thumbnail.url }}" alt="Imagen representativa de {{ item.name }}" />
+                </a>
             </div>
             <h4 class="node-item__field-title">
                 {{ item.name }}
@@ -44,10 +46,30 @@
                 <p class="node-item__field-label">
                     {% trans 'Fecha de alta' %}
                 </p>
-                <span class="node-item__field-value">
+                <p class="node-item__field-value">
                     {{ item.creation_date }}
-                </span>
+                </p>
             </p>
+            <p class="node-item__field-manager">
+                <p class="node-item__field-label">
+                    {% trans 'Coordinador' %}
+                </p>
+                <p class="node-item__field-value">
+                    {{ item.manager.username }}
+                </p>
+            </p>
+            <div class="node-item__actions">
+                <p class="node-item__action">
+                    <a href="{% url 'models:send_sms_to' item.slug %}" >
+                        {% trans 'Envía un mensaje' %}
+                    </a>
+                </p>
+                <p class="node-item__action">
+                    <a href="{% url 'node' item.slug %}">
+                        {% trans 'Ir al perfil del nodo' %}
+                    </a>
+                </p>
+            </div>
         </div>
-    </a>
+    </div>
 </div>

@@ -1,0 +1,26 @@
+{# Render a Sms object in a view #} {% load i18n utils static %}
+
+<div class="sms-item sms-item--{{ item.category }}">
+    <div class="inner">
+        <ul class="view__node-actions">
+            <li>
+                <a href="{% url 'models:send_sms_to' item.receiver.slug %}">
+                    {% icon 'reply' 'Responde' %}
+                </a>
+            </li>
+        </ul>
+        <div class="sms-item__date">
+            {{ item.date|date:"d-M-Y" }}
+        </div>
+        <div class="sms-item__nodes">
+            {% trans 'De ' %}
+            <a href="{% url 'node' item.emissor.slug %}" title="{% trans 'Ir al perfil del remitente' %}" target="_blank">
+                {{ item.emissor.name }}
+            </a>
+            {% trans 'a ' %} {{ item.receiver.name }}
+        </div>
+        <div class="sms-item__body">
+            {{ item.body | urlize }}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+// View of node
+// views/node-item.hml
+
+@import compass/css3/border-radius
+@import compass/css3/inline-block
+
+.node-item--dashboard
+  +links_remarked
+
+.node-item__field-thumbnail--dashboard
+  margin: 0 $m/2
+  img
+    +border-radius(50%)
+    max-width: 50px
+
+.node-item__field-thumbnail--dashboard,
+.node-item__field-title--dashboard
+  +inline-block
+
+.node-item--dashboard a
+  display: block
+  +transition(background-color .15s ease)
+  &:hover
+    background-color: #eee

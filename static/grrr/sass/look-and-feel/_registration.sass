@@ -11,7 +11,9 @@
 body.login,
 body.signin,
 body.password-recovery,
-body.contact
+body.contact,
+body.password-change,
+body.password-change-done
   background-color: $palette-yellow
   .page-title
     text-align: center
@@ -68,6 +70,7 @@ body.contact
 
 .password-reset-instructions,
 .register-instructions,
+.password-change-done-instructions,
 .contact-sent
   +links_normal
   max-width: 480px
@@ -76,7 +79,8 @@ body.contact
   margin: $m*2 auto
   +animation(showup 1s 1  )
 
-.contact-sent__exit
+.contact-sent__exit,
+.return-button
   +button_headers
   width: $m*4
   text-align: center

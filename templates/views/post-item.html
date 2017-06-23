@@ -1,25 +1,25 @@
 {# Render a Blog post in a view #} {% load utils i18n imagekit %}
 
-<div class="view-item--post {% if not item.published %}unpublished{% endif %}">
+<div class="post-item {% if not item.published %}unpublished{% endif %}">
     {% user_actions item user %}
     <a class="inner" href="{% url 'blogpost' item.slug %}">
         {% if item.image %}
-            <div class="view-item--post__field-image">
+            <div class="post-item__field-image">
                     {% thumbnail '400x' item.image %}
             </div>
         {% endif %}
-        <h4 class="view-item--post__field-title">
-          {{ item.title }}
+        <h4 class="post-item__field-title">
+            {{ item.title }}
         </h4>
-        <div class="view-item--post__field-date">
-          <p>{{ item.creation_date|date:"d-M-Y" }}</p>
+        <div class="post-item__field-date">
+            {{ item.creation_date|date:"d-M-Y" }}
         </div>
-        <div class="view-item--post__field-summary">
-          <p>{{ item.summary }}</p>
+        <div class="post-item__field-summary">
+            {{ item.summary }}
         </div>
         {% if not item.published %}
-            <div class="view-item--post__field-published">
-              <p>{% trans 'No publicado' %}</p>
+            <div class="post-item__field-published">
+                {% trans 'No publicado' %}
             </div>
         {% endif %}
     </a>

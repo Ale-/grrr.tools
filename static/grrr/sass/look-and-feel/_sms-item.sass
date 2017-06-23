@@ -1,0 +1,32 @@
+// Sms items in views
+// pages/dashboard.html
+// views/sms-item.html
+
+@import compass/css3/border-radius
+
+.sms-item
+  .inner
+    padding: $m
+    +border-radius($m/6)
+    color: white
+    margin-bottom: $m/4
+
+.sms-item--me
+  .inner
+    background-color: $color_calm
+
+.sms-item--of
+  .inner
+    background-color: $color_success
+
+.sms-item--de
+  .inner
+    background-color: $color_warning
+
+.sms-item__date,
+.sms-item__nodes
+  text-transform: uppercase
+  font-size: $size_small
+
+.sms-item__nodes
+  margin-bottom: $m/2

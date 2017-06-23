@@ -1,16 +1,16 @@
 {# Render a Blog post in a view #} {% load utils i18n imagekit %}
 
-<div class="view-item--material">
+<div class="material-item">
     <div class="inner">
         {% if item.image %}
-            <div class="view-item--material__field-image">
+            <div class="material-item__field-image">
                 {% thumbnail '400x' item.image %}
             </div>
         {% endif %}
-        <h4 class="view-item--material__field-name">
+        <h4 class="material-item__field-name">
             {{ item.name }}
         </h4>
-        <div class="view-item--material__field-description">
+        <div class="material-item__field-description">
             {{ item.description }}
         </div>
     </div>

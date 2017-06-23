@@ -11,9 +11,6 @@
     padding: $m
     background-color: #eee
     margin-bottom: $m
-    &:hover
-      outline: 2px solid #222
-      background-color: white
   [class^='inner__']
     text-align: center
   .inner__left
@@ -56,3 +53,16 @@
 .node-item__field-thumbnail
   img
     +border-radius(50%)
+
+.node-item__actions
+  border-top: 1px solid $color_text
+  margin-top: $m/2
+
+.node-item__action
+  font-size: .8rem
+  text-transform: uppercase
+  margin-top: $m/2
+
+.inner__right .node-item__field-label
+  +h(5)
+  margin-top: $m/2
