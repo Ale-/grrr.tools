@@ -3,6 +3,7 @@
 @import compass/css3/transform
 @import compass/css3/animation
 @import compass/css3/inline-block
+@import compass/css3/filter
 @import grid_system
 
 // Classes
@@ -127,6 +128,14 @@
     text-transform: uppercase
     font-size: $size_small
     margin: 4px $m 4px 0
+  [class*='field-published']
+    position: absolute
+    left: $m
+    top: $m
+    background: white
+    padding: $m/4
+    text-transform: uppercase
+    font-size: $size_small
   &.unpublished
     +opacity(.75)
   .inner

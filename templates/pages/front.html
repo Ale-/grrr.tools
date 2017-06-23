@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block main %}
-    {% include 'views/view.html' with content=blog_posts view_class="blog" template="blog-item" %}
+    {% view items=blog_posts user=request.user %}
 {% endblock %}
 
 {% block page_scripts %}
