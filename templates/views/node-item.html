@@ -1,69 +1,53 @@
 {# Render a Node post in a view #} {% load utils i18n imagekit %}
 
-<div class="blog-item">
-    <div class="inner">
+<div class="node-item">
+    <a class="inner" href="{% url 'node' item.slug %}">
         <div class="inner__left">
-            <h4 class="blog-item__field-title">
-                <a href="{% url 'node' item.slug %}">{{ item.name }}</a>
+            <div class="node-item__field-thumbnail">
+                <img src="{{ item.thumbnail.url }}" />
+            </div>
+            <h4 class="node-item__field-title">
+                {{ item.name }}
             </h4>
-            <p class="blog-item__field-creation-date">
-                <p class="view-item__field-label">
-                    {% trans 'Fecha de creación' %}
-                </p>
-                <span class="blog-item__field-value">
-                    {{ item.creation_date }}
-                </span>
-            </p>
-            <p class="blog-item__field-manager">
-                <p class="blog-item__field-label">
-                    <span class="icon-user"></span>
-                    <span>{% trans 'Coordinador' %}</span>
-                </p>
-                <span>{{ item.manager }}</span>
-            </p>
         </div>
         <div class="inner__center">
-            <div class="blog-item__field-members">
-                <p class="blog-item__field-label">
+            <div class="node-item__field-members">
+                <p class="node-item__field-label">
                     <span class="icon-personas"></span>
                     <span>{% trans 'Miembros' %}</span>
                 </p>
-                <p class="view-item__field-value view-item__field-value--members">
+                <p class="node-item__field-value node-item__field-value--members">
                     {{ item.members }}
                 </p>
             </div>
-            <div class="blog-item__field-recovered">
-                <p class="blog-item__field-label">
+            <div class="node-item__field-recovered">
+                <p class="node-item__field-label">
                     <span class="icon-recuperados"></span>
                     <span>{% trans 'Materiales recuperados' %}</span>
                 </p>
-                <p class="view-item__field-value view-item__field-value--recovered">
+                <p class="node-item__field-value node-item__field-value--recovered">
                     0 <small>tn.</small>
                 </p>
             </div>
-            <div class="blog-item__field-activated">
-                <p class="blog-item__field-label">
+            <div class="node-item__field-activated">
+                <p class="node-item__field-label">
                     <span class="icon-activados"></span>
                     <span>{% trans 'Materiales activados' %}</span>
                 </p>
-                <p class="view-item__field-value view-item__field-value--activated">
+                <p class="node-item__field-value node-item__field-value--activated">
                     0 <small>tn.</small>
                 </p>
             </div>
         </div>
         <div class="inner__right">
-            <p class="blog-item__field-recovered">
-                <p class="view-item__field-label">
-                    <span class="icon-user"></span>
-                    <span>{% trans 'Colaboradores' %}</span>
+            <p class="node-item__field-creation-date">
+                <p class="node-item__field-label">
+                    {% trans 'Fecha de alta' %}
                 </p>
-                <p class="view-item__field-value">
-                    <span>{{ item.users }}</span>
-                </p>
-            </p>
-            <p class="see-more">
-                {% trans 'Ver más info' %}
+                <span class="node-item__field-value">
+                    {{ item.creation_date }}
+                </span>
             </p>
         </div>
-    </div>
+    </a>
 </div>

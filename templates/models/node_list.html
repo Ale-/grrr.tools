@@ -15,7 +15,7 @@
     <div class="container-fixed">
         {% trans 'Nodos' as pagetitle %}
         {% include 'blocks/page-title.html' with text=pagetitle icon='nodos' %}
-        {% view view_class="nodes" items=object_list template="node-item" %}
+        {% view items=object_list user=request.user %}
     </div>
 {% endblock %}
 

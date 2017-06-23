@@ -22,7 +22,7 @@
         {% endblocktrans %}
     </p>
 
-    {% view view_class="reference" items=object_list template="reference-item" %}
+    {% view items=object_list user=request.user %}
 {% endblock %}
 
 {# Scripts #}

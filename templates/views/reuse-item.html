@@ -1,22 +1,19 @@
 {# Render a Blog post in a view #} {% load utils i18n imagekit %}
 
 <div class="view-item--reuse {% if not item.published %}unpublished{% endif %}">
-    <div class="inner">
+    {% user_actions item user %}
+    <a class="inner" href="{% url 'reuse' item.slug %}">
         {% if item.image %}
             <div class="view-item--reuse__field-image">
-                <a href="{% url 'reuse' item.slug %}">
-                    {% thumbnail '400x' item.image %}
-                </a>
+                {% thumbnail '400x' item.image %}
             </div>
         {% endif %}
         <h4 class="view-item--reuse__field-name">
-            <a href="{% url 'reuse' item.slug %}">
-                {{ item.name }}
-            </a>
+            {{ item.name }}
         </h4>
         <div class="view-item--reuse__field-date">
             <p>
-                {{ item.date }}
+                {{ item.date|date:"d-M-Y"  }}
             </p>
         </div>
         <div class="view-item--reuse__field-summary">
@@ -29,5 +26,5 @@
                 <p>{% trans 'No publicado' %}</p>
             </div>
         {% endif %}
-    </div>
+    </a>
 </div>

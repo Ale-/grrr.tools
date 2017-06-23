@@ -20,12 +20,10 @@
 .explanation__tooltip--modelform
   top: $m/2
   position: relative
-  visibility: hidden
+  display: none
   background: #111
   color: white
   padding: $m/2
-  +opacity(0)
-  +transition(opacity .5s ease)
   +border-radius(4px)
   &::before
     content: "▲"
@@ -38,5 +36,4 @@
 .explanation--modelform:hover
   cursor: help
   .explanation__tooltip--modelform
-    visibility: visible
-    +opacity(1)
+    display: block

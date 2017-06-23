@@ -10,11 +10,11 @@
 {% block main %}
     {% trans 'Blog' as title_text %}
     {% include 'blocks/page-title.html' with text=title_text icon="speech-bubble" %}
-    {% view view_class="blog" items=object_list template="blog-item" %}
+    {% view items=object_list user=request.user %}
 {% endblock %}
 
 {# Scripts #}
 {% block page_scripts %}
     {% jquery %}
-    {% include 'scripts/masonry.html' with grid_class='view__content--blog' item_class='view-item--blog' %}
+    {% include 'scripts/masonry.html' with grid_class='view__content--post' item_class='view-item--post' %}
 {% endblock %}

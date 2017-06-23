@@ -1,35 +1,37 @@
 {# Displays a Post instance #} {% extends 'layouts/sidebar-right-fixed.html' %} {% load i18n static utils %}
-{% block body_classes %}blog-item{% endblock %} {% block htmltitle %}{{ object.title }}{% endblock %}
+{% block body_classes %}post-detail{% endblock %} {% block htmltitle %}{{ object.title }}{% endblock %}
 
 {# Preface #}
 {% block preface %}
+    {# Breadcrumb #}
     {% url 'blog'  as url_2 %}
     {% trans 'Blog' as txt_2 %}
     {% breadcrumb url_2 txt_2 object.title %}
-
-    {% include 'models/actions.html' with object=object model="post" identifier=object.pk classname="blog" %}
-
+    {# User actions on node #}
+    {% user_actions object request.user %}
 {% endblock %}
 
 {# Content #}
 {% block main %}
-    <div class="blog-item {% if not object.published %}blog-item--unpublished{% endif %}">
+    <div class="post-detail {% if not object.published %}unpublished{% endif %}">
         {% if object.image  %}
-            <figure class="blog-item__image">
+            <figure class="post-detail__image">
                 <img src="{{ object.image.url }}" />
             </figure>
         {% endif %}
         {% include 'blocks/page-title.html' with text=object.title %}
-        <div class="blog-item__summary">
-            {{ object.summary  }}
+        <div class="post-detail__summary">
+            {{ object.summary }}
         </div>
-        <p class="blog-item__date">
+        <p class="post-detail__date">
             {{ object.creation_date }}
         </p>
-        <div class="blog-item__body">
+        <div class="post-detail__body">
             {{ object.wysiwyg | safe }}
         </div>
     </div>
+
+    {# Share links #}
     {% share object.title|escape request.build_absolute_uri|urlencode  %}
 {% endblock %}
 

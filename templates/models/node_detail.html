@@ -3,11 +3,12 @@
 
 {# Preface #}
 {% block preface %}
+    {# Breadcrumb #}
     {% url 'nodes' as url_2 %}
     {% trans 'Nodos' as txt_2 %}
     {% breadcrumb url_2 txt_2 node.name %}
-
-    {% include 'models/actions.html' with object=object model="node" identifier=object.pk classname="node" %}
+    {# User actions on node #}
+    {% user_actions object request.user %}
 {% endblock %}
 
 {# Content #}

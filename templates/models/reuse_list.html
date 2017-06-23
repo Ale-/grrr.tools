@@ -16,7 +16,8 @@
 {% block main %}
     {% trans 'Reusos' as title_text %}
     {% include 'blocks/page-title.html' with text=title_text icon="repeat" %}
-    {% view view_class="reuse" items=object_list template="reuse-item" %}
+    {# {% view user=current.user view_class="reuse" items=object_list template="reuse-item" %}#}
+    {% view items=object_list user=request.user %}
 {% endblock %}
 
 {# Scripts #}

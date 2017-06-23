@@ -1,44 +1,58 @@
 // View of node
 // views/node-item.hml
 
-.view-item--node
+@import compass/css3/border-radius
+
+.node-item
+  +links_remarked
   .inner
+    display: block
     +clearfix
     padding: $m
-    background-color: #eee !important
+    background-color: #eee
     margin-bottom: $m
+    &:hover
+      outline: 2px solid #222
+      background-color: white
+  [class^='inner__']
+    text-align: center
   .inner__left
     +column(2, 'sm', 20px)
-    border-right: 1px solid #555
+    padding-right: $m !important
   .inner__center
     +column(8, 'sm', 20px)
+    vertical-align: center
+    margin-top: $m
+    border-left: 1px solid #555
+    border-right: 1px solid #555
   .inner__right
     +column(2, 'sm', 20px)
-    border-left: 1px solid #555
+    padding-left: $m !important
 
-.view-item__field--activated,
-.view-item__field--recovered,
-.view-item__field--members
+.node-item__field-title
+  margin: 0
+
+.node-item__field-activated,
+.node-item__field-recovered,
+.node-item__field-members
   +column(4, 'sm', 20px)
   text-align: center
   text-transform: uppercase
 
-.view-item__field-value--activated,
-.view-item__field-value--recovered,
-.view-item__field-value--members
+.node-item__field-value--activated,
+.node-item__field-value--recovered,
+.node-item__field-value--members
   +h(1)
-.view-item__field-label--activated,
-.view-item__field-label--recovered,
-.view-item__field-label--members
+.node-item__field-label--activated,
+.node-item__field-label--recovered,
+.node-item__field-label--members
   font-size: .75em
 
-.view-item--node .inner__center
-  .icon-personas:before
+.node-item .inner__center
+  [class^='icon']::before
     display: block
     font-size: $m*3
-  .icon-recuperados:before
-    display: block
-    font-size: $m*3
-  .icon-activados:before
-    display: block
-    font-size: $m*3
+
+.node-item__field-thumbnail
+  img
+    +border-radius(50%)
