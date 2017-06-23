@@ -86,6 +86,10 @@ class MaterialsView(ListView):
 
     model = models.Material
 
+    def get_queryset(self):
+        queryset = models.Material.objects.all().order_by('family', 'subfamily')
+        return queryset
+
 class ReferencesView(ListView):
     """View of the Agreement model instances."""
 
