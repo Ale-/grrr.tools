@@ -89,8 +89,15 @@ class NodeEdit(GenericUpdate):
 class NodeDelete(GenericDelete):
   """ Modelform view to delete a Project object"""
 
-  title = _('Borra un proyecto')
+  title = _('Borra el nodo')
   model = models.Node
+
+  def get_context_data(self, **kwargs):
+    context = super(GenericDelete, self).get_context_data(**kwargs)
+    context['title'] = self.title + (' ') + self.object.name
+    context['form__html_class'] = 'node'
+    context['submit_text'] = _('Borrar este contenido')
+    return context
 
   def get_initial(self):
     super(NodeEdit, self).get_initial()
@@ -147,6 +154,8 @@ class ReuseEdit(GenericUpdate):
     context = super(GenericUpdate, self).get_context_data(**kwargs)
     context['title'] = self.title + (' ') + self.object.name
     context['explanation'] = self.explanation
+    context['form__html_class'] = 'reuse'
+    context['submit_text'] = _('Edita este reuso')
     return context
 
 class ReuseDelete(GenericDelete):
@@ -164,6 +173,8 @@ class ReuseDelete(GenericDelete):
   def get_context_data(self, **kwargs):
     context = super(GenericDelete, self).get_context_data(**kwargs)
     context['title'] = self.title + (' ') + self.object.name
+    context['form__html_class'] = 'reuse'
+    context['submit_text'] = _('Elimina este reuso')
     return context
 
 
@@ -220,7 +231,7 @@ class PostCreate(GenericCreate):
     return context
 
   def get_success_url(self):
-    return reverse('front')
+    return reverse('blogpost', args=(self.object.slug,))
 
 class PostEdit(GenericUpdate):
   """ Modelform view to edit a Project object"""
@@ -236,13 +247,26 @@ class PostEdit(GenericUpdate):
     context['title'] = self.title + (' ') + self.object.title
     context['explanation'] = _(post_explanation)
     context['submit_text'] = _('Edita este post')
+    context['form__html_class'] = 'blogpost'
     return context
+
+  def get_success_url(self):
+    return reverse('blogpost', args=(self.object.slug,))
+
 
 class PostDelete(GenericDelete):
   """ Modelform view to delete a Project object"""
 
-  title = _('Borra este post')
+  title = _('Borra el post')
   model = models.Post
 
   def get_success_url(self):
     return reverse('nodes')
+
+  def get_context_data(self, **kwargs):
+    context = super(GenericDelete, self).get_context_data(**kwargs)
+    context['title'] = self.title + (' ') + self.object.title
+    context['explanation'] = _(post_explanation)
+    context['submit_text'] = _('Borrar')
+    context['form__html_class'] = 'blogpost'
+    return context
