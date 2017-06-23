@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.views.generic.base import TemplateView
+from django.contrib.auth.views import password_change
 
 from apps.users import views as userviews
 from apps.views import views
@@ -21,6 +22,8 @@ urlpatterns += i18n_patterns(
     url(r'^mi-cuenta$', userviews.UserAccount.as_view(), name='dashboard'),
 
     # Registration urls
+    url(r'^cambia-tu-pass$', password_change, { 'template_name' : 'registration/password_change.html', }, name='password_change'),
+    url(r'^pass-cambiado$', TemplateView.as_view(template_name='registration/password_change_done.html'), name='password_change_done'),
     url(r'', include('registration.backends.default.urls')),
     url(r'^codigo-etico$', TemplateView.as_view(template_name="registration/ethic-code.html"), name='ethic-code'),
 
