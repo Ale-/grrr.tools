@@ -1,11 +1,13 @@
 {# Displays a Post instance #} {% extends 'layouts/sidebar-left-fixed.html' %} {% load i18n static utils %}
-{% block body_classes %}node-item{% endblock %} {% block htmltitle %}{{ object.name }}{% endblock %}
+{% block body_classes %}node-detail{% endblock %} {% block htmltitle %}{{ object.name }}{% endblock %}
 
 {# Preface #}
 {% block preface %}
     {% url 'nodes' as url_2 %}
     {% trans 'Nodos' as txt_2 %}
     {% breadcrumb url_2 txt_2 node.name %}
+
+    {% include 'models/actions.html' with object=object model="node" identifier=object.pk classname="node" %}
 {% endblock %}
 
 {# Content #}

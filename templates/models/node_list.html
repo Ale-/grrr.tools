@@ -1,5 +1,6 @@
-{# Views of existing nodes in the GRRR network #} {% extends 'layouts/single-fixed-column--map.html' %} {% load i18n static leaflet_tags utils %}
-{% block body_classes %}dashboard{% endblock %}{% block htmltitle %}{% trans 'Nodos' %}{% endblock %}
+{# Views of existing nodes in the GRRR network #}
+{% extends 'layouts/single-fixed-column--map.html' %} {% load i18n static leaflet_tags utils %}
+{% block body_classes %}nodes{% endblock %}{% block htmltitle %}{% trans 'Nodos' %}{% endblock %}
 
 {% block page_header %}
      {% leaflet_css %}

@@ -1,6 +1,16 @@
 {# Displays a Post instance #} {% extends 'layouts/sidebar-right-fixed.html' %} {% load i18n static utils %}
 {% block body_classes %}blog-item{% endblock %} {% block htmltitle %}{{ object.title }}{% endblock %}
 
+{# Preface #}
+{% block preface %}
+    {% url 'blog'  as url_2 %}
+    {% trans 'Blog' as txt_2 %}
+    {% breadcrumb url_2 txt_2 object.title %}
+
+    {% include 'models/actions.html' with object=object model="post" identifier=object.pk classname="blog" %}
+
+{% endblock %}
+
 {# Content #}
 {% block main %}
     <div class="blog-item {% if not object.published %}blog-item--unpublished{% endif %}">

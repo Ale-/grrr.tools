@@ -1,5 +1,11 @@
-{# Blog page #} {% extends 'layouts/single-fixed-column.html' %} {% load i18n static utils %}
+{# Reuses section page #}
+{% extends 'layouts/single-fixed-column--map.html' %} {% load i18n static utils leaflet_tags %}
 {% block body_classes %}reuses{% endblock %}{% block htmltitle %}{% trans 'Reusos' %}{% endblock %}
+
+{% block page_header %}
+     {% leaflet_css %}
+{% endblock %}
+
 
 {# Preface #}
 {% block preface %}
@@ -17,4 +23,8 @@
 {% block page_scripts %}
     {% jquery %}
     {% include 'scripts/masonry.html' with grid_class='view__content--reuse' item_class='view-item--reuse' %}
+    {% leaflet_js  %}
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+    <script type="text/javascript" src="{% js 'reuses-map.js' %}"></script>
 {% endblock %}

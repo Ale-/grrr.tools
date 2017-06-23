@@ -21,10 +21,11 @@
         Puedes adjuntar a tus reusos los documentos de cesión que hayas utilizado
         en ellos.
     {% endblocktrans %}</div>
-    {% view view_class="agreements" items=object_list template="agreement-item" %}
+    {% view view_class="agreement" items=object_list template="agreement-item" %}
 {% endblock %}
 
 {# Scripts #}
 {% block page_scripts %}
-    {% include 'scripts/masonry.html' with grid_class='view__content--blog' item_class='view-item--blog' %}
+    {% jquery %}
+    {% include 'scripts/masonry.html' with grid_class='view__content--agreement' item_class='view-item--agreement' %}
 {% endblock %}

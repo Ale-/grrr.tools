@@ -22,10 +22,11 @@
         {% endblocktrans %}
     </p>
 
-    {% view view_class="references" items=object_list template="reference-item" %}
+    {% view view_class="reference" items=object_list template="reference-item" %}
 {% endblock %}
 
 {# Scripts #}
 {% block page_scripts %}
-    {% include 'scripts/masonry.html' with grid_class='view__content--references' item_class='view-item--reference' %}
+    {% jquery %}
+    {% include 'scripts/masonry.html' with grid_class='view__content--reference' item_class='view-item--reference' %}
 {% endblock %}

@@ -1,5 +1,14 @@
 {# Displays a Post instance #} {% extends 'layouts/sidebar-right-fixed.html' %} {% load i18n static utils %}
-{% block body_classes %}blog-item{% endblock %} {% block htmltitle %}{{ object.title }}{% endblock %}
+{% block body_classes %}reuse-detail{% endblock %} {% block htmltitle %}{{ object.name }}{% endblock %}
+
+{# Preface #}
+{% block preface %}
+    {% url 'reuses'  as url_2 %}
+    {% trans 'Reusos' as txt_2 %}
+    {% breadcrumb url_2 txt_2 object.name %}
+
+    {% include 'models/actions.html' with object=object model="reuse" identifier=object.pk classname="reuse" %}
+{% endblock %}
 
 {# Content #}
 {% block main %}
@@ -9,7 +18,7 @@
                 <img src="{{ object.image.url }}" />
             </figure>
         {% endif %}
-        {% include 'blocks/page-title.html' with text=object.title %}
+        {% include 'blocks/page-title.html' with text=object.name %}
         <div class="item--reuse__field-summary">
             {{ object.summary  }}
         </div>
