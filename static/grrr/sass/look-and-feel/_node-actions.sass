@@ -1,10 +1,12 @@
 // Actions on view items
 // views/*-item.hml
 
-.node-actions
+[class*='node-actions']
   float: right
-  margin: $m/4 $m/2
+  +links_remarked
 
-.node-actions__action
+[class*='node-actions__action']
   font-size: 1.25rem
   display: inline
+  padding-left: $m
+  font-size: 1.5em
