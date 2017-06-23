@@ -1,3 +1,8 @@
+// Icon fontface
+
+@import compass/css3/inline-block
+@import compass/css3/border-radius
+
 $fontface_url: "../fonts/grrr_icons/grrr_icons"
 
 @font-face
@@ -26,19 +31,30 @@ $fontface_url: "../fonts/grrr_icons/grrr_icons"
 
 // Map markers
 
-.icon-offer:before
-  content: "\e902"
+=mapicon($icon)
+  font-size: 40px
+  &::before
+    content: $icon
+  + .inner
+    position: absolute
+    display: block
+    width: 22px
+    height: 22px
+    left: 3px
+    top: 8px
+    z-index: -1
+    background: $palette_yellow
+    +border-radius(50%)
+
+.icon-offer
+  +mapicon("\e902")
   color: #fff200
-  font-size: 40px
-.icon-demand:before
-  content: "\e900"
-  font-size: 40px
-.icon-reuse:before
-  content: "\e903"
-  font-size: 40px
-.icon-node:before
-  content: "\e901"
-  font-size: 40px
+.icon-demand
+  +mapicon("\e900")
+.icon-reuse
+  +mapicon("\e903")
+.icon-node
+  +mapicon("\e901")
 
 // Materials
 

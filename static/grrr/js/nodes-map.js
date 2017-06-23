@@ -34,7 +34,7 @@ ready( function()
 {
     // Map icon
     var icon = L.divIcon({
-        html        : '<span class="icon-node"></span>',
+        html        : '<span class="icon-node"></span><span class="inner"></span>',
         iconSize    : [25, 40],
         iconAnchor  : [13, 40],
         popupAnchor : [0, -25],
