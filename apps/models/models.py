@@ -221,7 +221,7 @@ class Sms(models.Model):
     """Messages sent to nodes of the network"""
 
     author   = models.ForeignKey(User, blank=True, null=True, editable=False)
-    date     = models.DateField(blank=True, editable=False)
+    date     = models.DateField(blank=True, editable=False, default=date.today)
     category = models.CharField(_("Tipo de mensaje"), max_length=2, choices=categories.MESSAGE_CATEGORIES, default='me',
                help_text=_("Elige el tipo de mensaje que quieres enviar."))
     emissor  = models.ForeignKey(Node, verbose_name=_("Remitente"), related_name="emissor", null=True, blank=True,
