@@ -103,12 +103,12 @@ class ReusesView(ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_anonymous:
-            return models.Reuse.objects.filter(published=True).all().order_by('-date')
+            return models.Reuse.objects.filter(published=True).all().order_by('-active', '-date')
         elif user.is_staff:
-            return models.Reuse.objects.all().order_by('-date')
+            return models.Reuse.objects.all().order_by('-active', '-date')
         published = queryset.filter(published=True)
         own       = queryset.filter(nodes__in=user.node_set)
-        return (published | own).order_by('date')
+        return (published | own).order_by('-active', '-date')
 
 class ReuseItemView(DetailView):
     """View of a Reuse model instance."""

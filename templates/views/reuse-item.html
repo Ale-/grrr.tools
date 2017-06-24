@@ -22,5 +22,10 @@
                 <p>{% trans 'No publicado' %}</p>
             </div>
         {% endif %}
+        {% if item.active %}
+            <div class="reuse-item__field-active">
+                <span class="icon-repeat"></span> {% trans 'Reuso en marcha' %}
+            </div>
+        {% endif %}
     </a>
 </div>

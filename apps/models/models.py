@@ -185,6 +185,8 @@ class Reuse(models.Model):
                 help_text=_("Dirección del nodo. No es necesario que incluyas la localidad anterior."))
     geom      = PointField(_("Ubicación"), blank=False, null=True,
                 help_text=_("¿Dónde se hizo el reuso?"))
+    active    = models.BooleanField(_("Activo"), default=True, blank=False,
+                help_text=_("¿Este reuso es un proceso en marcha o se da por finalizado? Los proyectos en marcha tienen mayor visibilidad en la plataforma."))
 
     def __str__(self):
         """String representation of model instances."""
