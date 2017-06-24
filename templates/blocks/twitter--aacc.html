@@ -1,11 +1,16 @@
 {# Displays AACC Twitter widget #} {% load i18n %}
 
-<a class="twitter-timeline"
-   data-width="300"
-   data-height="{{ height }}"
-   data-link-color="#555"
-   data-chrome="noheader nofooter noborders noscrollbar transparent"
-   href="https://twitter.com/aacc_net">
-   {% trans 'Arquitecturas Colectivas' %}
-</a>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<div class="timeline">
+    <h3 class="timeline__title">
+        {% trans '@aacc_net' noop %}
+    </h3>
+    <a class="twitter-timeline"
+       data-width="300"
+       data-height="{{ height }}"
+       data-link-color="#555"
+       data-chrome="noheader nofooter noborders noscrollbar transparent"
+       href="https://twitter.com/aacc_net">
+       {% trans 'Arquitecturas Colectivas' %}
+    </a>
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>

@@ -37,9 +37,6 @@
 
 {# Sidebar #}
 {% block sidebar %}
-    <h3>
-        {% trans 'Arquitecturas Colectivas' noop %}
-    </h3>
     {% include 'blocks/twitter--aacc.html' with height=1600 %}
 {% endblock %}
 
@@ -47,8 +44,15 @@
 {% block page_scripts %}
     {# Adjusts twitter widget height to content's height #}
     <script type="text/javascript">
-        var content_height = document.querySelector('.layout-main').clientHeight;
-        var twitter_widget = document.querySelector('.twitter-timeline');
-        twitter_widget.setAttribute('data-height', content_height - 180);
+        // Ready, only IE 9 or bigger
+        var ready = function(callback) {
+            document.readyState === "interactive" ||
+            document.readyState === "complete" ? callback() : document.addEventListener("DOMContentLoaded", callback);
+        };
+        ready(function(){
+            var content_height = document.querySelector('.layout-main').clientHeight;
+            var twitter_widget = document.querySelector('.twitter-timeline__iframe');
+            twitter_widget.setAttribute('data-height', content_height - 180);
+        });
     </script>
 {% endblock %}
