@@ -56,6 +56,12 @@ class ViewsTest(TestCase):
         response = c.get(reverse('agreements'))
         # Check empty view
         self.assertEqual(response.status_code, 200)
+        # Check prepopulated view
+        self.test_post = mommy.make("models.Agreement")
+        response = c.get(reverse('agreements'))
+        content = response.context['object_list']
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(content.count(), 1)
 
     def test_glossary(self):
         """
@@ -66,7 +72,21 @@ class ViewsTest(TestCase):
         # Check empty view
         self.assertEqual(response.status_code, 200)
 
-    def test_references(self):
+    def test_dashboard(self):
+        """
+        Check resources section
+        """
+        c = Client()
+        response = c.get(reverse('dashboard'))
+        # Check that view redirects to login page when user is anonymous
+        self.assertEqual(response.status_code, 302)
+        # Check that view redirects to login page when user is registered
+        self.test_user = mommy.make('User',  username='test', password = 'paxxword', is_active = True)
+        c.login(username='test', password='paxxword')
+        response = c.get(reverse('dashboard'), follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_references_views(self):
         """
         Check resources section
         """
@@ -74,8 +94,14 @@ class ViewsTest(TestCase):
         response = c.get(reverse('references'))
         # Check empty view
         self.assertEqual(response.status_code, 200)
+        # Check prepopulated view
+        self.test_post = mommy.make("models.Reference")
+        response = c.get(reverse('references'))
+        content = response.context['object_list']
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(content.count(), 1)
 
-    def test_blog_view(self):
+    def test_blog_views(self):
         """
         Checks Blog section
         """
@@ -89,18 +115,11 @@ class ViewsTest(TestCase):
         content = response.context['object_list']
         self.assertEqual(response.status_code, 200)
         self.assertEqual(content.count(), 1)
-
-    def test_blog_item_view(self):
-        """
-        Checks a single blogpost view
-        """
-        self.test_post = mommy.make("models.Post", wysiwyg="Lorem ipsum.")
-        c = Client()
         response = c.get(reverse('blogpost', kwargs={'slug': self.test_post.slug}))
         # Check view
         self.assertEqual(response.status_code, 200)
 
-    def test_nodes_view(self):
+    def test_node_views(self):
         """
         Checks front
         """
@@ -114,13 +133,39 @@ class ViewsTest(TestCase):
         content = response.context['object_list']
         self.assertEqual(response.status_code, 200)
         self.assertEqual(content.count(), 1)
-
-    def test_node_item_view(self):
-        """
-        Checks a single node view
-        """
-        self.test_post = mommy.make("models.Node")
-        c = Client()
         response = c.get(reverse('node', kwargs={'slug': self.test_post.slug}))
         # Check view
         self.assertEqual(response.status_code, 200)
+
+    def test_reuse_views(self):
+        """
+        Checks reuses section view
+        """
+        c = Client()
+        response = c.get(reverse('reuses'))
+        # Check empty view
+        self.assertEqual(response.status_code, 200)
+        # Check prepopulated view
+        self.test_post = mommy.make("models.Reuse", wysiwyg="Lorem ipsum.")
+        response = c.get(reverse('reuses'))
+        content = response.context['object_list']
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(content.count(), 1)
+        response = c.get(reverse('reuse', kwargs={'slug': self.test_post.slug}))
+        # Check view
+        self.assertEqual(response.status_code, 200)
+
+    def test_material_views(self):
+        """
+        Checks reuses section view
+        """
+        c = Client()
+        response = c.get(reverse('materials'))
+        # Check empty view
+        self.assertEqual(response.status_code, 200)
+        # Check prepopulated view
+        self.test_post = mommy.make("models.Material")
+        response = c.get(reverse('materials'))
+        content = response.context['object_list']
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(content.count(), 1)
