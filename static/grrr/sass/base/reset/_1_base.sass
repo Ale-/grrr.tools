@@ -73,10 +73,12 @@ select
     cursor: pointer
 
 // SELECTION COLORS
-::-moz-selection,
+::-moz-selection
+  background: $color_selection_background
+  color: $color_selection_text
 ::selection
   background: $color_selection_background
-  color     : $color_selection_text
+  color: $color_selection_text
 
 // Sticky footer
 @if $apply_sticky_footer
