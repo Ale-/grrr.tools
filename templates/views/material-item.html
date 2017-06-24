@@ -2,16 +2,20 @@
 
 <div class="material-item">
     <div class="inner">
-        {% if item.image %}
-            <div class="material-item__field-image">
-                {% thumbnail '400x' item.image %}
+        <div class="inner__left">
+            {% if item.image %}
+                <div class="material-item__field-image">
+                    {% thumbnail '400x' item.image %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="inner__right">
+            <h4 class="material-item__field-name">
+                {{ item.name }}
+            </h4>
+            <div class="material-item__field-description">
+                {{ item.description }}
             </div>
-        {% endif %}
-        <h4 class="material-item__field-name">
-            {{ item.name }}
-        </h4>
-        <div class="material-item__field-description">
-            {{ item.description }}
         </div>
     </div>
 </div>

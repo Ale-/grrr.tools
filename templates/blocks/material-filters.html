@@ -1,0 +1,29 @@
+{# Widget for filtering the material view #} {% load i18n utils %}
+
+<form class="material-filters">
+    {% trans 'Busco' %}
+    <select class="material-filters__search-field--type">
+        <option>{% trans 'ofertas' %}</option>
+        <option>{% trans 'demandas' %}</option>
+        <option>{% trans 'ofertas y demandas' %}</option>
+    </select>
+    {% trans 'de elementos' %}
+    <select class="material-filters__search-field--subfamily">
+        <option>{% trans 'longitudinales' %}</option>
+        <option>{% trans 'superficiales' %}</option>
+        <option>{% trans 'contenedores' %}</option>
+        <option>{% trans 'singulares' %}</option>
+    </select>
+    {% trans 'de' %}
+    <select class="material-filters__search-field--family">
+        <option>{% trans 'madera' %}</option>
+        <option>{% trans 'metal' %}</option>
+        <option>{% trans 'plástico' %}</option>
+        <option>{% trans 'electrónica' %}</option>
+        <option>{% trans 'textil' %}</option>
+        <option>{% trans 'otros materiales' %}</option>
+    </select>
+    <button class="material-filters__search-submit" type="submit">
+        {% trans 'Busca' %}
+    </button>
+</form>

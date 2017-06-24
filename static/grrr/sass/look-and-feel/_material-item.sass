@@ -1,5 +1,22 @@
 // Item in a Material view
 // views/material-item.hml
 
+@import compass/css3/inline-block
+
 .material-item
-  +view_item_normal
+  .inner
+    +clearfix
+    padding: $m/2
+  .inner__left
+    float: left
+    width: 100px
+    +inline-block
+    vertical-align: top
+  .inner__right
+    +inline-block
+    padding: 0 $m/2
+    width: calc(100% - 100px)
+    vertical-align: top
+
+.material-item__field-name
+  margin-top: 0
