@@ -7,12 +7,14 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.contrib.contenttypes.fields import GenericRelation
 
 # Import contrib apps
 from djgeojson.fields import PointField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from ckeditor_uploader.fields import RichTextUploadingField
+from star_ratings.models import Rating
 
 # Import site apps
 from apps.models import categories
@@ -187,6 +189,7 @@ class Reuse(models.Model):
                 help_text=_("¿Dónde se hizo el reuso?"))
     active    = models.BooleanField(_("Activo"), default=True, blank=False,
                 help_text=_("¿Este reuso es un proceso en marcha o se da por finalizado? Los proyectos en marcha tienen mayor visibilidad en la plataforma."))
+    ratings   = GenericRelation(Rating, related_query_name='reuses')
 
     def __str__(self):
         """String representation of model instances."""

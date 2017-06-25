@@ -27,5 +27,10 @@
                 <span class="icon-repeat"></span> {% trans 'Reuso en marcha' %}
             </div>
         {% endif %}
+        {% if item.ratings.all.0.average >= 4.0 %}
+            <div class="reuse-item__field-quality-seal">
+                <img src="{% img '/ethic-code/sello-calidad-grrr.png' %}" />
+            </div>
+        {% endif %}
     </a>
 </div>

@@ -52,6 +52,9 @@ urlpatterns += i18n_patterns(
 
     # Contact form
     url(r'^contacta/', include('contact_form.urls')),
+
+    # ratings
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
 )
 
 if settings.DEBUG == True:

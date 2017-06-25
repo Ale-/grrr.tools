@@ -58,6 +58,7 @@ CONTRIB_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'imagekit',
+    'star_ratings'
 ]
 
 PROJECT_APPS = [
