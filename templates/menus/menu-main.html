@@ -3,21 +3,9 @@
 <div class="menu-main" id="menu-main">
     <ul class="menu-main__links">
         <li class="menu-main__link">
-            <a href="{% url 'about' %}"
-               title="{% trans 'Sección informativa del sitio' %}">
-                {% trans 'Acerca' %}
-            </a>
-        </li>
-        <li class="menu-main__link">
-            <a href="{% url 'resources' %}"
-               title="{% trans 'Recursos legales y documentales sobre la reutilización' %}">
-                {% trans 'Recursos' %}
-            </a>
-        </li>
-        <li class="menu-main__link">
-            <a href="{% url 'materials' %}"
-               title="{% trans 'Lista de materiales subidos a la plataforma' %}">
-                {% trans 'Materiales' %}
+            <a href="{% url 'reuses' %}"
+               title="{% trans 'Ejemplos de reutilización según los valores de la plataforma' %}">
+                {% trans 'Reusos' %}
             </a>
         </li>
         <li class="menu-main__link">
@@ -27,15 +15,21 @@
             </a>
         </li>
         <li class="menu-main__link">
-            <a href="{% url 'reuses' %}"
-               title="{% trans 'Ejemplos de reutilización según los valores de la plataforma' %}">
-                {% trans 'Reusos' %}
+            <a href="{% url 'resources' %}"
+               title="{% trans 'Recursos legales y documentales sobre la reutilización' %}">
+                {% trans 'Recursos' %}
             </a>
         </li>
         <li class="menu-main__link">
             <a href="{% url 'blog' %}"
                title="{% trans 'Blog del colectivo que impulsa este proyecto' %}">
                 {% trans 'Blog' %}
+            </a>
+        </li>
+        <li class="menu-main__link">
+            <a href="{% url 'about' %}"
+               title="{% trans 'Sección informativa del sitio' %}">
+                {% trans 'Acerca' %}
             </a>
         </li>
         <li class="menu-main__link menu-main__link--login">

@@ -88,6 +88,21 @@
     &:active
       color: $color_text
 
+=links_subheader
+  a
+    text-transform: uppercase
+    +h(5)
+    padding: $m/4 $m/3
+    +transition(color .1s ease)
+    border: 1px solid white
+    &:link, &:visited
+      color: white
+    &:hover
+      color: $palette_yellow
+    &:active
+      color: white
+
+
 =button_simple
   border: none
   background: none

@@ -4,7 +4,8 @@
 {% block layout %}
 
     {% include 'regions/header.html' with region_name='header' html_container='header' layout='fixed' %}
-
+    {% include 'regions/subheader.html' with region_name='subheader' html_container='section' layout='fixed' %}
+    
     <div class="region-preface">
         <div class="container-fixed">
             {% block preface %}{% endblock %}
