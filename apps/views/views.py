@@ -98,19 +98,19 @@ class ReferencesView(ListView):
 class ReusesView(ListView):
     """View of the Reuse model instances."""
 
-    model = models.Reuse
+    model = models.Space
 
     def get_queryset(self):
         user = self.request.user
         if user.is_anonymous:
-            return models.Reuse.objects.filter(published=True).all().order_by('-active', '-date')
+            return models.Space.objects.filter(published=True, reuse=True).all().order_by('-active', '-creation_date')
         elif user.is_staff:
-            return models.Reuse.objects.all().order_by('-active', '-date')
-        published = queryset.filter(published=True)
-        own       = queryset.filter(nodes__in=user.node_set)
-        return (published | own).order_by('-active', '-date')
+            return models.Space.objects.filter(reuse=True).order_by('-active', '-creation_date')
+        published = models.Space.objects.filter(published=True, reuse=True)
+        own       = models.Space.objects.filter(nodes__in=user.node_set)
+        return (published | own).order_by('-active', '-creation_date')
 
 class ReuseItemView(DetailView):
     """View of a Reuse model instance."""
 
-    model = models.Reuse
+    model = models.Space

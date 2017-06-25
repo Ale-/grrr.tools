@@ -8,8 +8,12 @@
             {% include 'forms/field.html' with field=form.name %}
         </div>
         <div class="fieldset__right--two-col">
-            {% include 'forms/field.html' with field=form.date  %}
+            {% include 'forms/field.html' with field=form.published %}
         </div>
+    </div>
+    <div class="fieldset--inline">
+        {% include 'forms/field.html' with field=form.reuse %}
+        {% include 'forms/field.html' with field=form.active %}    
     </div>
     <div class="fieldset--two-col">
         <div class="fieldset__left--two-col">
@@ -31,13 +35,5 @@
     </div>
     <div class="fieldset--one-col">
         {% include 'forms/field.html' with field=form.nodes %}
-    </div>
-    <div class="fieldset--two-col">
-        <div class="fieldset__left--two-col">
-            {% include 'forms/field.html' with field=form.published  %}
-        </div>
-        <div class="fieldset__right--two-col">
-            {% include 'forms/field.html' with field=form.active  %}
-        </div>
     </div>
 </div>

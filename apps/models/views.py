@@ -108,63 +108,64 @@ class NodeDelete(GenericDelete):
     return reverse('nodes')
 
 #
-# Reuse
+# Space
 #
 
-reuse_explanation = ("Los reusos cuentan cómo los nodos reutilizan los materiales. Pueden tener asociados los acuerdos "
-                     "de cesión que se usaron (y se reflejaran en la sección 'Acuerdos' automáticamente) y lotes de materiales "
-                     "que se contabilizarán como 'materiales activados' en las vistas de nodos. Intenta dar detalles que permitan "
-                     "replicar las cualidades positivas de tu reuso y evitar los errores que tuviste.")
+space_explanation = ("Los espacios son lo que su nombre indica: espacios reales que forman parte de la red GRRR. Por ejemplo "
+                     "podrían ser espacios: el almacén municipal de un ayuntamiento, el taller de un nodo o un solar dónde se "
+                     "está creando un huerto comunitario a partir de materiales reutilizados. Los materiales se mueven entre "
+                     "espacios y son los espacios los que tienen asociadas ofertas y demandas. Los espacios también pueden tener "
+                     "asociados documentos de cesión y disponen de una bitácora en la plataforma. ")
 
-class ReuseCreate(GenericCreate):
-  """ Modelform view to create a Reuse object"""
+class SpaceCreate(GenericCreate):
+  """ Modelform view to create a Space object"""
 
-  title = _('Publica un reuso')
-  explanation = _(reuse_explanation)
-  form_class = forms.ReuseForm
+  title = _('Añade un espacio a la red GRRR')
+  explanation = _(space_explanation)
+  form_class = forms.SpaceForm
   dependencies = ['leaflet']
-  model = models.Reuse
+  model = models.Space
   template_name = generic_template
-  form__html_class = 'reuse'
+  form__html_class = 'space'
 
   def get_context_data(self, **kwargs):
-    context = super(ReuseCreate, self).get_context_data(**kwargs)
-    context['submit_text'] = _('Publica el reuso')
+    context = super(SpaceCreate, self).get_context_data(**kwargs)
+    context['submit_text'] = _('Crea este contenido')
     context['explanation'] = self.explanation
     return context
 
   def get_success_url(self):
-    return reverse('reuses')
+    return reverse('spaces')
 
-class ReuseEdit(GenericUpdate):
-  """ Modelform view to edit a Reuse object"""
+class SpaceEdit(GenericUpdate):
+  """ Modelform view to edit a Space object"""
 
-  title = _('Editar')
-  explanation = _(reuse_explanation)
-  form_class = forms.ReuseForm
+  title = _('Edita')
+  explanation = _(space_explanation)
+  form_class = forms.SpaceForm
   dependencies = ['leaflet']
-  model = models.Reuse
+  model = models.Space
   template_name = generic_template
 
   def get_success_url(self):
-    return reverse('reuse', args=(self.object.slug,))
+    return reverse('space', args=(self.object.slug,))
 
   def get_context_data(self, **kwargs):
     context = super(GenericUpdate, self).get_context_data(**kwargs)
     context['title'] = self.title + (' ') + self.object.name
     context['explanation'] = self.explanation
-    context['form__html_class'] = 'reuse'
-    context['submit_text'] = _('Edita este reuso')
+    context['form__html_class'] = 'space'
+    context['submit_text'] = _('Guardar los cambios')
     return context
 
-class ReuseDelete(GenericDelete):
-  """ Modelform view to delete a Reuse object"""
+class SpaceDelete(GenericDelete):
+  """ Modelform view to delete a Space object"""
 
   title = _('Borra el reuso')
-  model = models.Reuse
+  model = models.Space
 
   def get_initial(self):
-    super(ReuseDelete, self).get_initial()
+    super(SpaceDelete, self).get_initial()
     if not self.object.edit_permissions( self.request.user ):
       raise PermissionDenied
     return self.initial
@@ -172,13 +173,13 @@ class ReuseDelete(GenericDelete):
   def get_context_data(self, **kwargs):
     context = super(GenericDelete, self).get_context_data(**kwargs)
     context['title'] = self.title + (' ') + self.object.name
-    context['form__html_class'] = 'reuse'
-    context['submit_text'] = _('Elimina este reuso')
+    context['form__html_class'] = 'space'
+    context['submit_text'] = _('Borra este contenido')
     return context
 
 
   def get_success_url(self):
-    return reverse('reuses')
+    return reverse('spaces')
 
 #
 # Material

@@ -11,11 +11,11 @@ urlpatterns = [
     url(r'^borra/nodo/(?P<pk>.+)$', views.NodeDelete.as_view(), name="delete_node"),
 
     # Add project form
-    url(r'^crea/reuso$', views.ReuseCreate.as_view(), name="create_reuse"),
+    url(r'^crea/espacio$', views.SpaceCreate.as_view(), name="create_space"),
     # Edit project form
-    url(r'^edita/reuso/(?P<pk>.+)$', views.ReuseEdit.as_view(), name="edit_reuse"),
+    url(r'^edita/espacio/(?P<pk>.+)$', views.SpaceEdit.as_view(), name="edit_space"),
     # Remove project form
-    url(r'^borra/reuso/(?P<pk>.+)$', views.ReuseDelete.as_view(), name="delete_reuse"),
+    url(r'^borra/espacio/(?P<pk>.+)$', views.SpaceDelete.as_view(), name="delete_space"),
 
     # Add project form
     url(r'^crea/post$', views.PostCreate.as_view(), name="create_post"),

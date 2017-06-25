@@ -66,11 +66,11 @@ class PostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
 
-class ReuseForm(forms.ModelForm):
+class SpaceForm(forms.ModelForm):
     """Form to create/update Blog posts"""
 
     class Meta:
-        model   = models.Reuse
+        model   = models.Space
         fields = '__all__'
         widgets = {
             'geom'    : utils.GeocodedLeafletWidget(submit_text='Localiza el reuso', provider="google", sources="id_place id_address"),
@@ -79,7 +79,7 @@ class ReuseForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        super(ReuseForm, self).__init__(*args, **kwargs)
+        super(SpaceForm, self).__init__(*args, **kwargs)
 
 class SmsForm(forms.ModelForm):
     """Sms modelforms"""

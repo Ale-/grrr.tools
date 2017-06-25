@@ -1,34 +1,34 @@
 {# Render a Blog post in a view #} {% load utils i18n imagekit %}
 
-<div class="reuse-item {% if not item.published %}unpublished{% endif %}">
+<div class="space-item {% if not item.published %}unpublished{% endif %}">
     {% user_actions item user %}
     <a class="inner" href="{% url 'reuse' item.slug %}">
         {% if item.image %}
-            <div class="reuse-item__field-image">
+            <div class="space-item__field-image">
                 {% thumbnail '400x' item.image %}
             </div>
         {% endif %}
-        <h4 class="reuse-item__field-name">
+        <h4 class="space-item__field-name">
             {{ item.name }}
         </h4>
-        <div class="reuse-item__field-date">
+        <div class="space-item__field-date">
             {{ item.date|date:"d-M-Y"  }}
         </div>
-        <div class="reuse-item__field-summary">
+        <div class="space-item__field-summary">
             {{ item.summary }}
         </div>
         {% if not item.published %}
-            <div class="reuse-item__field-published">
+            <div class="space-item__field-published">
                 <p>{% trans 'No publicado' %}</p>
             </div>
         {% endif %}
         {% if item.active %}
-            <div class="reuse-item__field-active">
+            <div class="space-item__field-active">
                 <span class="icon-repeat"></span> {% trans 'Reuso en marcha' %}
             </div>
         {% endif %}
         {% if item.ratings.all.0.average >= 4.0 %}
-            <div class="reuse-item__field-quality-seal">
+            <div class="space-item__field-quality-seal">
                 <img src="{% img '/ethic-code/sello-calidad-grrr.png' %}" />
             </div>
         {% endif %}

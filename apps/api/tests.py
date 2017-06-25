@@ -38,7 +38,7 @@ class ApiTest(TestCase):
         self.assertEqual(reuses_response.status_code, 200)
         self.assertEqual(reuses_response.content.decode("utf-8"), "If a tree falls in the woods and nobody is there to hear it, does it make a sound?")
         # Check view with contents
-        test_post = mommy.make("models.Reuse", wysiwyg="Lorem ipsum.", geom=json.loads('{ "type": "Point", "coordinates": [ 0 , 0 ] }'))
+        test_post = mommy.make("models.Space", reuse=True, geom=json.loads('{ "type": "Point", "coordinates": [ 0 , 0 ] }'))
         reuses_response = c.get(reverse('api:reuses_service'))
         content = reuses_response.json()
         self.assertEqual(reuses_response.status_code, 200)

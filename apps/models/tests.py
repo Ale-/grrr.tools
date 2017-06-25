@@ -22,13 +22,13 @@ class NodeTest(TestCase):
         self.assertEqual(node.slug, slugify(node.name))
         self.assertEqual(node.creation_date, date.today())
 
-class ReuseTest(TestCase):
+class SpaceTest(TestCase):
     """ Test Reuses creation """
 
-    def test_reuse_creation(self):
-        node = mommy.make("models.Reuse", wysiwyg="Lorem ipsum.")
+    def test_space_creation(self):
+        node = mommy.make("models.Space")
         # Check string representation
-        self.assertTrue(isinstance(node, models.Reuse))
+        self.assertTrue(isinstance(node, models.Space))
         # Check fields
         self.assertEqual(node.__str__(), node.name)
         self.assertEqual(node.slug, slugify(node.name))

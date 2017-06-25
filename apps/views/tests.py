@@ -146,7 +146,7 @@ class ViewsTest(TestCase):
         # Check empty view
         self.assertEqual(response.status_code, 200)
         # Check prepopulated view
-        self.test_post = mommy.make("models.Reuse", wysiwyg="Lorem ipsum.")
+        self.test_post = mommy.make("models.Space", reuse=True)
         response = c.get(reverse('reuses'))
         content = response.context['object_list']
         self.assertEqual(response.status_code, 200)

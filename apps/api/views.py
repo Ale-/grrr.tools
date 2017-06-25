@@ -28,7 +28,7 @@ def nodes(request):
 def reuses(request):
   """API endpoint to get all reuses in the site"""
 
-  nodes = models.Reuse.objects.all()
+  nodes = models.Space.objects.filter(reuse=True, published=True)
   if len(nodes) > 0:
       jsondump = []
       for node in nodes:

@@ -160,36 +160,35 @@ class Agreement(models.Model):
             self.creation_date = date.today()
         super(Agreement, self).save(*args, **kwargs)
 
-class Reuse(models.Model):
-    """Cases of reuse done by projects of the nodes in the network."""
+class Space(models.Model):
+    """Spaces of the network."""
 
-    name      = models.CharField(_("Nombre"), max_length=128,
-                help_text=_("Ponle un nombre significativo al reuso."))
-    slug      = models.SlugField(editable=False, blank=True)
-    published = models.BooleanField(_("Publicado"), default=True, blank=False,
-                help_text=_("Sólo los contenidos publicados serán visibles. Desmarca esta casilla para generar un borrador que podrás publicar más adelante, cuando esté acabado."))
-    date      = models.DateField(_("Fecha del reuso"), default=date.today,
-                help_text=_("Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015."))
-    nodes     = models.ManyToManyField(Node, verbose_name="Nodos", blank=False, related_name="Nodos",
-                help_text=_("¿Qué nodos de la red han participado en el reuso? Mantén presionado 'Control' o 'Command' en un Mac, para seleccionar más de una opción."))
-    image     = models.ImageField(_("Imagen"), blank=False, upload_to="images/news/",
-                help_text=_("Una imagen significativa del reuso para las vistas de resúmenes de contenido y el encabezado de la vista completa. Puedes añadir más imágenes al texto completo del reuso."))
-    thumbnail = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
-    agreement = models.ManyToManyField(Agreement, verbose_name="Acuerdos", related_name="agreement", blank=True,
-                help_text=_("Puedes asociar documentos de acuerdos de cesión al reuso."))
-    wysiwyg   = RichTextUploadingField(_("Texto completo"), blank=False,
-                help_text=_("Cuerpo de texto del reuso."))
-    summary   = models.TextField(_("Resumen"), blank=False,
-                help_text=_("Un resumen de la noticia para las vistas de contenidos, si no lo usas se usará un recorte del cuerpo."))
-    place     = models.CharField(_("Localidad"), max_length=128, blank=True, null=True,
-                help_text=_("El nombre de la localidad —ciudad, pueblo, ámbito— donde se hizo el reuso. Aunque es opcional, esta información ayuda al resto de usuari@s a contextualizar la iniciativa rápidamente."))
-    address   = models.CharField(_("Dirección"), max_length=128, blank=True, null=True,
-                help_text=_("Dirección del nodo. No es necesario que incluyas la localidad anterior."))
-    geom      = PointField(_("Ubicación"), blank=False, null=True,
-                help_text=_("¿Dónde se hizo el reuso?"))
-    active    = models.BooleanField(_("Activo"), default=True, blank=False,
-                help_text=_("¿Este reuso es un proceso en marcha o se da por finalizado? Los proyectos en marcha tienen mayor visibilidad en la plataforma."))
-    ratings   = GenericRelation(Rating, related_query_name='reuses')
+    name          = models.CharField(_("Nombre"), max_length=128,
+                    help_text=_("Ponle un nombre significativo al espacio."))
+    slug          = models.SlugField(editable=False, blank=True)
+    creation_date = models.DateField(_("Fecha de alta en la plataforma"), default=date.today)
+    reuse         = models.BooleanField(_("¿Es un reuso"), default=True, blank=False,
+                    help_text=_("¿Es el espacio el escenario de un reuso?"))
+    active        = models.BooleanField(_("Activo"), default=True, blank=False,
+                    help_text=_("¿Este reuso es un proceso en marcha o se da por finalizado? Los proyectos en marcha tienen mayor visibilidad en la plataforma."))
+    published     = models.BooleanField(_("Publicado"), default=True, blank=False,
+                    help_text=_("Sólo los contenidos 'publicados' son visibles. Desmarca esta casilla para generar un contenido provisional que podrás hacer público más adelante."))
+    nodes         = models.ManyToManyField(Node, verbose_name="Nodos", blank=False, related_name="Nodos",
+                    help_text=_("¿Qué nodos de la red participan en este espacio? Mantén presionado 'Control' o 'Command' en un Mac, para seleccionar más de una opción."))
+    image         = models.ImageField(_("Imagen"), blank=False, upload_to="images/news/",
+                    help_text=_("Una imagen significativa del espacio para las vistas de resúmenes de contenido y el encabezado de la vista completa. Puedes añadir más imágenes al texto completo del reuso."))
+    thumbnail     = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
+    agreement     = models.ManyToManyField(Agreement, verbose_name="Acuerdos", related_name="agreement", blank=True,
+                    help_text=_("Puedes asociar documentos de acuerdos de cesión al espacio."))
+    summary       = models.TextField(_("Resumen"), blank=False,
+                    help_text=_("Un resumen de la noticia para las vistas de contenidos, si no lo usas se usará un recorte del cuerpo."))
+    place         = models.CharField(_("Localidad"), max_length=128, blank=True, null=True,
+                    help_text=_("El nombre de la localidad —ciudad, pueblo, ámbito— donde se hizo el reuso. Aunque es opcional, esta información ayuda al resto de usuari@s a contextualizar la iniciativa rápidamente."))
+    address       = models.CharField(_("Dirección"), max_length=128, blank=True, null=True,
+                    help_text=_("Dirección del nodo. No es necesario que incluyas la localidad anterior."))
+    geom          = PointField(_("Ubicación"), blank=False, null=True,
+                    help_text=_("Usa el botón inferior para localizar el espacio a partir de los valores de los campos anteriores, 'Localidad' y 'Dirección'."))
+    ratings       = GenericRelation(Rating, related_query_name='reuses')
 
     def __str__(self):
         """String representation of model instances."""
@@ -198,7 +197,7 @@ class Reuse(models.Model):
     def save(self, *args, **kwargs):
         """Custom save functions that populates automatically 'slug' field"""
         self.slug = slugify(self.name)
-        super(Reuse, self).save(*args, **kwargs)
+        super(Space, self).save(*args, **kwargs)
 
     def edit_permissions(self, user):
         """Returns users allowed to edit an instance of this model."""
