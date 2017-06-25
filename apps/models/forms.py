@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 from . import models
 from apps.utils import widgets as utils
+from apps.utils.fields import GroupedModelChoiceField
+from . import categories
 
 class NodeCreateForm(forms.ModelForm):
     """Form to create/update Node objects"""
@@ -102,3 +104,30 @@ class SmsForm(forms.ModelForm):
             self.base_fields['receiver'].empty_label = None
             self.base_fields['receiver'].queryset = models.Node.objects.all().order_by('name')
         super(SmsForm, self).__init__(*args, **kwargs)
+
+class BatchForm(forms.ModelForm):
+    """Batch modelforms"""
+
+    def group_label(material_key):
+        return dict(categories.MATERIALS_BY_FAMILY)[material_key]
+
+    material = GroupedModelChoiceField(queryset=models.Material.objects.order_by('family', 'name'),
+                                       label='Material',
+                                       help_text=_('El material del que se compone el lote.'),
+                                       group_by_field='family', group_label=group_label,
+                                       empty_label=" ", widget = utils.SelectOrAddWidget(view_name='models:create_material_popup', link_text=_("Añade un material")) )
+
+    class Meta:
+        model   = models.Batch
+        fields = '__all__'
+        widgets = {
+            'image'       : utils.PictureWithPreviewWidget(),
+            'public_info' : utils.LimitedTextareaWidget(limit=500),
+            'private_info' : utils.LimitedTextareaWidget(limit=500)
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.base_fields['material'].empty_label = None
+        self.base_fields['space'].empty_label = None
+        self.base_fields['space'].queryset = models.Space.objects.order_by('name')
+        super(BatchForm, self).__init__(*args, **kwargs)

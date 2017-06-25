@@ -238,3 +238,58 @@ class Sms(models.Model):
     def __str__(self):
         """String representation of model instances."""
         return "Mensaje de " + self.emissor.name + " a " + self.receiver.name + " del " + str(self.date)
+
+
+class Batch(models.Model):
+    """Batches of the same material associated to spaces."""
+
+    space        = models.ForeignKey(Space, verbose_name=_("Espacio"), null=True,
+                   help_text=_("¿En qué espacio está este lote?"))
+    material     = models.ForeignKey(Material, verbose_name=_("Material"), blank=False, null=True, on_delete=models.SET_NULL,
+                   help_text=_("El material del que se compone el lote"))
+    image        = models.ImageField(_("Imagen"), blank=True, upload_to="images/batches/")
+    quantity     = models.PositiveIntegerField(_("Cantidad total"), null=True,
+                   help_text=_("Cantidad total de material en el lote, medido en las unidades del material"))
+    offered      = models.PositiveIntegerField(_("Cantidad ofrecida"),
+                   help_text=_("¿Cuánto se ofrece de la cantidad total?"))
+    public_info  = models.TextField(_("Información pública"), blank=True, null=True,
+                   help_text=_("Información sobre este lote, visible de manera pública"))
+    private_info = models.TextField(_("Información privada"), blank=True, null=True,
+                   help_text=_("Información sobre el lote, sólo visible para usuari-s de los nodos asociados al espacio"))
+    expiration   = models.DateField(_("Fecha de expiración"), blank=True, null=True,
+                   help_text=_("Fecha límite para acceder a la oferta asociada. Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015."))
+
+    class Meta:
+        verbose_name_plural = "Batches"
+
+    def __str__(self):
+          """Sets string representation of model instances."""
+          return self.space.name + " · Material: " + (self.material.name if self.material else "NULL") + " # " + str(self.id)
+
+    @property
+    def material_family(self):
+        """Returns the family of the Material object associated with the Batch instance."""
+        return self.material.family
+
+    def material_id(self):
+        """Returns the id of the Material object associated with the Batch instance."""
+        return self.material.material_id()
+
+    def edit_permissions(self, user):
+        """Returns users allowed to edit an instance of this model."""
+        return self.space.edit_permissions(user)
+
+    def save(self, *args, **kwargs):
+        """Notifies the creation of the instance to nodes that demand the material of the batch."""
+        # TODO:
+        # if self.public_quantity is not None and self.public_quantity > 0:
+        #     batches = Batch.objects.filter(material=self.material).filter(public_quantity=0)
+        #     for batch in batches:
+        #         msg = ProjectMessage()
+        #         msg.body = "Es un mensaje automático para indicarte que se ha creado un lote que se ajusta a una necesidad tuya"
+        #         msg.category = 'of'
+        #         msg.emissor = self.project
+        #         msg.receiver = batch.project
+        #         msg.save()
+
+        super(Batch, self).save(*args, **kwargs)

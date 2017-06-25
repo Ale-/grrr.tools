@@ -81,13 +81,13 @@ class AgreementsView(ListView):
 
     model = models.Agreement
 
-class MaterialsView(ListView):
-    """View of the Material model instances."""
+class BatchesView(ListView):
+    """View of the Batches model instances."""
 
-    model = models.Material
+    model = models.Batch
 
     def get_queryset(self):
-        queryset = models.Material.objects.all().order_by('family', 'subfamily')
+        queryset = models.Batch.objects.filter(offered__gt=0)
         return queryset
 
 class ReferencesView(ListView):

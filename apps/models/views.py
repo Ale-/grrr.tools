@@ -308,3 +308,74 @@ class SmsCreate(GenericCreate):
 
   def get_success_url(self):
     return reverse('dashboard')
+
+
+#
+# Mensaje
+#
+
+batch_explanation = ("Los lotes son partidas de un mismo material y asociadas a un espacio.")
+
+class BatchCreate(GenericCreate):
+  """ Modelform view to create a Batch object"""
+
+  title = _('Añade un lote')
+  explanation = _(batch_explanation)
+  form_class = forms.BatchForm
+  model = models.Batch
+  template_name = generic_template
+  form__html_class = 'batch'
+
+  def get_context_data(self, **kwargs):
+    context = super(BatchCreate, self).get_context_data(**kwargs)
+    context['submit_text'] = _('Registra este lote')
+    context['explanation'] = self.explanation
+    return context
+
+  def get_success_url(self):
+    return reverse('reuses')
+
+
+class BatchEdit(GenericUpdate):
+  """ Modelform view to edit a Batch object"""
+
+  title = _('Edita este lote')
+  explanation = _(batch_explanation)
+  form_class = forms.BatchForm
+  dependencies = ['leaflet']
+  model = models.Batch
+  template_name = generic_template
+  form__html_class = 'batch'
+
+  def get_success_url(self):
+    return reverse('reuses')
+
+  def get_context_data(self, **kwargs):
+    context = super(GenericUpdate, self).get_context_data(**kwargs)
+    context['explanation'] = self.explanation
+    context['form__html_class'] = 'batch'
+    context['submit_text'] = _('Guarda los cambios')
+    return context
+
+
+class BatchDelete(GenericDelete):
+  """ Modelform view to delete a Batch object"""
+
+  title = _('Borra el nodo')
+  model = models.Batch
+
+  def get_context_data(self, **kwargs):
+    context = super(GenericDelete, self).get_context_data(**kwargs)
+    context['title'] = self.title + (' ') + self.object.name
+    context['form__html_class'] = 'batch'
+    context['submit_text'] = _('Borrar este contenido')
+    return context
+
+  def get_initial(self):
+    super(NodeEdit, self).get_initial()
+    if not self.object.edit_permissions( self.request.user ):
+      raise PermissionDenied
+    return self.initial
+
+  def get_success_url(self):
+    return reverse('reuses')

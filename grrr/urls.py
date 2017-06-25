@@ -42,7 +42,7 @@ urlpatterns += i18n_patterns(
     url(r'^nodo/(?P<slug>.+)$', views.NodeItemView.as_view(), name="node"),
     url(r'^aspectos-legales$', TemplateView.as_view(template_name="pages/legal-issues.html"), name='legal-issues'),
     url(r'^acuerdos$', views.AgreementsView.as_view(), name='agreements'),
-    url(r'^materiales$', views.MaterialsView.as_view(), name='materials'),
+    url(r'^busca$', views.BatchesView.as_view(), name='batches'),
     url(r'^referencias$', views.ReferencesView.as_view(), name='references'),
     url(r'^reusos$', views.ReusesView.as_view(), name='reuses'),
     url(r'^reuso/(?P<slug>.+)$', views.ReuseItemView.as_view(), name="reuse"),

@@ -160,12 +160,12 @@ class ViewsTest(TestCase):
         Checks reuses section view
         """
         c = Client()
-        response = c.get(reverse('materials'))
+        response = c.get(reverse('batches'))
         # Check empty view
         self.assertEqual(response.status_code, 200)
         # Check prepopulated view
-        self.test_post = mommy.make("models.Material")
-        response = c.get(reverse('materials'))
+        self.test_post = mommy.make("models.Batch", offered=1)
+        response = c.get(reverse('batches'))
         content = response.context['object_list']
         self.assertEqual(response.status_code, 200)
         self.assertEqual(content.count(), 1)

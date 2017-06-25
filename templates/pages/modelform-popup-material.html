@@ -1,0 +1,15 @@
+{# Modelform page #} {% extends 'layouts/single-fixed-column.html' %} {% load static i18n utils  %}
+{% block body_classes %}modelform{% endblock %} {% block htmltitle %}Añade un material{% endblock %}
+
+{# Main content #}
+{% block main %}
+    {% trans 'Añade un material' as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="square-plus" %}
+    {% if explanation %}
+        {% include 'blocks/explanation.html' with icon='ℹ' classname='modelform' text=explanation %}
+    {% endif %}
+    {% include "forms/form.html" with form=form form_class='material' submit_text="Añade el material" %}
+{% endblock %}
+
+{% block page_scripts %}
+  {{ form.media }}
+{% endblock %}

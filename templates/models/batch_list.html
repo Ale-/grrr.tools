@@ -1,10 +1,10 @@
 {# Views of existing nodes in the GRRR network #} {% extends 'layouts/single-fixed-column.html' %} {% load i18n static utils %}
-{% block body_classes %}materials{% endblock %}{% block htmltitle %}{% trans 'Materiales' %}{% endblock %}
+{% block body_classes %}materials{% endblock %}{% block htmltitle %}{% trans 'Busca' %}{% endblock %}
 
 {# Preface #}
 {% block preface %}
     {% breadcrumb %}
-    {% trans 'Buscador' as pagetitle %}
+    {% trans 'Busca' as pagetitle %}
     {% include 'blocks/page-title.html' with text=pagetitle icon='box' %}
     {% url 'contact_form' as contact_url %}
     {% trans 'Contacta con el equipo GRRR' as contact_title%}
@@ -21,5 +21,5 @@
 
 {% block main %}
     <h2>{% trans 'Ofertas y demandas' %}</h2>
-    {% lorem %}
+    {% view items=object_list user=request.user %}
 {% endblock %}

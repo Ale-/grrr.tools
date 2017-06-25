@@ -89,3 +89,15 @@ class SmsTest(TestCase):
         self.assertTrue(isinstance(sms, models.Sms))
         # Check fields
         self.assertEqual(sms.__str__(), "Mensaje de " + sms.emissor.name + " a " + sms.receiver.name + " del " + str(sms.date))
+
+
+class BatchTest(TestCase):
+    """ Test Sms creation """
+
+    def test_batch_creation(self):
+        space = mommy.make('models.Space')
+        batch = mommy.make('models.Batch', space=space)
+        # Check string representation
+        self.assertTrue(isinstance(batch, models.Batch))
+        # Check fields
+        self.assertEqual(batch.__str__(), space.name + " · Material: " + (batch.material.name if batch.material else "NULL") + " # " + str(batch.id))

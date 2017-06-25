@@ -1,6 +1,8 @@
 from django.conf.urls import url
-from . import views
 
+from . import views
+from .forms import MaterialForm
+from apps.utils.views import PopupFormView
 
 urlpatterns = [
     # Add project form
@@ -24,8 +26,16 @@ urlpatterns = [
     # Remove project form
     url(r'^borra/post/(?P<pk>.+)$', views.PostDelete.as_view(), name="delete_post"),
 
+    # Add batch form
+    url(r'^crea/lote$', views.BatchCreate.as_view(), name="create_batch"),
+    # Edit batch form
+    url(r'^edita/lote/(?P<pk>.+)$', views.BatchEdit.as_view(), name="edit_batch"),
+    # Remove batch form
+    url(r'^borra/lote/(?P<pk>.+)$', views.BatchDelete.as_view(), name="delete_batch"),
+
     # Add material form
     url(r'^crea/material$', views.MaterialCreate.as_view(), name="create_material"),
+    url(r'^anade/material$', PopupFormView.as_view(form_class=MaterialForm, template_name="pages/modelform-popup-material.html"), name="create_material_popup"),
 
     # Add SMS form
     url(r'^envia/sms$', views.SmsCreate.as_view(), name="create_sms"),
