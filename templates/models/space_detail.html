@@ -20,13 +20,30 @@
 
 {# Content #}
 {% block main %}
-    <p class="inventory-link">
-        <a href="{% url 'inventory' object.slug %}">Ver inventario de {{ object.name }}</a>
-    </p>
-    {% trans 'Necesidades del espacio' as needs_title %}
-    {% view items=needs user=request.user title=needs_title %}
-    {% trans 'Bitácora del espacio' as blog_title %}
-    {% view items=blogposts user=request.user title=blog_title %}
+    <ul class="tabs">
+        <li class="tabs__item active">
+            <span class="label">{% trans 'Blog' %}</span> ({{ blogposts|length }})
+        </li>
+        {% if needs|length > 0 %}
+        <li class="tabs__item">
+            <span class="label">{% trans 'Necesidades' %}</span> ({{ needs|length }})
+        </li>
+        {% endif %}
+        {% if inventory|length > 0 %}
+        <li class="tabs__item">
+            <span class="label">{% trans 'Inventario' %}</span> ({{ inventory|length }})
+        </li>
+        {% endif %}
+    </ul>
+    <div class="profile-tab active">
+        {% view items=blogposts user=request.user classname_modifier="space" view_id=""%}
+    </div>
+    <div class="profile-tab">
+        {% view items=needs user=request.user title=needs_title classname_modifier="space"%}
+    </div>
+    <div class="profile-tab">
+        {% view items=inventory user=request.user classname_modifier="inventory" %}
+    </div>
 {% endblock %}
 
 {# Sidebar #}
@@ -37,5 +54,24 @@
 {# page scripts #}
 {% block page_scripts %}
     <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+    <script type="text/javascript">
+        var tabs         = document.querySelectorAll('.tabs__item');
+        var tabs_content = document.querySelectorAll('.profile-tab');
+        tabs.forEach( function(tab, i){
+            tab.addEventListener('click', function(event)
+            {
+                // Add active state to selected tab
+                tabs.forEach( function(tab){
+                    tab.classList.remove('active');
+                });
+                tabs[i].classList.add('active');
+                // Add active state to selected tab content
+                tabs_content.forEach( function(content){
+                    content.classList.remove('active');
+                });
+                tabs_content[i].classList.add('active');
+            });
+        })
+    </script>
     {% leaflet_js %}
 {% endblock %}
