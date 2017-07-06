@@ -8,7 +8,7 @@
             {% include 'forms/field.html' with field=form.title %}
         </div>
         <div class="fieldset__right--two-col">
-            {% include 'forms/field.html' with field=form.creation_date %}
+            {% include 'forms/field.html' with field=form.space %}
         </div>
     </div>
     <div class="fieldset--two-col">
@@ -22,7 +22,11 @@
     <div class="fieldset--one-col">
         {% include 'forms/field.html' with field=form.wysiwyg %}
     </div>
-    <div class="fieldset--one-col">
+    <div class="fieldset--inline">
         {% include 'forms/field.html' with field=form.published %}
+        {% if request.user.is_staff %}
+            {% include 'forms/field.html' with field=form.grrr_blog %}
+            {% include 'forms/field.html' with field=form.creation_date %}
+        {% endif %}
     </div>
 </div>
