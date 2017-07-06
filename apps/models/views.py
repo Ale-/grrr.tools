@@ -248,6 +248,12 @@ class PostEdit(GenericUpdate):
   template_name = generic_template
   form__html_class = 'blogpost'
 
+  def get_initial(self):
+    super(PostEdit, self).get_initial()
+    return {
+        'user' : self.request.user
+    }
+
   def get_context_data(self, **kwargs):
     context = super(GenericUpdate, self).get_context_data(**kwargs)
     context['title'] = self.title + (' ') + self.object.title
