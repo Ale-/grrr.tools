@@ -1,0 +1,30 @@
+{# Render a Blog post in a view #} {% load utils i18n imagekit %}
+
+<div class="post-item--space {% if not item.published %}unpublished{% endif %}">
+    {% user_actions item user %}
+    <a class="inner" href="{% url 'blogpost' item.slug %}">
+        <div class="inner__left">
+        {% if item.image %}
+            <div class="post-item--space__field-image">
+                    {% thumbnail '400x' item.image %}
+            </div>
+        {% endif %}
+        </div>
+        <div class="inner_right">
+            <h4 class="post-item--space__field-title">
+                {{ item.title }}
+            </h4>
+            <div class="post-item--space__field-date">
+                {{ item.creation_date|date:"d-M-Y" }}
+            </div>
+            <div class="post-item--space__field-summary">
+                {{ item.summary }}
+            </div>
+            {% if not item.published %}
+                <div class="post-item--space__field-published">
+                    {% trans 'No publicado' %}
+                </div>
+            {% endif %}
+        </div>
+    </a>
+</div>

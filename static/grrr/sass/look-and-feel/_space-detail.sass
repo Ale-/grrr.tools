@@ -1,0 +1,30 @@
+// Profile of a Space object
+// apps/utils/models/space-detail.html
+
+.profile-tab
+  display: none
+  margin-top: $m*2
+.profile-tab.active
+  display: block
+
+.tabs
+  text-align: right
+  border-bottom: 1px solid $color_text
+.tabs__item
+  color: #444
+  display: inline
+  margin-right: $m/2
+  margin-bottom: $m/2
+  padding: $m/6 $m/2 0
+  background: white
+  border-bottom: 1px solid $color_text
+  text-transform: uppercase
+  &:hover
+    cursor: pointer
+  .label
+    +h(6)
+.tabs__item.active
+  color: #111
+  border: 1px solid $color_text
+  border-width: 1px 1px 0
+  padding-bottom: 1px

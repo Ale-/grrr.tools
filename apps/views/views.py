@@ -120,26 +120,8 @@ class SpaceItemView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(SpaceItemView, self).get_context_data(**kwargs)
-        obj = super(SpaceItemView, self).get_object()
+        obj     = super(SpaceItemView, self).get_object()
         context['blogposts'] = models.Post.objects.filter(space=obj)
         context['needs']     = models.Batch.objects.filter(category='de', space=obj)
+        context['inventory'] = models.Batch.objects.filter(category='of', space=obj)
         return context
-
-
-class InventoryView(ListView):
-    """View of the Batches model instances."""
-
-    model = models.Batch
-    template_name = 'models/inventory.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(InventoryView, self).get_context_data(**kwargs)
-        space = get_object_or_404(models.Space, slug=self.kwargs['slug'])
-        context['object'] = space
-        context['agreements'] = space.agreement.all()
-        return context
-
-    def get_queryset(self):
-        space = get_object_or_404(models.Space, slug=self.kwargs['slug'])
-        queryset = models.Batch.objects.filter(space=space, category='of')
-        return queryset
