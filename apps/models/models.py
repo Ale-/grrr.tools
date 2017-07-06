@@ -101,39 +101,6 @@ class Material(models.Model):
         """Returns users allowed to edit an instance of this model."""
         return user.is_staff
 
-
-class Post(models.Model):
-    """News about the GRRR project and the site."""
-
-    title         = models.CharField(_("Título"), max_length=128,
-                                     help_text=_("El titulo del post."))
-    slug          = models.SlugField(editable=False, blank=True)
-    creation_date = models.DateField(_("Fecha"), default=date.today,
-                    help_text=_("Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015."))
-    author        = models.ForeignKey(User, related_name="author", verbose_name=_("Autor-"), null=True, blank=False)
-    published     = models.BooleanField(_("Publicado"), default=True, blank=False,
-                    help_text=_("Sólo los contenidos publicados serán visibles. Desmarca esta casilla para generar un borrador que podrás publicar más adelante, cuando esté acabado."))
-    image         = models.ImageField(_("Imagen"), blank=True, upload_to="images/blog/",
-                                      help_text="Una imagen representativa para las vistas de contenido y para la cabecera de la vista del post completo.")
-    thumbnail     = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
-    summary       = models.TextField(_("Resumen"), blank=True,
-                    help_text=_("Un resumen de la noticia para las vistas de contenidos, si no lo usas se usará un recorte del cuerpo."))
-    wysiwyg       = RichTextUploadingField(_("Texto"), blank=False,
-                    help_text=_("El texto completo de la noticia."))
-
-    def __str__(self):
-        """Uses Material title as string representation of model instances."""
-        return self.title
-
-    def save(self, *args, **kwargs):
-        """Custom save functions that populates automatically 'slug' field"""
-        self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
-
-    def edit_permissions(self, user):
-        """Returns users allowed to edit an instance of this model."""
-        return user.is_staff
-
 class Agreement(models.Model):
     """Agreement documents"""
 
@@ -166,7 +133,7 @@ class Space(models.Model):
     name          = models.CharField(_("Nombre"), max_length=128,
                     help_text=_("Ponle un nombre significativo al espacio."))
     slug          = models.SlugField(editable=False, blank=True)
-    creation_date = models.DateField(_("Fecha de alta en la plataforma"), default=date.today)
+    creation_date = models.DateField(_("Fecha de alta en la plataforma"), default=date.today, blank=True)
     reuse         = models.BooleanField(_("¿Es un reuso"), default=True, blank=False,
                     help_text=_("¿Es el espacio el escenario de un reuso?"))
     active        = models.BooleanField(_("Activo"), default=True, blank=False,
@@ -203,6 +170,42 @@ class Space(models.Model):
         """Returns users allowed to edit an instance of this model."""
         user_in_groups = self.nodes.filter(users__in = [user]).count() > 0
         return user_in_groups or user.is_staff
+
+class Post(models.Model):
+    """News about the GRRR project and the site."""
+
+    title         = models.CharField(_("Título"), max_length=128,
+                    help_text=_("El titulo del post."))
+    space         = models.ForeignKey(Space, verbose_name=_("Espacio"), null=True,
+                    help_text=_("¿Al blog de qué espacio está asociado este post?"))
+    slug          = models.SlugField(editable=False, blank=True)
+    creation_date = models.DateField(_("Fecha"), default=date.today,
+                    help_text=_("Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015."))
+    author        = models.ForeignKey(User, related_name="author", verbose_name=_("Autor-"), null=True, blank=False)
+    published     = models.BooleanField(_("Publicado"), default=True, blank=False,
+                    help_text=_("Sólo los contenidos publicados serán visibles. Desmarca esta casilla para generar un borrador que podrás publicar más adelante, cuando esté acabado."))
+    grrr_blog     = models.BooleanField(_("Blog del GRRR"), default=False, blank=False,
+                    help_text=_("Indica si es un post para el blog principal de la web."))
+    image         = models.ImageField(_("Imagen"), blank=True, upload_to="images/blog/",
+                                      help_text="Una imagen representativa para las vistas de contenido y para la cabecera de la vista del post completo.")
+    thumbnail     = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
+    summary       = models.TextField(_("Resumen"), blank=True,
+                    help_text=_("Un resumen de la noticia para las vistas de contenidos, si no lo usas se usará un recorte del cuerpo."))
+    wysiwyg       = RichTextUploadingField(_("Texto"), blank=False,
+                    help_text=_("El texto completo de la noticia."))
+
+    def __str__(self):
+        """Uses Material title as string representation of model instances."""
+        return self.title
+
+    def save(self, *args, **kwargs):
+        """Custom save functions that populates automatically 'slug' field"""
+        self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
+
+    def edit_permissions(self, user):
+        """Returns users allowed to edit an instance of this model."""
+        return user.is_staff
 
 class Reference(models.Model):
     """References linked to site's goals"""
@@ -243,21 +246,21 @@ class Sms(models.Model):
 class Batch(models.Model):
     """Batches of the same material associated to spaces."""
 
+    category     = models.CharField(_("¿Oferta o demanda?"), max_length=2, choices=categories.BATCH_CATEGORIES, default='de',
+                   help_text=_("¿Ofreces o necesitas materiales?"))
     space        = models.ForeignKey(Space, verbose_name=_("Espacio"), null=True,
-                   help_text=_("¿En qué espacio está este lote?"))
+                   help_text=_("¿A qué espacio está asociada la oferta/demanda?"))
     material     = models.ForeignKey(Material, verbose_name=_("Material"), blank=False, null=True, on_delete=models.SET_NULL,
                    help_text=_("El material del que se compone el lote"))
     image        = models.ImageField(_("Imagen"), blank=True, upload_to="images/batches/")
-    quantity     = models.PositiveIntegerField(_("Cantidad total"), null=True,
-                   help_text=_("Cantidad total de material en el lote, medido en las unidades del material"))
-    offered      = models.PositiveIntegerField(_("Cantidad ofrecida"),
-                   help_text=_("¿Cuánto se ofrece de la cantidad total?"))
+    quantity     = models.PositiveIntegerField(_("Cantidad"), blank=True, null=True,
+                   help_text=_("Especifica en las unidades del material cuánto se ofrece o necesita —opcional—."))
     public_info  = models.TextField(_("Información pública"), blank=True, null=True,
-                   help_text=_("Información sobre este lote, visible de manera pública"))
+                   help_text=_("Informa en este campo de características del lote."))
     private_info = models.TextField(_("Información privada"), blank=True, null=True,
-                   help_text=_("Información sobre el lote, sólo visible para usuari-s de los nodos asociados al espacio"))
+                   help_text=_("Información de carácter privado, sólo para usuari*s de los nodos asociados al espacio."))
     expiration   = models.DateField(_("Fecha de expiración"), blank=True, null=True,
-                   help_text=_("Fecha límite para acceder a la oferta asociada. Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015."))
+                   help_text=_("Fecha límite opcional para la oferta/demanda."))
 
     class Meta:
         verbose_name_plural = "Batches"

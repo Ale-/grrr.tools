@@ -135,7 +135,7 @@ class SpaceCreate(GenericCreate):
     return context
 
   def get_success_url(self):
-    return reverse('spaces')
+    return reverse('space', args=(self.object.slug,))
 
 class SpaceEdit(GenericUpdate):
   """ Modelform view to edit a Space object"""
@@ -179,7 +179,7 @@ class SpaceDelete(GenericDelete):
 
 
   def get_success_url(self):
-    return reverse('spaces')
+    return reverse('dashboard')
 
 #
 # Material
@@ -223,6 +223,12 @@ class PostCreate(GenericCreate):
   model = models.Post
   template_name = generic_template
   form__html_class = 'blogpost'
+
+  def get_initial(self):
+    super(PostCreate, self).get_initial()
+    return {
+        'user' : self.request.user
+    }
 
   def get_context_data(self, **kwargs):
     context = super(PostCreate, self).get_context_data(**kwargs)
@@ -325,6 +331,11 @@ class BatchCreate(GenericCreate):
   model = models.Batch
   template_name = generic_template
   form__html_class = 'batch'
+
+  def get_initial(self):
+    super(BatchCreate, self).get_initial()
+    context = { 'user' : self.request.user }
+    return context
 
   def get_context_data(self, **kwargs):
     context = super(BatchCreate, self).get_context_data(**kwargs)
