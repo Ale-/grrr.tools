@@ -14,9 +14,14 @@
     </li>
     {% endif %} {% if txt_3 %}
     <li class="breadcrumb__item">
-        <span>
+        {% if url_3 %}<a class="breadcrumb__link" href="{{ url_3 }}">{% endif %}
             {{ txt_3 }}
-        </span>
+        {% if url_3 %}</a>{% endif %}
+    </li>
+    {% endif %}
+    {% if txt_4 %}
+    <li class="breadcrumb__item">
+        {{ txt_4 }}
     </li>
     {% endif %}
 </ul>

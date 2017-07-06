@@ -66,10 +66,8 @@ def jquery():
     return  mark_safe("<script type='text/javascript' src='" + settings.STATIC_URL + "/admin/js/vendor/jquery/jquery.min.js'></script>")
 
 @register.inclusion_tag("breadcrumb.html")
-def breadcrumb(url_2=None, txt_2=None, txt_3=None):
-    return {
-        'url_2' : url_2, 'txt_2' : txt_2, 'txt_3' : txt_3
-    }
+def breadcrumb(url_2=None, txt_2=None, url_3=None, txt_3=None, txt_4=None):
+    return locals()
 
 @register.inclusion_tag("user-actions.html")
 def user_actions(object, user):
