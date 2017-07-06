@@ -7,7 +7,7 @@
         </h4>
     {% endif %}
 
-    <div class="view-{{ view_class }}{% if classname_modifier %}--{{ classname_modifier }}__content{% endif %}">
+    <div class="view-{{ view_class }}{% if classname_modifier %}--{{ classname_modifier }}{% endif %}__content">
         {% with 'views/'|add:template|add:'.html' as template %}
             {% for item in items %}
                 {% include template with item=item %}
