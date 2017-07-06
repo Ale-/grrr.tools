@@ -1,0 +1,81 @@
+// Profile to be shown on space pages
+// blocks/space-profile.html
+
+@import compass/css3/transition
+@import compass/css3/border-radius
+
+.space-profile__location
+  margin-bottom: 0
+  position: relative
+  &:hover
+    cursor: pointer
+    background-color: $palette_yellow
+
+.space-profile__location-icon
+  font-size: 16px
+  margin-right: $m/4
+
+.space-profile__location-icon,
+.space-profile__location-address
+  vertical-align: middle
+
+.space-profile__location-address::after
+  content: "⌄"
+  color: #555
+  position: absolute
+  font-size: 1.5em
+  right: 0
+  top: -8px
+
+.space-profile.active .space-profile__location-address::after
+  content: "⌃"
+  top: 0px
+
+.space-profile__location-map
+  visibility: hidden
+  height: 0
+  +transition(height .15s ease)
+
+.space-profile.active .space-profile__location-map
+  visibility: visible
+  height: 300px
+
+#space-location
+  height: 200px
+
+.space-profile__name
+  text-transform: uppercase
+  margin: $m/2 0
+
+.space-profile__location-trigger
+  border-bottom: 2px solid $color_text
+
+.space-profile__nodes-item
+  clear: both
+
+.space-profile__nodes-text,
+.space-profile__nodes-image
+  vertical-align: middle
+
+.space-profile__nodes-image
+  +border-radius(50%)
+  width: $m*2
+  margin-right: $m/2
+
+.space-profile__nodes-title,
+.space-profile__ratings-title,
+.space-profile__agreements-title
+  margin-bottom: $m/2
+  border-bottom: 1px solid $color_text
+
+.space-profile__ratings .star-ratings
+  text-align: center
+  background: #f5f5f5
+  padding: $m/2 0
+
+.space-profile__share .share
+  border-top: 2px solid $color_text
+  margin-top: $m/2
+
+.space-profile__agreements-icon
+  font-size: 24px
