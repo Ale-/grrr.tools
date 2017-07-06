@@ -46,3 +46,8 @@ MESSAGE_CATEGORIES = (
     ('of', _('Quiero notificar al nodo que tengo materiales que puede querer')),
     ('de', _('Tengo interés en materiales de este nodo')),
 )
+
+BATCH_CATEGORIES = (
+    ('of', _('Oferta de materiales')),
+    ('de', _('Demanda de materiales')),
+)

@@ -3,21 +3,19 @@
 {% load i18n %}
 
 <div class="form-fields--{{ form_class }}">
+    <div class="fieldset--inline">
+        {% include 'forms/field.html' with field=form.category %}
+        {% include 'forms/field.html' with field=form.space %}
+    </div>
     <div class="fieldset--two-col">
         <div class="fieldset__left--two-col">
-            {% include 'forms/field.html' with field=form.space %}
-        </div>
-        <div class="fieldset__right--two-col">
             {% include 'forms/field.html' with field=form.image %}
         </div>
-    </div>
-    <div class="fieldset--inline">
-        {% include 'forms/field.html' with field=form.material %}
-        {% include 'forms/field.html' with field=form.quantity %}
-    </div>
-    <div class="fieldset--inline">
-        {% include 'forms/field.html' with field=form.offered %}
-        {% include 'forms/field.html' with field=form.expiration %}
+        <div class="fieldset__right--two-col">
+            {% include 'forms/field.html' with field=form.material %}
+            {% include 'forms/field.html' with field=form.quantity %}
+            {% include 'forms/field.html' with field=form.expiration %}
+        </div>
     </div>
     <div class="fieldset--two-col">
         <div class="fieldset__left--two-col">
