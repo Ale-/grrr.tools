@@ -28,14 +28,13 @@ def fake_breadcrumb(text=fake_breadcrumb_default_text):
     return { 'text' : text }
 
 @register.inclusion_tag('view.html')
-def view(items=None, user=None, title=None, item_template_modifier=None):
+def view(items=None, user=None, title=None, classname_modifier=None, view_id=None):
+    view_class = 'empty'
     if len(items)>0:
         view_class = items[0].__class__.__name__.lower()
-    else:
-        view_class = 'empty'
     template   = view_class + "-item"
-    if item_template_modifier:
-        template += ("--" + item_template_modifier)
+    if classname_modifier:
+        template += ("--" + classname_modifier)
     return locals()
 
 @register.inclusion_tag('limited-choices-select.html')

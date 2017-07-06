@@ -1,13 +1,13 @@
 {# Base view #} {% load i18n %}
 
-<div class="view {% if view_class %}view--{{ view_class }}{% endif %}">
+<div class="view-{{ view_class }}{% if classname_modifier %}--{{ classname_modifier }}{% endif %}">
     {% if title %}
-        <h4 class="title {% if view_class %}view__title--{{ view_class }}{% endif %}">
+        <h4 class="view-{{ view_class }}{% if classname_modifier %}--{{ classname_modifier }}__title{% endif %}">
             {{ title }}
         </h4>
     {% endif %}
 
-    <div class="view__content {% if view_class %}view__content--{{ view_class }}{% endif %}">
+    <div class="view-{{ view_class }}{% if classname_modifier %}--{{ classname_modifier }}__content{% endif %}">
         {% with 'views/'|add:template|add:'.html' as template %}
             {% for item in items %}
                 {% include template with item=item %}
