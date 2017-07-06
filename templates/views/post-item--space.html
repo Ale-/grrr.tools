@@ -1,14 +1,14 @@
 {# Render a Blog post in a view #} {% load utils i18n imagekit %}
 
 <div class="post-item--space {% if not item.published %}unpublished{% endif %}">
-    {% user_actions item user %}
     <a class="inner" href="{% url 'blogpost' item.slug %}">
         <div class="inner__left">
-        {% if item.image %}
-            <div class="post-item--space__field-image">
-                    {% thumbnail '400x' item.image %}
-            </div>
-        {% endif %}
+            {% if item.image %}
+                <div class="post-item--space__field-image">
+                        {% thumbnail '400x' item.image %}
+                </div>
+            {% endif %}
+            {% user_actions item user %}
         </div>
         <div class="inner_right">
             <h4 class="post-item--space__field-title">
