@@ -1,7 +1,7 @@
 # Import django packages
 from django.views import View
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.utils.translation import ugettext_lazy as _
 
@@ -13,7 +13,10 @@ class FrontView(View):
     """View of frontpage."""
 
     def get(self, request):
-        blog_posts = models.Post.objects.all().order_by('-creation_date')[::4]
+        offers  = models.Batch.objects.filter(category='of')[::3]
+        demands = models.Batch.objects.filter(category='de')[::3]
+        spaces  = models.Space.objects.filter(published=True)[::3]
+        posts   = models.Post.objects.filter(published=True).order_by('-creation_date')[::4]
         return render(request, 'pages/front.html', locals())
 
 class ResourcesView(View):
@@ -110,7 +113,33 @@ class ReusesView(ListView):
         own       = models.Space.objects.filter(nodes__in=user.node_set)
         return (published | own).order_by('-active', '-creation_date')
 
-class ReuseItemView(DetailView):
+class SpaceItemView(DetailView):
     """View of a Reuse model instance."""
 
     model = models.Space
+
+    def get_context_data(self, **kwargs):
+        context = super(SpaceItemView, self).get_context_data(**kwargs)
+        obj = super(SpaceItemView, self).get_object()
+        context['blogposts'] = models.Post.objects.filter(space=obj)
+        context['needs']     = models.Batch.objects.filter(category='de', space=obj)
+        return context
+
+
+class InventoryView(ListView):
+    """View of the Batches model instances."""
+
+    model = models.Batch
+    template_name = 'models/inventory.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(InventoryView, self).get_context_data(**kwargs)
+        space = get_object_or_404(models.Space, slug=self.kwargs['slug'])
+        context['object'] = space
+        context['agreements'] = space.agreement.all()
+        return context
+
+    def get_queryset(self):
+        space = get_object_or_404(models.Space, slug=self.kwargs['slug'])
+        queryset = models.Batch.objects.filter(space=space, category='of')
+        return queryset
