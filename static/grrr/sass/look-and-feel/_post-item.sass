@@ -3,3 +3,48 @@
 
 .post-item
   +view_item_normal
+
+.post-item--space
+  +links_normal
+  position: relative
+  padding: $m
+  &:hover
+    outline: 2px solid $color_text
+  .inner
+    +clearfix
+  .inner__left
+    position: relative
+    +breakpoint('sm')
+      width: 50%
+      float: left
+      padding-right: $m
+  &.unpublished
+    +opacity(.75)
+  [class*='node-actions--']
+    position: absolute
+    background: white
+    right: $m
+    top: 0
+    padding: $m/4
+  [class*='node-actions__action--']
+    padding-left: $m/3
+    font-size: 1rem
+  [class*='field-published']
+    position: absolute
+    left: $m
+    top: $m
+    background: white
+    padding: $m/4
+    text-transform: uppercase
+    font-size: $size_small
+
+.post-item--space__field-title
+  margin: $m/2 0 0
+  text-transform: uppercase
+
+.post-item--space__field-summary
+  margin-top: $m/2
+
+.post-item--space__field-date
+  text-transform: uppercase
+  font-size: $size_small
