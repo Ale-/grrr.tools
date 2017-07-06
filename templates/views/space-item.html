@@ -2,7 +2,7 @@
 
 <div class="space-item {% if not item.published %}unpublished{% endif %}">
     {% user_actions item user %}
-    <a class="inner" href="{% url 'reuse' item.slug %}">
+    <a class="inner" href="{% url 'space' item.slug %}">
         {% if item.image %}
             <div class="space-item__field-image">
                 {% thumbnail '400x' item.image %}

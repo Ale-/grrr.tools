@@ -1,0 +1,37 @@
+{# Views of existing nodes in the GRRR network #} {% extends 'layouts/sidebar-left-fixed.html' %}
+{% load i18n static utils ratings leaflet_tags %}
+{% block body_classes %}inventory{% endblock %}
+{% block htmltitle %}{% trans 'Inventario' %}{% endblock %}
+
+{# Page styles #}
+{% block page_header %}
+     {% leaflet_css %}
+{% endblock %}
+
+{# Preface #}
+{% block preface %}
+    {# Breadcrumb #}
+    {% url 'reuses'  as url_2 %} {% trans 'Reusos' as txt_2 %}
+    {% url 'space' object.slug as url_3 %}
+    {% trans 'Inventario' as txt_4 %}
+    {% breadcrumb url_2 txt_2 url_3 object.name txt_4 %}
+
+    {# User actions on space #}
+    {% user_actions object request.user %}
+{% endblock %}
+
+{% block main %}
+    {% trans 'Inventario' as pagetitle %}
+    {% include 'blocks/page-title.html' with text=pagetitle icon='box' %}
+    {% view items=object_list user=request.user %}
+{% endblock %}
+
+{# Sidebar #}
+{% block sidebar %}
+    {% include 'blocks/space-profile.html' with object=object %}
+{% endblock %}
+
+{# Page styles #}
+{% block page_scripts %}
+     {% leaflet_js %}
+{% endblock %}

@@ -1,53 +1,41 @@
-{# Displays a Post instance #} {% extends 'layouts/sidebar-left-fixed.html' %} {% load i18n static utils ratings %}
-{% block body_classes %}reuse-detail{% endblock %} {% block htmltitle %}{{ object.name }}{% endblock %}
+{# Displays a Post instance #} {% extends 'layouts/sidebar-left-fixed.html' %}
+{% load i18n static utils ratings leaflet_tags %}
+{% block body_classes %}space-detail{% endblock %}
+{% block htmltitle %}{{ object.name }}{% endblock %}
+
+{# Page styles #}
+{% block page_header %}
+     {% leaflet_css %}
+{% endblock %}
 
 {# Preface #}
 {% block preface %}
     {# Breadcrumb #}
     {% url 'reuses'  as url_2 %}
     {% trans 'Reusos' as txt_2 %}
-    {% breadcrumb url_2 txt_2 object.name %}
+    {% breadcrumb url_2 txt_2 None object.name %}
     {# User actions on reuse #}
     {% user_actions object request.user %}
 {% endblock %}
 
 {# Content #}
 {% block main %}
-    {% lorem %}
+    <p class="inventory-link">
+        <a href="{% url 'inventory' object.slug %}">Ver inventario de {{ object.name }}</a>
+    </p>
+    {% trans 'Necesidades del espacio' as needs_title %}
+    {% view items=needs user=request.user title=needs_title %}
+    {% trans 'Bitácora del espacio' as blog_title %}
+    {% view items=blogposts user=request.user title=blog_title %}
 {% endblock %}
 
 {# Sidebar #}
 {% block sidebar %}
-    <div class="reuse-detail {% if not object.published %}unpublished{% endif %}">
-        <p class="reuse-detail__date">
-            {{ object.date }}
-        </p>
-        {% if object.image  %}
-            <figure class="reuse-detail__field-image">
-                <img src="{{ object.image.url }}" />
-            </figure>
-        {% endif %}
-        {% include 'blocks/page-title.html' with text=object.name %}
-        <div class="reuse-detail__summary">
-            {{ object.summary  }}
-        </div>
-        <h4>{% trans 'Nodos que participan:' %}</h4>
-        <ul class="reuse-detail__nodes">
-            {% for node in object.nodes.all %}
-                <li class="reuse-detail__nodes-item">
-                    <img src="{{ node.thumbnail.url }}" />
-                    {{ node.name }}
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <h4>{% trans 'Valora este reuso' %}</h4>
-    {% ratings object %}
-    {% share object.title|escape request.build_absolute_uri|urlencode  %}
-
+    {% include 'blocks/space-profile.html' with object=object %}
 {% endblock %}
 
 {# page scripts #}
 {% block page_scripts %}
     <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+    {% leaflet_js %}
 {% endblock %}

@@ -1,0 +1,77 @@
+{# Space profile #} {% load i18n static ratings utils leaflet_tags %}
+
+<div class="space-profile {% if not object.published %}unpublished{% endif %}">
+    <div class="space-profile__location">
+        <p class="space-profile__location-trigger">
+            <span class="space-profile__location-icon icon-node"></span>
+            <span class="space-profile__location-address">{{ object.place }}</span>
+        </p>
+        <div class="space-profile__location-map">
+            {% leaflet_map "space-location" callback="space_map_init" %}
+        </div>
+    </div>
+    {% if object.image  %}
+        <figure class="space-profile__field-image">
+            <img src="{{ object.image.url }}" />
+        </figure>
+    {% endif %}
+    <h3 class="space-profile__name">
+        {{ object.name  }}
+    </h3>
+    <div class="space-profile__summary">
+        {{ object.summary  }}
+    </div>
+    <ul class="space-profile__nodes">
+        <h4 class="space-profile__nodes-title">
+            {% trans 'Nodos relacionados' %}
+        </h4>
+        {% for node in object.nodes.all %}
+            <li class="space-profile__nodes-item">
+                <img class="space-profile__nodes-image" src="{{ node.thumbnail.url }}" />
+                <span class="space-profile__nodes-text">{{ node.name }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul class="space-profile__agreements">
+        <h4 class="space-profile__agreements-title">
+            {% trans 'Acuerdos relacionados' %}
+        </h4>
+        {% for agreement in agreements %}
+            <li class="space-profile__agreements-item">
+                <span class="space-profile__agreements-icon icon-acuerdo"></span>
+                <span class="space-profile__agreements-text">{{ agreement.name }}</span>
+            </li>
+        {% empty %}
+            {% url 'agreements' as agreements_link %}
+            {% blocktrans trimmed %}
+                No hay acuerdos relacionados con este espacio actualmente.
+                Ver todos los <a href="{{ agreements_link }}" target="_blank">
+                acuerdos</a>
+            {% endblocktrans %}
+        {% endfor %}
+    </ul>
+    <div class="space-profile__ratings">
+        <h4 class="space-profile__ratings-title">
+            {% trans 'Valora este espacio' %}
+        </h4>
+        {% ratings object %}
+    </div>
+    <div class="space-profile__share">
+        {% share object.name|escape request.build_absolute_uri|urlencode  %}
+    </div>
+</div>
+
+{# Populate map #}
+<script type="text/javascript">
+    var map_trigger = document.querySelector('.space-profile__location-trigger');
+    var map_widget  = document.querySelector('.space-profile');
+    map_trigger.addEventListener('click', function(){
+        map_widget.classList.toggle('active');
+    });
+    function space_map_init(map, options) {
+        var lat = parseFloat({{ object.geom.coordinates.1 }});
+        var lon = parseFloat({{ object.geom.coordinates.0 }});
+        map.setView([ lat, lon ], 10);
+        var marker = L.marker([ lat, lon ]).addTo(map);
+    }
+</script>
