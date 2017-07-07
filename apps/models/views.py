@@ -367,6 +367,11 @@ class BatchEdit(GenericUpdate):
   template_name = generic_template
   form__html_class = 'batch'
 
+  def get_initial(self):
+    super(BatchEdit, self).get_initial()
+    context = { 'user' : self.request.user }
+    return context
+
   def get_success_url(self):
     return reverse('reuses')
 
