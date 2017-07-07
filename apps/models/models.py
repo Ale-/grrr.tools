@@ -276,7 +276,7 @@ class Batch(models.Model):
                    help_text=_("Información de carácter privado, sólo para usuari*s de los nodos asociados al espacio."))
     expiration   = models.DateField(_("Fecha de expiración"), blank=True, null=True,
                    help_text=_("Fecha límite opcional para la oferta/demanda."))
-    milestones   = models.ManyToManyField(Milestone, blank=True)
+    milestones   = models.ManyToManyField(Milestone, verbose_name=_("Movimientos"), blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Batches"
@@ -302,8 +302,8 @@ class Batch(models.Model):
         """Notifies the creation of the instance to nodes that demand the material of the batch."""
         super(Batch, self).save(*args, **kwargs)
 
-        # Add a new milestone to the list of milestones
-        if(self.category == 'of'):
+        # If creating a new batch and it's an offer, add a new milestone to the list of milestones
+        if not self.id and self.category == 'of':
             milestone = Milestone.objects.create(
                 date     = self.date,
                 space    = self.space,
