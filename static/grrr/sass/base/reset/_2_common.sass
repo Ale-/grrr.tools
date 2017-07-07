@@ -123,14 +123,18 @@
     cursor: pointer
 
 // Views
-
-=view_item_normal
-  width: 100%
-  +links_header
+=view_item_3-2-1
+  display: inline-block
+  vertical-align: top
   +breakpoint('sm')
     width: 50%
   +breakpoint('md')
     width: 33%
+
+=view_item_normal
+  width: 100%
+  position: relative
+  +links_header
   [class*='field-name'],
   [class*='field-title']
     text-transform: uppercase

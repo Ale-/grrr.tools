@@ -82,6 +82,7 @@ class NodeEdit(GenericUpdate):
     context['title'] = self.title + (' ') + self.object.name
     context['explanation'] = self.explanation
     context['form__html_class'] = 'node'
+    context['delete_button_arg'] = self.object.id
     context['submit_text'] = _('Edita este nodo')
     return context
 
@@ -156,6 +157,7 @@ class SpaceEdit(GenericUpdate):
     context['explanation'] = self.explanation
     context['form__html_class'] = 'space'
     context['submit_text'] = _('Guardar los cambios')
+    context['delete_button_arg'] = self.object.id
     return context
 
 class SpaceDelete(GenericDelete):
@@ -260,6 +262,7 @@ class PostEdit(GenericUpdate):
     context['explanation'] = _(post_explanation)
     context['submit_text'] = _('Edita este post')
     context['form__html_class'] = 'blogpost'
+    context['delete_button_arg'] = self.object.id
     return context
 
   def get_success_url(self):
@@ -372,6 +375,7 @@ class BatchEdit(GenericUpdate):
     context['explanation'] = self.explanation
     context['form__html_class'] = 'batch'
     context['submit_text'] = _('Guarda los cambios')
+    context['delete_button_arg'] = self.object.id
     return context
 
 

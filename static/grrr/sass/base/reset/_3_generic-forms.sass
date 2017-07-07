@@ -108,12 +108,25 @@
     max-width: calc(100% - #{$m})
 
   //Submits
-  input[type=submit]
-    +button_calm(40px)
+  .form__buttons
+    margin-top: $m
+    text-align: center
+  .form__submit,
+  .form__delete,
+  .form__cancel
     +h(5)
-    padding-top: 0
-    padding-bottom: 0
+    padding: 0 $m/2
     text-transform: uppercase
+    margin: 0 $m/2
+  input[type=submit]
+    +button_success(40px)
+  .form__delete
+    display: inline-block
+    +button_warning(40px)
+  .form__cancel
+    display: inline-block
+    +button_calm(40px)
+
 
   label.submit
     &:hover

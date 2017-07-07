@@ -13,7 +13,7 @@
     {% if explanation %}
         {% include 'blocks/explanation.html' with icon='ℹ' classname='modelform' text=explanation %}
     {% endif %}
-    {% include "forms/form.html" with form=form form_class=form__html_class submit_text=submit_text %}
+    {% include "forms/form.html" with form=form form_class=form__html_class submit_text=submit_text delete_arg=delete_button_arg %}
 {% endblock %}
 
 {% block page_scripts %}
