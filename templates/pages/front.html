@@ -1,4 +1,4 @@
-{# Site front page #} {% extends 'layouts/single-fixed-column--map.html' %} {% load static utils leaflet_tags %}
+{# Site front page #} {% extends 'layouts/single-fixed-column--map.html' %} {% load i18n static utils leaflet_tags %}
 {% block body_classes %}front{% endblock %}
 
 {% block page_header %}
@@ -8,17 +8,21 @@
 {% block main %}
     <div class="front__top">
         <div class="front__top-left">
-            {% view items=offers user=request.user title="Se ofrece" %}
+            {% trans 'Se ofrece' as offers_title %}
+            {% view items=offers user=request.user title=offers_title %}
         </div>
         <div class="front__top-center">
-            {% view items=demands user=request.user title="Se necesita" %}
+            {% trans 'Se necesita' as needs_title %}
+            {% view items=demands user=request.user title=needs_title %}
         </div>
         <div class="front__top-right">
-            {% view items=spaces user=request.user title="Reusos" %}
+            {% trans 'Reusos' as reuses_title %}
+            {% view items=spaces user=request.user title=reuses_title %}
         </div>
     </div>
     <div class="front__bottom">
-        {% view items=posts user=request.user %}
+        {% trans 'Blog' as blog_title %}
+        {% view items=posts user=request.user title=blog_title %}
     </div>
 {% endblock %}
 

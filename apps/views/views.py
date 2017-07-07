@@ -13,10 +13,10 @@ class FrontView(View):
     """View of frontpage."""
 
     def get(self, request):
-        offers  = models.Batch.objects.filter(category='of')[::3]
-        demands = models.Batch.objects.filter(category='de')[::3]
-        spaces  = models.Space.objects.filter(published=True)[::3]
-        posts   = models.Post.objects.filter(published=True).order_by('-creation_date')[::4]
+        offers  = models.Batch.objects.filter(category='of')[:4]
+        demands = models.Batch.objects.filter(category='de')[:4]
+        spaces  = models.Space.objects.filter(published=True)[:3]
+        posts  = models.Post.objects.filter(published=True).order_by('-creation_date')[:3]
         return render(request, 'pages/front.html', locals())
 
 class ResourcesView(View):
