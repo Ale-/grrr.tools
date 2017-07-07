@@ -46,6 +46,7 @@ urlpatterns += i18n_patterns(
     url(r'^referencias$', views.ReferencesView.as_view(), name='references'),
     url(r'^reusos$', views.ReusesView.as_view(), name='reuses'),
     url(r'^espacio/(?P<slug>.+)$', views.SpaceItemView.as_view(), name="space"),
+    url(r'^lote/(?P<pk>.+)$', views.BatchItemView.as_view(), name="batch"),
 
     # API services
     url(r'^api/', include('apps.api.urls', namespace='api')),

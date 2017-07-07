@@ -2,20 +2,44 @@
 
 <div class="batch-item">
     <div class="inner">
-        <div class="inner__left">
-            {% if item.image %}
-                <div class="batch-item__field-image">
-                    {% thumbnail '400x' item.image %}
-                </div>
+        <div class="batch-item__header">
+            <span class="batch-item__field-icon icon-{{ item.material_family }}"></span>
+            {% if item.category == 'of' %}
+                <span class="batch-item__field-id">Ref. {{ item.batch_id }}</span>
+            {% endif %}
+            {% user_actions item user %}
+        </div>
+        {% if item.image %}
+            <div class="batch-item__field-image">
+                {% thumbnail '400x' item.image %}
+            </div>
+        {% else item.material.img %}
+            <div class="batch-item__field-image">
+                {% thumbnail '400x' item.material.image %}
+            </div>
+        {% endif %}
+        <div class="batch-item__field-offer">
+            {% if item.category == 'of' %}
+                <h5>{% trans 'Se ofrecen' %}</h5>
+                <p><a href="{% url 'batch' item.id %}">
+                    {{ item.quantity }} {{ item.material.get_unit_display }} de {{ item.material.name }}
+                </a></p>
+            {% else %}
+                <h5>{% trans 'Se necesitan' %}</h5>
+                {% if item.quantity %}
+                    <p><a href="{% url 'batch' item.id %}">
+                        {{ item.quantity }} {{ item.material.get_unit_display }} de {{ item.material.name }}
+                    </a></p>
+                {% else %}
+                    <p><a href="{% url 'batch' item.id %}">
+                        {{ item.material.name }}
+                    </a></p>
+                {% endif %}
             {% endif %}
         </div>
-        <div class="inner__right">
-            <h4 class="batch-item__field-name">
-                {{ item.name }}
-            </h4>
-            <div class="batch-item__field-description">
-                {{ item.description }}
-            </div>
+        <div class="batch-item__field-space">
+            <h5>{% trans 'En' %}</h5>
+            <p><a href="{% url 'space' item.space.slug %}">{{ item.space.name }}</a></p>
         </div>
     </div>
 </div>

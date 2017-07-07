@@ -1,0 +1,65 @@
+{# Displays a Post instance #} {% extends 'layouts/sidebar-left-fixed.html' %}
+{% load i18n static utils ratings leaflet_tags imagekit %}
+{% block body_classes %}space-detail{% endblock %}
+{% block htmltitle %}{{ object.name }}{% endblock %}
+
+{# Page styles #}
+{% block page_header %}
+     {% leaflet_css %}
+{% endblock %}
+
+{# Preface #}
+{% block preface %}
+    {# Breadcrumb #}
+    {% url 'reuses'  as url_2 %}
+    {% trans 'Reusos' as txt_2 %}
+    {% breadcrumb url_2 txt_2 None object.name %}
+    {# User actions on reuse #}
+    {% user_actions object request.user %}
+{% endblock %}
+
+{# Content #}
+{% block main %}
+    <div class="inner__left">
+        Ref. {{ object.batch_id }}
+        <div>
+        Descripción del lote
+        {{ object.public_info }}
+        </div>
+        <div>
+        material
+        {{ object.material.name }}
+        </div>
+        <div>
+        tipología
+        {{ object.material.get_subfamily_display }} de {{ object.material.get_family_display }}
+        </div>
+        <div>
+        Unidades
+        {{ object.material.get_unit_display }}
+        </div>
+
+    </div>
+    <div class="inner__right">
+        {% if object.image %}
+            <div class="batch-item__field-image">
+                {% thumbnail '400x' object.image %}
+            </div>
+        {% elif object.material.img %}
+            <div class="batch-item__field-image">
+                {% thumbnail '400x' object.material.image %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{# Sidebar #}
+{% block sidebar %}
+    {% include 'blocks/space-profile.html' with object=object.space %}
+{% endblock %}
+
+{# page scripts #}
+{% block page_scripts %}
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+    {% leaflet_js %}
+{% endblock %}

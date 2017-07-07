@@ -125,3 +125,8 @@ class SpaceItemView(DetailView):
         context['needs']     = models.Batch.objects.filter(category='de', space=obj)
         context['inventory'] = models.Batch.objects.filter(category='of', space=obj)
         return context
+
+class BatchItemView(DetailView):
+    """View of a Batch instance."""
+
+    model = models.Batch
