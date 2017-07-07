@@ -55,4 +55,5 @@ BATCH_CATEGORIES = (
 MILESTONE_CATEGORIES = (
     ('AC', _('Materiales activados')),
     ('TR', _('Materiales transferidos')),
+    ('RE', _('Materiales recibidos'))
 )
