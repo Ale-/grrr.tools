@@ -1,7 +1,12 @@
+# Import python packages
+from datetime import date
+
+# Import django packages
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
+# Import app packages
 from . import models
 from apps.utils import widgets as utils
 from apps.utils.fields import GroupedModelChoiceField
@@ -117,14 +122,14 @@ class BatchForm(forms.ModelForm):
                                        label='Material',
                                        help_text=_('El material del que se compone el lote.'),
                                        group_by_field='family', group_label=group_label,
-                                       empty_label=" ", widget = utils.SelectOrAddWidget(view_name='models:create_material_popup', link_text=_("Añade un material")) )
+                                       empty_label=" ", widget = utils.SelectOrAddWidget(view_name='models:create_material_popup', link_text=_("Añade un material")))
 
     class Meta:
         model   = models.Batch
         fields = '__all__'
         widgets = {
-            'image'       : utils.PictureWithPreviewWidget(),
-            'public_info' : utils.LimitedTextareaWidget(limit=500),
+            'image'        : utils.PictureWithPreviewWidget(),
+            'public_info'  : utils.LimitedTextareaWidget(limit=500),
             'private_info' : utils.LimitedTextareaWidget(limit=500)
         }
 
@@ -133,5 +138,5 @@ class BatchForm(forms.ModelForm):
         self.base_fields['material'].empty_label = None
         self.base_fields['space'].empty_label = None
         self.base_fields['space'].queryset = models.Space.objects.filter( nodes__in=user.users.all() ).order_by('name')
-        self.base_fields['space'].widget.attrs['placeholder'] = _("dd/mm/aaaa, por ejemplo: 01/05/2015")
+        self.base_fields['date'].widget.attrs['placeholder'] = _("Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015")
         super(BatchForm, self).__init__(*args, **kwargs)

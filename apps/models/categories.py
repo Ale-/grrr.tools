@@ -51,3 +51,8 @@ BATCH_CATEGORIES = (
     ('of', _('Oferta de materiales')),
     ('de', _('Demanda de materiales')),
 )
+
+MILESTONE_CATEGORIES = (
+    ('AC', _('Materiales activados')),
+    ('TR', _('Materiales transferidos')),
+)

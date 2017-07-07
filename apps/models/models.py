@@ -243,6 +243,19 @@ class Sms(models.Model):
         return "Mensaje de " + self.emissor.name + " a " + self.receiver.name + " del " + str(self.date)
 
 
+class Milestone(models.Model):
+    """Milestones register batch transfer between spaces. Created automatically not in forms"""
+
+    date     = models.DateField(null = True)
+    space    = models.ForeignKey(Space, null = True)
+    category = models.CharField(max_length=2, choices=categories.MILESTONE_CATEGORIES, default='TR')
+    quantity = models.PositiveIntegerField(null = True)
+
+    def __str__(self):
+        """String representation of model instances."""
+        return self.get_category_display() + " | " + self.space.name + " | " + str(self.date)
+
+
 class Batch(models.Model):
     """Batches of the same material associated to spaces."""
 
@@ -250,6 +263,8 @@ class Batch(models.Model):
                    help_text=_("¿Ofreces o necesitas materiales?"))
     space        = models.ForeignKey(Space, verbose_name=_("Espacio"), null=True,
                    help_text=_("¿A qué espacio está asociada la oferta/demanda?"))
+    date         = models.DateField(_("Fecha de entrada"), default=date.today,
+                   help_text=_("Fecha de entrada del lote en tu inventario"))
     material     = models.ForeignKey(Material, verbose_name=_("Material"), blank=False, null=True, on_delete=models.SET_NULL,
                    help_text=_("El material del que se compone el lote"))
     image        = models.ImageField(_("Imagen"), blank=True, upload_to="images/batches/")
@@ -261,6 +276,7 @@ class Batch(models.Model):
                    help_text=_("Información de carácter privado, sólo para usuari*s de los nodos asociados al espacio."))
     expiration   = models.DateField(_("Fecha de expiración"), blank=True, null=True,
                    help_text=_("Fecha límite opcional para la oferta/demanda."))
+    milestones   = models.ManyToManyField(Milestone, blank=True)
 
     class Meta:
         verbose_name_plural = "Batches"
@@ -274,9 +290,9 @@ class Batch(models.Model):
         """Returns the family of the Material object associated with the Batch instance."""
         return self.material.family
 
-    def material_id(self):
-        """Returns the id of the Material object associated with the Batch instance."""
-        return self.material.material_id()
+    def batch_id(self):
+        """Returns the id of the Batch instance."""
+        return "%03d" % self.pk
 
     def edit_permissions(self, user):
         """Returns users allowed to edit an instance of this model."""
@@ -284,6 +300,18 @@ class Batch(models.Model):
 
     def save(self, *args, **kwargs):
         """Notifies the creation of the instance to nodes that demand the material of the batch."""
+        super(Batch, self).save(*args, **kwargs)
+
+        # Add a new milestone to the list of milestones
+        if(self.category == 'of'):
+            milestone = Milestone.objects.create(
+                date     = self.date,
+                space    = self.space,
+                category = 'TR',
+                quantity = self.quantity,
+            )
+            self.milestones.add(milestone)
+
         # TODO:
         # if self.public_quantity is not None and self.public_quantity > 0:
         #     batches = Batch.objects.filter(material=self.material).filter(public_quantity=0)
@@ -294,5 +322,3 @@ class Batch(models.Model):
         #         msg.emissor = self.project
         #         msg.receiver = batch.project
         #         msg.save()
-
-        super(Batch, self).save(*args, **kwargs)
