@@ -1,0 +1,28 @@
+.batch-item
+  border: 1px dotted $color_text
+  margin-bottom: $m
+  padding-bottom: $m/2
+  +links_normal
+  position: relative
+  [class*='node-actions--']
+    position: absolute
+    background: white
+    right: 0
+    top: 0
+    padding: $m/4
+  [class*='node-actions__action--']
+    padding-left: $m/3
+    font-size: 1rem
+.batch-item__field-offer,
+.batch-item__field-space
+  margin: $m/2
+  h5
+    text-transform: uppercase
+    margin: 0
+
+.batch-item__header
+  padding: $m/3 $m/2
+
+.batch-item__field-icon
+  font-size: 1.5em
+  float: left
