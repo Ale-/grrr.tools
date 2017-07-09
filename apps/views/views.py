@@ -4,10 +4,14 @@ from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.http import HttpResponseRedirect
 
 # Import site apps
 from apps.models import models
 from apps.views import glossary as glossary_terms
+from . import forms
 
 class FrontView(View):
     """View of frontpage."""
@@ -69,10 +73,20 @@ class BlogItemView(DetailView):
 
     model = models.Post
 
+    def get_context_data(self, **kwargs):
+        context = super(BlogItemView, self).get_context_data(**kwargs)
+        obj     = super(BlogItemView, self).get_object()
+        context['other_posts'] = models.Post.objects.filter(space=obj.space).exclude(pk=obj.pk)
+        return context
+
 class NodesView(ListView):
     """View of the blog model instances."""
 
     model = models.Node
+
+    def get_queryset(self):
+        queryset = models.Node.objects.all().order_by('name')
+        return queryset
 
 class NodeItemView(DetailView):
     """View of a blog model instance."""
@@ -130,3 +144,102 @@ class BatchItemView(DetailView):
     """View of a Batch instance."""
 
     model = models.Batch
+
+    def get_context_data(self, **kwargs):
+        context = super(BatchItemView, self).get_context_data(**kwargs)
+        obj     = super(BatchItemView, self).get_object()
+        context['history'] = obj.milestones.order_by('date')
+        return context
+
+
+class TransferBatchView(View):
+    """Form to transfer of a Batch instance."""
+
+    title = _("Transfiere")
+    form = forms.TransferBatchForm
+    form__html_class = 'transfer'
+    explanation = ('Al transferir materiales se actualiza de manera automática '
+                  'el inventario del espacio que los recibe. Esta operación no se '
+                  'puede modificar una vez realizada. Si hay algún error ponte en '
+                  'contacto con el equipo GRRR')
+
+    @method_decorator(login_required)
+    def get(self, request, pk):
+        batch = get_object_or_404(models.Batch, pk=pk)
+        form = self.form()
+        return render(request, 'pages/modelform-batches.html', {
+            'form': form,
+            'form__html_class' : self.form__html_class,
+            'title' : self.title,
+            'batch' : batch,
+            'submit_text' : _('Transfiere'),
+            'explanation' : _(self.explanation)
+        })
+
+    @method_decorator(login_required)
+    def post(self, request, pk):
+        # Form
+        form = self.form(request.POST)
+        if form.is_valid():
+            # Origin node
+            batch = get_object_or_404(models.Batch, pk=pk)
+            # Target node
+            space = form.cleaned_data['space']
+            # Create new batch in target node
+            new_batch = models.Batch.objects.create(
+                category     = 'of',
+                space        = space,
+                date         = form.cleaned_data['date'],
+                material     = batch.material,
+                image        = batch.image,
+                quantity     = form.cleaned_data['quantity'],
+                public_info  = batch.public_info,
+                expiration   = None,
+            )
+            milestone = models.Milestone.objects.create(
+                date     = form.cleaned_data['date'],
+                space    = batch.space,
+                category = 'TR',
+                quantity = form.cleaned_data['quantity'],
+            )
+            new_batch.milestones.add(milestone)
+
+            # Update current batch
+            batch.quantity = batch.quantity - form.cleaned_data['quantity']
+            if batch.quantity == 0:
+                batch.delete()
+                return HttpResponseRedirect(reverse('space', args=[space.slug]))
+            batch.save(update_fields=('quantity',))
+            return HttpResponseRedirect(reverse('batch', args=[batch.pk]))
+
+        return render(request, 'pages/modelform-batches.html', {
+            'form': form,
+            'form__html_class' : self.form__html_class,
+            'title' : self.title,
+            'batch' : batch,
+            'submit_text' : _('Transfiere'),
+            'explanation' : _(self.explanation)
+        })
+
+class ActivateBatchView(View):
+    """Form to transfer of a Batch instance."""
+
+    title = _("Activa")
+    form = forms.ActivateBatchForm
+    form__html_class = 'activate'
+    explanation = ('Al activa materiales se actualiza de manera automática '
+                  'tu inventario y la cantidad de materiales activados por este espacio.'
+                  'Esta operación no se puede modificar una vez realizada.'
+                  'Si hay algún error ponte en contacto con el equipo GRRR')
+
+    @method_decorator(login_required)
+    def get(self, request, pk):
+        batch = get_object_or_404(models.Batch, pk=pk)
+        return render(request, 'pages/modelform-batches.html', {
+            'form': self.form,
+            'form__html_class' : self.form__html_class,
+            'title' : self.title,
+            'batch' : batch,
+            'submit_text' : _('Activa'),
+            'explanation' : _(self.explanation)
+        })

@@ -47,6 +47,8 @@ urlpatterns += i18n_patterns(
     url(r'^reusos$', views.ReusesView.as_view(), name='reuses'),
     url(r'^espacio/(?P<slug>.+)$', views.SpaceItemView.as_view(), name="space"),
     url(r'^lote/(?P<pk>.+)$', views.BatchItemView.as_view(), name="batch"),
+    url(r'^transfiere/(?P<pk>.+)$', views.TransferBatchView.as_view(), name="transfer_batch"),
+    url(r'^activa/(?P<pk>.+)$', views.ActivateBatchView.as_view(), name="activate_batch"),
 
     # API services
     url(r'^api/', include('apps.api.urls', namespace='api')),
