@@ -1,0 +1,70 @@
+{# Modelform page #} {% extends 'layouts/sidebar-left-fixed.html' %} {% load static i18n utils imagekit leaflet_tags %}
+{% block body_classes %}modelform-batches{% endblock %} {% block htmltitle %}{% trans 'Añade/Activa un lote' %}{% endblock %}
+
+{# Form dependencies #}
+{% block page_header %}
+    {% leaflet_css plugins="forms" %}
+{% endblock %}
+
+{% block preface %}
+  {% fake_breadcrumb %}
+  {% trans title as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="grrr" %}
+{% endblock %}
+
+{% block sidebar %}
+    <h4 class="batch-detail__id">
+        Ref. {{ batch.batch_id }}
+    </h4>
+    <div class="batch-detail__space">
+        <p class="batch-detail__label">
+          {% trans 'Espacio' %}
+        </p>
+        {{ batch.space.name }}
+    </div>
+    <div class="batch-detail__quantity">
+        <p class="batch-detail__label">
+          {% trans 'Cantidad disponible' %}
+        </p>
+        {{ batch.quantity }} {{ batch.material.get_unit_display }}
+    </div>
+    <div class="batch-detail__description">
+        <p class="batch-detail__label">
+          {% trans 'Descripción del lote' %}
+        </p>
+        {% if batch.public_info %}
+            {{ batch.public_info }}
+        {% else %}
+            {% blocktrans trimmed %}
+                <em>Parece que no hay disponible una descripción del lote.</em>
+            {% endblocktrans %}
+        {% endif %}
+    </div>
+    {% if batch.image %}
+        <div class="batch-item__field-image">
+            <p class="batch-detail__label">
+              {% trans 'Imagen del lote' %}
+            </p>
+            {% thumbnail '400x' batch.image %}
+        </div>
+    {% elif batch.material.img %}
+        <p class="batch-detail__label">
+          {% trans 'Imagen del material' %}
+        </p>
+        <div class="batch-item__field-image">
+            {% thumbnail '400x' batch.material.image %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{# Main content #}
+{% block main %}
+    <div class="batch-forms-explanation">
+    {{ explanation }}
+    </div>
+    {% include "forms/form.html" with form=form form_class=form__html_class submit_text=submit_text delete_arg=delete_button_arg %}
+{% endblock %}
+
+{% block page_scripts %}
+  {{ form.media }}
+  {% leaflet_js plugins="forms" %}
+{% endblock %}
