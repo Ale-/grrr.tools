@@ -353,7 +353,7 @@ class BatchCreate(GenericCreate):
     return context
 
   def get_success_url(self):
-    return reverse('reuses')
+    return reverse('batch', args=(self.object.pk,))
 
 
 class BatchEdit(GenericUpdate):
@@ -373,12 +373,13 @@ class BatchEdit(GenericUpdate):
     return context
 
   def get_success_url(self):
-    return reverse('reuses')
+    return reverse('batch', args=(self.object.pk,))
 
   def get_context_data(self, **kwargs):
     context = super(GenericUpdate, self).get_context_data(**kwargs)
     context['explanation'] = self.explanation
     context['form__html_class'] = 'batch'
+    context['title'] = self.title
     context['submit_text'] = _('Guarda los cambios')
     context['delete_button_arg'] = self.object.id
     return context
