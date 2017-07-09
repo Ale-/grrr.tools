@@ -1,0 +1,10 @@
+{# Render a Blog post in a view #} {% load utils i18n imagekit %}
+
+<div class="milestone-item">
+    <div class="inner">
+        <div class="milestone-item__field-date">
+            <h5>{% trans 'Fecha' %}</h5>
+            <p>{{ item.date }}</p>
+        </div>
+    </div>
+</div>
