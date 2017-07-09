@@ -8,23 +8,21 @@
                 {% thumbnail '400x' item.image %}
             </div>
         {% endif %}
+        <div class="space-item__field-place">
+            {{ item.place }}
+        </div>
         <h4 class="space-item__field-name">
             {{ item.name }}
         </h4>
-        <div class="space-item__field-date">
-            {{ item.date|date:"d-M-Y"  }}
-        </div>
         <div class="space-item__field-summary">
+            {% if item.active %}
+                <span class="space-item__field-active icon-repeat"></span>
+            {% endif %}
             {{ item.summary }}
         </div>
         {% if not item.published %}
             <div class="space-item__field-published">
                 <p>{% trans 'No publicado' %}</p>
-            </div>
-        {% endif %}
-        {% if item.active %}
-            <div class="space-item__field-active">
-                <span class="icon-repeat"></span> {% trans 'Reuso en marcha' %}
             </div>
         {% endif %}
         {% if item.ratings.all.0.average >= 4.0 %}
