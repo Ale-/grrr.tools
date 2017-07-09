@@ -52,6 +52,13 @@ BATCH_CATEGORIES = (
     ('de', _('Demanda de materiales')),
 )
 
+BATCH_PERIODICITY = (
+    ('no', _('Ninguna')),
+    ('se', _('Semanal')),
+    ('me', _('Mensual')),
+    ('an', _('Anual')),
+)
+
 MILESTONE_CATEGORIES = (
     ('AC', _('Materiales activados')),
     ('TR', _('Materiales transferidos')),
