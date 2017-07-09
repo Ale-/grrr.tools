@@ -7,6 +7,8 @@
 .space-profile__location
   margin-bottom: 0
   position: relative
+  text-transform: uppercase
+  font-size: $size_small
   &:hover
     cursor: pointer
     background-color: $palette_yellow
@@ -80,3 +82,13 @@
 
 .space-profile__agreements-icon
   font-size: 24px
+
+.space-profile__thumbnail
+  width: $m*2
+  +border-radius(50%)
+  display: inline-block
+  float: left
+  margin-right: $m/2
+
+.space-profile .inner
+  margin-bottom: $m

@@ -1,0 +1,39 @@
+{# Space profile #} {% load i18n static ratings utils leaflet_tags imagekit %}
+
+<div class="space-profile {% if not object.published %}unpublished{% endif %}">
+    <div class="space-profile__location">
+        <p class="space-profile__location-trigger">
+            <span class="space-profile__location-icon icon-node"></span>
+            <span class="space-profile__location-address">{{ object.place }} {% trans '(ver en mapa)' %}</span>
+        </p>
+        <div class="space-profile__location-map">
+            {% leaflet_map "space-location" callback="space_map_init" %}
+        </div>
+    </div>
+    <div class="inner">
+        <img class="space-profile__thumbnail" src="{{ object.thumbnail.url }}" />
+        <h3 class="space-profile__name">
+            <a href="{% url 'space' object.slug %}">
+              {{ object.name }}
+            </a>
+        </h3>
+        <div class="space-profile__summary">
+            {{ object.summary  }}
+        </div>
+    </div>
+</div>
+
+{# Populate map #}
+<script type="text/javascript">
+    var map_trigger = document.querySelector('.space-profile__location-trigger');
+    var map_widget  = document.querySelector('.space-profile');
+    map_trigger.addEventListener('click', function(){
+        map_widget.classList.toggle('active');
+    });
+    function space_map_init(map, options) {
+        var lat = parseFloat({{ object.geom.coordinates.1 }});
+        var lon = parseFloat({{ object.geom.coordinates.0 }});
+        map.setView([ lat, lon ], 10);
+        var marker = L.marker([ lat, lon ]).addTo(map);
+    }
+</script>

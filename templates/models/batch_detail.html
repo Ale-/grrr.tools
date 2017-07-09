@@ -1,6 +1,6 @@
-{# Displays a Post instance #} {% extends 'layouts/sidebar-left-fixed.html' %}
+{# Displays a Post instance #} {% extends 'layouts/sidebar-right-fixed.html' %}
 {% load i18n static utils ratings leaflet_tags imagekit %}
-{% block body_classes %}space-detail{% endblock %}
+{% block body_classes %}batch-detail{% endblock %}
 {% block htmltitle %}{{ object.name }}{% endblock %}
 
 {# Page styles #}
@@ -11,51 +11,151 @@
 {# Preface #}
 {% block preface %}
     {# Breadcrumb #}
-    {% url 'reuses'  as url_2 %}
-    {% trans 'Reusos' as txt_2 %}
-    {% breadcrumb url_2 txt_2 None object.name %}
-    {# User actions on reuse #}
-    {% user_actions object request.user %}
+    {% with pagetitle="Ref. "|add:object.batch_id|add:" "|add:object.material.name %}
+        {% url 'reuses' as url_2 %}
+        {% trans 'Espacios' as txt_2 %}
+        {% url 'reuse' object.space.slug as url_3 %}
+        {% breadcrumb url_2 txt_2 url_3 object.space.name %}
+        {# User actions on reuse #}
+        {% include 'blocks/page-title.html' with text=pagetitle icon=object.material.family %}
+    {% endwith %}
 {% endblock %}
 
 {# Content #}
 {% block main %}
     <div class="inner__left">
-        Ref. {{ object.batch_id }}
-        <div>
-        Descripción del lote
-        {{ object.public_info }}
-        </div>
-        <div>
-        material
-        {{ object.material.name }}
-        </div>
-        <div>
-        tipología
-        {{ object.material.get_subfamily_display }} de {{ object.material.get_family_display }}
-        </div>
-        <div>
-        Unidades
-        {{ object.material.get_unit_display }}
-        </div>
-
-    </div>
-    <div class="inner__right">
+        {% user_actions object request.user %}
         {% if object.image %}
             <div class="batch-item__field-image">
                 {% thumbnail '400x' object.image %}
             </div>
-        {% elif object.material.img %}
+        {% elif object.material.image %}
             <div class="batch-item__field-image">
                 {% thumbnail '400x' object.material.image %}
             </div>
         {% endif %}
+        <hr/>
+        <div class="batch-detail__material">
+            <p class="batch-detail__label">
+              {% trans 'Material' %}
+            </p>
+            {{ object.material.name }}
+        </div>
+        <div class="batch-detail__tipology">
+            <p class="batch-detail__label">
+              {% trans 'Tipología' %}
+            </p>
+            {{ object.material.get_subfamily_display }} de {{ object.material.get_family_display }}
+        </div>
+        <div class="batch-detail__unit">
+            <p class="batch-detail__label">
+              {% trans 'Unidades' %}
+            </p>
+            {{ object.material.get_unit_display }}
+        </div>
+        <div class="batch-detail__unit">
+            <p class="batch-detail__label">
+              {% trans 'Peso unitario' %}
+            </p>
+            {% if object.material.weight %}
+                {{ object.material.weight }}
+            {% else %}
+                {% blocktrans trimmed %}
+                    <em>No se ha constatado el peso unitario de este material.</em>
+                {% endblocktrans %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="inner__right">
+        <h4 class="batch-detail__id">
+            Ref. {{ object.batch_id }}
+        </h4>
+        <div class="batch-detail__quantity">
+            <p class="batch-detail__label">
+              {% trans 'Cantidad disponible' %}
+            </p>
+            {{ object.quantity }} {{ object.material.get_unit_display }}
+        </div>
+        <div class="batch-detail__expiracion">
+            <p class="batch-detail__label">
+              {% trans 'Fecha de expiración' %}
+            </p>
+            {% if object.expiration %}
+                {{ object.expiration }}
+            {% else %}
+                {% blocktrans trimmed %}
+                    <em>La oferta de este lote no tiene una fecha límite.</em>
+                {% endblocktrans %}
+            {% endif %}
+        </div>
+        <div class="batch-detail__periodicity">
+            <p class="batch-detail__label">
+              {% trans 'Periodicidad' %}
+            </p>
+            {% if object.periodicity %}
+                {{ object.periodicity }}
+            {% else %}
+                {% blocktrans trimmed %}
+                    <em>No hay periodicidad.</em>
+                {% endblocktrans %}
+            {% endif %}
+        </div>
+        <div class="batch-detail__description">
+            <p class="batch-detail__label">
+              {% trans 'Descripción del lote' %}
+            </p>
+            {% if object.public_info %}
+                {{ object.public_info }}
+            {% else %}
+                {% blocktrans trimmed %}
+                    <em>Parece que no hay disponible una descripción del lote.</em>
+                {% endblocktrans %}
+            {% endif %}
+        </div>
+        <hr/>
+        <div class="batch-detail__description">
+            <p class="batch-detail__label">
+              {% trans 'Cantidad total' %}
+            </p>
+            {{ object.total }}
+        </div>
+        <div class="batch-detail__private-info">
+            <p class="batch-detail__label">
+              {% trans 'Información privada' %}
+            </p>
+            {% if object.private_info %}
+                {{ object.private.info }}
+            {% else %}
+                {% blocktrans trimmed %}
+                    <em>No hay información privada sobre el lote.</em>
+                {% endblocktrans %}
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
 
 {# Sidebar #}
 {% block sidebar %}
-    {% include 'blocks/space-profile.html' with object=object.space %}
+    {% include 'blocks/space-profile-short.html' with object=object.space %}
+    {% if request.user|has_permissions:object %}
+
+    <div class="batch-detail__actions">
+        <p class="batch-detail__action-sms">
+            <a href="{% url 'models:send_sms_to' object.space.slug %}">
+                {% trans 'Contacta con este espacio' %}
+            </a>
+        </p>
+        <p class="batch-detail__action-transfer">
+            <a href="{% url 'transfer_batch' object.pk %}">
+                {% trans 'Mueve materiales de este lote' %}</a>
+        </p>
+        <p class="batch-detail__action-activate">
+            <a href="{% url 'activate_batch' object.pk %}">
+                {% trans 'Activa materiales de este lote' %}
+            </a>
+        </p>
+    </div>
+    {% endif %}
 {% endblock %}
 
 {# page scripts #}

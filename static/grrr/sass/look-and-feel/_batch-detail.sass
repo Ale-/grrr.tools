@@ -1,0 +1,32 @@
+.batch-detail
+  +links_normal
+  .inner__left,
+  .inner__right
+    position: relative
+    +column(6, 'sm', $m)
+  .node-actions--batch
+    position: absolute
+    left: 0
+    top: 0
+    background: white
+    padding: $m/2
+    margin: 0
+.batch-detail__label
+  +h(6)
+  text-transform: uppercase
+  margin-top: $m/2
+.batch-detail__id
+  margin-top: 0
+  border-bottom: 2px solid $color_text
+.batch-detail__action-transfer,
+.batch-detail__action-activate,
+.batch-detail__action-sms,
+  +button_headers
+  text-align: center
+  padding: $m/2
+.batch-detail__actions
+  margin-top: $m/2
+
+.batch-forms-explanation
+  font-size: 1.2em
+  margin: $m*2 $m
