@@ -88,6 +88,7 @@ class SpaceForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        self.base_fields['nodes'].queryset = models.Node.objects.all().order_by('name')
         super(SpaceForm, self).__init__(*args, **kwargs)
 
 class SmsForm(forms.ModelForm):
