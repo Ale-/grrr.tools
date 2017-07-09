@@ -24,25 +24,21 @@
         <li class="tabs__item active">
             <span class="label">{% trans 'Blog' %}</span> ({{ blogposts|length }})
         </li>
-        {% if needs|length > 0 %}
         <li class="tabs__item">
             <span class="label">{% trans 'Necesidades' %}</span> ({{ needs|length }})
         </li>
-        {% endif %}
-        {% if inventory|length > 0 %}
         <li class="tabs__item">
             <span class="label">{% trans 'Inventario' %}</span> ({{ inventory|length }})
         </li>
-        {% endif %}
     </ul>
     <div class="profile-tab active">
         {% view items=blogposts user=request.user classname_modifier="space" view_id=""%}
     </div>
     <div class="profile-tab">
-        {% view items=needs user=request.user title=needs_title classname_modifier="space"%}
+        {% view items=needs user=request.user title=needs_title %}
     </div>
     <div class="profile-tab">
-        {% view items=inventory user=request.user classname_modifier="inventory" %}
+        {% view items=inventory user=request.user %}
     </div>
 {% endblock %}
 
@@ -74,4 +70,5 @@
         })
     </script>
     {% leaflet_js %}
+    {% include 'scripts/masonry.html' with grid_class='view-batch__content' item_class='batch-item' %}
 {% endblock %}

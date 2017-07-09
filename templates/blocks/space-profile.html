@@ -4,7 +4,7 @@
     <div class="space-profile__location">
         <p class="space-profile__location-trigger">
             <span class="space-profile__location-icon icon-node"></span>
-            <span class="space-profile__location-address">{{ object.place }}</span>
+            <span class="space-profile__location-address">{{ object.place }} {% trans '(ver en mapa)' %}</span>
         </p>
         <div class="space-profile__location-map">
             {% leaflet_map "space-location" callback="space_map_init" %}
