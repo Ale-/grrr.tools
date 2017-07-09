@@ -9,12 +9,11 @@
 
 .space-item__field-active
   background: $palette_yellow
-  margin-top: $m/2
   font-size: $size_small
-  text-align: center
   text-transform: uppercase
-  [class^='icon']
-    margin-right: $m/2
+  padding: $m/4
+  margin-right: $m/2
+  float: left
 
 .space-item__field-quality-seal
   position: absolute
@@ -23,3 +22,21 @@
   img
     width: 64px
     mix-blend-mode: multiply
+
+.front .space-item
+  margin-bottom: $m
+  .inner
+    padding: 0
+  [class*="node-actions--"]
+    right: 0
+    top: 0
+
+.space-item__field-place
+  text-transform: uppercase
+  font-size: .75em
+  margin-bottom: $m/6
+.space-item__field-name
+  margin-top: 0
+
+.space-item__field-image
+  margin-bottom: $m/2
