@@ -8,21 +8,37 @@
 {% block main %}
     <div class="front__top">
         <div class="front__top-left">
-            {% trans 'Se ofrece' as offers_title %}
-            {% view items=offers user=request.user title=offers_title %}
+            <h4 class="front_label">
+              <a href="{% url 'batches' %}" title="{% trans 'Busca ofertas y demandas' %}">
+                  {% trans 'Se ofrece' %}
+              </a>
+            </h4>
+            {% view items=offers user=request.user %}
         </div>
         <div class="front__top-center">
-            {% trans 'Se necesita' as needs_title %}
-            {% view items=demands user=request.user title=needs_title %}
+          <h4 class="front_label">
+            <a href="{% url 'batches' %}" title="{% trans 'Busca ofertas y demandas' %}">
+                {% trans 'Se necesita' %}
+            </a>
+          </h4>
+            {% view items=demands user=request.user %}
         </div>
         <div class="front__top-right">
-            {% trans 'Reusos' as reuses_title %}
-            {% view items=spaces user=request.user title=reuses_title %}
+          <h4 class="front_label">
+            <a href="{% url 'reuses' %}" title="{% trans 'Busca ofertas y demandas' %}">
+                {% trans 'Reusos' %}
+            </a>
+          </h4>
+            {% view items=spaces user=request.user %}
         </div>
     </div>
     <div class="front__bottom">
-        {% trans 'Blog' as blog_title %}
-        {% view items=posts user=request.user title=blog_title %}
+      <h4 class="front_label">
+        <a href="{% url 'blog' %}" title="{% trans 'Visita el blog de la web' %}">
+            {% trans 'Blog' %}
+        </a>
+      </h4>
+        {% view items=posts user=request.user %}
     </div>
 {% endblock %}
 
@@ -30,5 +46,5 @@
     {% leaflet_js  %}
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
-    <script type="text/javascript" src="{% js 'nodes-map.js' %}"></script>
+    <script type="text/javascript" src="{% js 'batches-map.js' %}"></script>
 {% endblock %}

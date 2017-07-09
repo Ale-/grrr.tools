@@ -42,3 +42,21 @@ def reuses(request):
       return HttpResponse(json.dumps(jsondump, indent=4), content_type="application/json")
   else:
       return HttpResponse("If a tree falls in the woods and nobody is there to hear it, does it make a sound?")
+
+def batches(request):
+  """API endpoint to get all batches in the site"""
+
+  nodes = models.Batch.objects.all()
+  if len(nodes) > 0:
+      jsondump = []
+      for node in nodes:
+          if(node.space.geom):
+              item = {}
+              item['lat']   =  node.space.geom['coordinates'][1]
+              item['lon']   =  node.space.geom['coordinates'][0]
+              item['popup'] =  "<h5><a href='" + reverse('node', args=[node.pk]) + "'>" + node.material.name + "</a></h5>" + \
+                                   "<p>" + node.public_info + "</p>"
+              jsondump.append(item)
+      return HttpResponse(json.dumps(jsondump, indent=4), content_type="application/json")
+  else:
+      return HttpResponse("If a tree falls in the woods and nobody is there to hear it, does it make a sound?")
