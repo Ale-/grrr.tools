@@ -268,15 +268,19 @@ class Batch(models.Model):
     material     = models.ForeignKey(Material, verbose_name=_("Material"), blank=False, null=True, on_delete=models.SET_NULL,
                    help_text=_("El material del que se compone el lote"))
     image        = models.ImageField(_("Imagen"), blank=True, upload_to="images/batches/")
+    total        = models.PositiveIntegerField(_("Cantidad total"), blank=True, null=True,
+                   help_text=_("Especifica en las unidades del material cuánta cantidad hay en total en el lote."))
     quantity     = models.PositiveIntegerField(_("Cantidad"), blank=True, null=True,
-                   help_text=_("Especifica en las unidades del material cuánto se ofrece o necesita —opcional—."))
+                   help_text=_("Especifica en las unidades del material cuánto se ofrece/necesita (opcional en este último caso)."))
     public_info  = models.TextField(_("Información pública"), blank=True, null=True,
                    help_text=_("Informa en este campo de características del lote."))
     private_info = models.TextField(_("Información privada"), blank=True, null=True,
                    help_text=_("Información de carácter privado, sólo para usuari*s de los nodos asociados al espacio."))
     expiration   = models.DateField(_("Fecha de expiración"), blank=True, null=True,
                    help_text=_("Fecha límite opcional para la oferta/demanda."))
-    milestones   = models.ManyToManyField(Milestone, verbose_name=_("Movimientos"), blank=True, null=True)
+    category     = models.CharField(_("Periodicidad"), max_length=2, choices=categories.BATCH_PERIODICITY, default='no',
+                   help_text=_("¿Es uan oferta única o tiene periodicidad?"))
+    milestones   = models.ManyToManyField(Milestone, verbose_name=_("Movimientos"), blank=True)
 
     class Meta:
         verbose_name_plural = "Batches"
