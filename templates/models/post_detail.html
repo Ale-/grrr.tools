@@ -37,22 +37,30 @@
 
 {# Sidebar #}
 {% block sidebar %}
-    {% include 'blocks/twitter--aacc.html' with height=1600 %}
+    {% if object.space and other_posts|length > 0 %}
+        {% trans 'Otros posts de ' as title_prefix %}
+        {% with title_prefix|add:" "|add:object.space.name as other_posts_title %}
+            {% view items=other_posts user=request.user title=other_posts_title %}
+        {% endwith %}
+        <p class="other_posts__see-more">
+            <a href="{% url 'space' object.space.slug %}">
+              {% icon 'plus' 'Ver más resultados' %}
+            </a>
+        </p>
+    {% else %}
+        {% include 'blocks/twitter--aacc.html' with height=1600 %}
+    {% endif %}
 {% endblock %}
 
 {# page scripts #}
 {% block page_scripts %}
     {# Adjusts twitter widget height to content's height #}
+    {% jquery %}
     <script type="text/javascript">
         // Ready, only IE 9 or bigger
-        var ready = function(callback) {
-            document.readyState === "interactive" ||
-            document.readyState === "complete" ? callback() : document.addEventListener("DOMContentLoaded", callback);
-        };
-        ready(function(){
-            var content_height = document.querySelector('.layout-main').clientHeight;
-            var twitter_widget = document.querySelector('.twitter-timeline');
-            twitter_widget.setAttribute('data-height', content_height - 180);
-        });
+        !(function($){
+            var content_height = $('.layout-main').height();
+            $('.twitter-timeline').attr('data-height', content_height - 180);
+        })(jQuery);
     </script>
 {% endblock %}
