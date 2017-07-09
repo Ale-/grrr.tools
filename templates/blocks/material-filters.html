@@ -3,27 +3,27 @@
 <form class="material-filters">
     {% trans 'Busco' %}
     <select class="material-filters__search-field--type">
-        <option>{% trans 'ofertas' %}</option>
-        <option>{% trans 'demandas' %}</option>
-        <option>{% trans 'ofertas y demandas' %}</option>
+        <option value="of">{% trans 'ofertas' %}</option>
+        <option value="de">{% trans 'demandas' %}</option>
+        <option value="all">{% trans 'ofertas y demandas' %}</option>
     </select>
     {% trans 'de elementos' %}
     <select class="material-filters__search-field--subfamily">
-        <option>{% trans 'longitudinales' %}</option>
-        <option>{% trans 'superficiales' %}</option>
-        <option>{% trans 'contenedores' %}</option>
-        <option>{% trans 'singulares' %}</option>
+        <option value="lo">{% trans 'longitudinales' %}</option>
+        <option value="su">{% trans 'superficiales' %}</option>
+        <option value="co">{% trans 'contenedores' %}</option>
+        <option value="ot">{% trans 'singulares' %}</option>
     </select>
     {% trans 'de' %}
     <select class="material-filters__search-field--family">
-        <option>{% trans 'madera' %}</option>
-        <option>{% trans 'metal' %}</option>
-        <option>{% trans 'plástico' %}</option>
-        <option>{% trans 'electrónica' %}</option>
-        <option>{% trans 'textil' %}</option>
-        <option>{% trans 'otros materiales' %}</option>
+        <option value="mad">{% trans 'madera' %}</option>
+        <option value="met">{% trans 'metal' %}</option>
+        <option value="pla">{% trans 'plástico' %}</option>
+        <option value="ele">{% trans 'electrónica' %}</option>
+        <option value="tex">{% trans 'textil' %}</option>
+        <option value="otr">{% trans 'otros materiales' %}</option>
     </select>
-    <button class="material-filters__search-submit" type="submit">
-        {% trans 'Busca' %}
+    <button class="material-filters__search-submit">
+        {% trans 'Filtra' %}
     </button>
 </form>

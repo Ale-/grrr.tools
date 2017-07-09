@@ -20,6 +20,27 @@
 {% endblock %}
 
 {% block main %}
-    <h2>{% trans 'Ofertas y demandas' %}</h2>
-    {% view items=object_list user=request.user %}
+    <h2>{% trans 'Ofertas y demandas actuales' %}</h2>
+    {% view items=object_list user=request.user classname_modifier="search"  %}
+{% endblock %}
+
+{# Scripts #}
+{% block page_scripts %}
+    {% jquery %}
+    {% include 'scripts/masonry.html' with grid_class='view-batch__content' item_class='batch-item' %}
+    <script type="text/javascript">
+        !(function($){
+            $(document).ready( function(){
+                $('.material-filters__search-submit').click( function(e){
+                    e.preventDefault();
+                    $('.batch-item').hide('slow');
+                    var query = '.sub-' + $('.material-filters__search-field--subfamily').val() +
+                                '.mat-' + $('.material-filters__search-field--family').val();
+                    if($('.material-filters__search-field--type').val() != 'all' )
+                        query += '.cat-' + $('.material-filters__search-field--type').val()
+                    $(query).show('slow');
+                });
+            });
+        })(jQuery);
+    </script>
 {% endblock %}
