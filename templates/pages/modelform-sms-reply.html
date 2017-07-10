@@ -1,0 +1,23 @@
+{# Modelform page #} {% extends 'layouts/single-fixed-column.html' %} {% load static i18n utils imagekit leaflet_tags %}
+{% block body_classes %}modelform{% endblock %} {% block htmltitle %}{% trans 'Añade/Activa un lote' %}{% endblock %}
+
+{# Form dependencies #}
+{% block page_header %}
+    {% leaflet_css plugins="forms" %}
+{% endblock %}
+
+{# Main content #}
+{% block main %}
+    {% fake_breadcrumb %}
+    {% trans title as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="grrr" %}
+    {% if explanation %}
+        {% include 'blocks/explanation.html' with icon='ℹ' classname='modelform' text=explanation %}
+    {% endif %}
+    {% include 'views/sms-item.html' with item=replied %}
+    {% include "forms/form.html" with form=form form_class=form__html_class submit_text=submit_text delete_arg=delete_button_arg %}
+{% endblock %}
+
+{% block page_scripts %}
+  {{ form.media }}
+  {% leaflet_js plugins="forms" %}
+{% endblock %}

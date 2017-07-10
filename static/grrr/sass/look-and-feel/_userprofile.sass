@@ -3,8 +3,6 @@
 
 .userprofile
   font-family: $font_text
-  padding: $m
-  background: #eee
   +links_normal
 
 .userprofile__field
@@ -25,3 +23,55 @@
   font-size: $size_small
   &:hover
     background-color: rgba(black, .05)
+
+.dashboard .layout-sidebar-left h4,
+.dashboard .layout-sidebar-right h4
+  +h(5)
+  text-transform: uppercase
+  border-bottom: 2px solid $color_text
+  margin: 0 0 $m
+
+.view-space--dashboard
+  margin-bottom: $m*2
+
+.view-space--dashboard,
+.view-node--dashboard
+  font-family: $font_text
+
+.sms-filters
+  margin-top: $m
+  text-align: center
+
+.sms-filters__filter
+  display: inline
+  color: #999
+  margin-right: $m/2
+  text-transform: uppercase
+  font-size: $size_small
+  &:hover
+    cursor: pointer
+  &::before
+    content: " "
+    width: $m/2
+    height: $m/2
+    margin-right: $m/6
+    display: inline-block
+    line-height: 12px
+    +border-radius(50%)
+
+.sms-filters__filter--all::before
+  background: #eee
+.sms-filters__filter--new::before
+  border: 2px solid $color_text
+  width: 8px
+  height: 8px
+.sms-filters__filter--n12n::before
+  background: $palette_yellow
+
+.sms-filters__filter.active
+  color: $color_text
+
+.empty-filters
+  font-size: 1.2em
+  padding: $m
+  top: $m

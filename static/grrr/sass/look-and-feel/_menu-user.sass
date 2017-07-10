@@ -5,6 +5,7 @@
 
 .menu-user
   width: $m*10
+  margin-right: $m/2
 
 .menu-user:hover
   .menu-user__links
@@ -21,15 +22,6 @@
   font-size: $size_small
   text-transform: uppercase
   +links_footer
-  +border-radius(4px)
-
-.menu-user__links::before
-  content: "▲"
-  position: absolute
-  top: -$m*1.2
-  right: $m/2
-  font-size: 1.25em
-  color: #222
 
 .menu-user__link
   line-height: $m*1.5
@@ -41,3 +33,13 @@
   &:hover
     [class^="icon-"]
       color: $palette_yellow
+
+.unseen-messages
+  float: right
+  margin-left: $m/2
+  background: rgba(black, .7)
+  padding: 0 $m/3
+
+.unseen-messages__count
+  font-size: $size_small
+  font-family: monospace

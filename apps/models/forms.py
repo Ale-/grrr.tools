@@ -94,6 +94,12 @@ class SpaceForm(forms.ModelForm):
 class SmsForm(forms.ModelForm):
     """Sms modelforms"""
 
+    batch = GroupedModelChoiceField(queryset=models.Batch.objects.order_by('space'),
+                                    label=_("Oferta/demanda"),
+                                    help_text=_('Si mandas el mensaje en relación a una oferta o demanda puedes especificarla aquí.'),
+                                    group_by_field='space',
+                                    empty_label=_("El mensaje no está relacionado con ningún lote"), )
+
     class Meta:
         model   = models.Sms
         fields = '__all__'
@@ -104,13 +110,14 @@ class SmsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs['initial']['user']
         self.base_fields['emissor'].empty_label = None
-        self.base_fields['emissor'].queryset = models.Node.objects.filter(users__in=[user])
+        nodes = models.Node.objects.filter(users__in=[user])
+        user_spaces = models.Space.objects.filter(nodes__in=nodes)
+        self.base_fields['emissor'].queryset = user_spaces
         if 'receiver' in kwargs['initial']:
-            self.base_fields['receiver'].widget.attrs['disabled'] = True
             self.base_fields['receiver'].widget.attrs['readonly'] = True
         else:
             self.base_fields['receiver'].empty_label = None
-            self.base_fields['receiver'].queryset = models.Node.objects.all().order_by('name')
+            self.base_fields['receiver'].queryset = models.Space.objects.all().order_by('name')
         super(SmsForm, self).__init__(*args, **kwargs)
 
 class BatchForm(forms.ModelForm):

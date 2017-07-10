@@ -37,8 +37,12 @@ urlpatterns = [
     url(r'^crea/material$', views.MaterialCreate.as_view(), name="create_material"),
     url(r'^anade/material$', PopupFormView.as_view(form_class=MaterialForm, template_name="pages/modelform-popup-material.html"), name="create_material_popup"),
 
-    # Add SMS form
+    # Send SMS form
     url(r'^envia/sms$', views.SmsCreate.as_view(), name="create_sms"),
-    # Add SMS form
-    url(r'^envia/sms/a/(?P<slug>.+)$$', views.SmsCreate.as_view(), name="send_sms_to"),
+    # Send SMS to given space asking for given batch
+    url(r'^envia/sms/a/(?P<slug>.+)/lote-(?P<pk>.+)$', views.SmsCreate.as_view(), name="batch_sms"),
+    # Send SMS to given space form
+    url(r'^envia/sms/a/(?P<slug>.+)$', views.SmsCreate.as_view(), name="send_sms_to"),
+    # Reply SMS form
+    url(r'^responde/sms/(?P<pk>.+)$', views.SmsReply.as_view(), name="reply_sms"),
 ]

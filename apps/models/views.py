@@ -291,7 +291,9 @@ class PostDelete(GenericDelete):
 # Mensaje
 #
 
-sms_explanation = ("Los mensajes son el canal de comunicación entre los nodos de la red.")
+sms_explanation = ("Los mensajes son el canal de comunicación entre los espacios de la red."
+                   "Los mensajes son visibles por los usuarios de los colectivos que trabajan en "
+                   "dichos espacios. Puedes ver tus mensajes en tu perfil de usuari@")
 
 class SmsCreate(GenericCreate):
   """ Modelform view to create a Sms object"""
@@ -307,7 +309,9 @@ class SmsCreate(GenericCreate):
     super(SmsCreate, self).get_initial()
     context = { 'user' : self.request.user }
     if 'slug' in self.kwargs:
-        context['receiver'] = get_object_or_404(models.Node, slug=self.kwargs['slug'])
+        context['receiver'] = get_object_or_404(models.Space, slug=self.kwargs['slug'])
+    if 'pk' in self.kwargs:
+        context['batch'] = get_object_or_404(models.Batch, pk=self.kwargs['pk'])
     return context
 
   def form_valid(self, form):
@@ -324,6 +328,43 @@ class SmsCreate(GenericCreate):
   def get_success_url(self):
     return reverse('dashboard')
 
+class SmsReply(GenericCreate):
+  """ Modelform view to create a Sms object"""
+
+  title = _('Responde a un mensaje')
+  explanation = _(sms_explanation)
+  form_class = forms.SmsForm
+  model = models.Sms
+  template_name = 'pages/modelform-sms-reply.html'
+  form__html_class = 'sms'
+
+  def get_initial(self):
+    super(SmsReply, self).get_initial()
+    replied = models.Sms.objects.filter(pk=self.kwargs['pk']).first()
+    return {
+        'user'     : self.request.user,
+        'emissor'  : replied.receiver,
+        'receiver' : replied.emissor,
+        'batch'    : replied.batch if replied.batch else None
+    }
+
+  def form_valid(self, form):
+    form.instance.author  = self.request.user
+    form.instance.date    = date.today()
+    replied = models.Sms.objects.filter(pk=self.kwargs['pk']).first()
+    form.instance.replies = replied
+    return super(SmsReply, self).form_valid(form)
+
+  def get_context_data(self, **kwargs):
+    context = super(SmsReply, self).get_context_data(**kwargs)
+    replied = models.Sms.objects.filter(pk=self.kwargs['pk']).first()
+    context['submit_text'] = _('Envía el mensaje')
+    context['explanation'] = self.explanation
+    context['replied'] = replied
+    return context
+
+  def get_success_url(self):
+    return reverse('dashboard')
 
 #
 # Mensaje

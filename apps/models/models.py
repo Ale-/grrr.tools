@@ -8,6 +8,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.contrib.contenttypes.fields import GenericRelation
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils.timezone import now
 
 # Import contrib apps
 from djgeojson.fields import PointField
@@ -224,25 +227,6 @@ class Reference(models.Model):
         """String representation of model instances."""
         return self.name
 
-class Sms(models.Model):
-    """Messages sent to nodes of the network"""
-
-    author   = models.ForeignKey(User, blank=True, null=True, editable=False)
-    date     = models.DateField(blank=True, editable=False, default=date.today)
-    category = models.CharField(_("Tipo de mensaje"), max_length=2, choices=categories.MESSAGE_CATEGORIES, default='me',
-               help_text=_("Elige el tipo de mensaje que quieres enviar."))
-    emissor  = models.ForeignKey(Node, verbose_name=_("Remitente"), related_name="emissor", null=True, blank=True,
-               help_text=_("Especifica el proyecto que quieres que aparezca como remitente. Esto es aconsejado si el mensaje se manda en relación a un lote."))
-    receiver = models.ForeignKey(Node, verbose_name=_("Destinatario"), related_name="receiver", null=True,
-               help_text=_("Nodo al que envias el mensaje"))
-    body     = models.TextField(_("Mensaje"), blank=False,
-               help_text=_("Texto del mensaje. No está permitido usar HTML. Las URLs se convertirán directamente en enlaces."))
-
-    def __str__(self):
-        """String representation of model instances."""
-        return "Mensaje de " + self.emissor.name + " a " + self.receiver.name + " del " + str(self.date)
-
-
 class Milestone(models.Model):
     """Milestones register batch transfer between spaces. Created automatically not in forms"""
 
@@ -262,7 +246,7 @@ class Batch(models.Model):
     category     = models.CharField(_("¿Oferta o demanda?"), max_length=2, choices=categories.BATCH_CATEGORIES, default='de',
                    help_text=_("¿Ofreces o necesitas materiales?"))
     space        = models.ForeignKey(Space, verbose_name=_("Espacio"), null=True,
-                   help_text=_("¿A qué espacio está asociada la oferta/demanda?"))
+                   help_text=_("¿Qué espacio ofrece o demanda?"))
     date         = models.DateField(_("Fecha de entrada"), default=date.today,
                    help_text=_("Fecha de entrada del lote en tu inventario"))
     material     = models.ForeignKey(Material, verbose_name=_("Material"), blank=False, null=True, on_delete=models.SET_NULL,
@@ -278,25 +262,25 @@ class Batch(models.Model):
                    help_text=_("Información de carácter privado, sólo para usuari*s de los nodos asociados al espacio."))
     expiration   = models.DateField(_("Fecha de expiración"), blank=True, null=True,
                    help_text=_("Fecha límite opcional para la oferta/demanda."))
-    category     = models.CharField(_("Periodicidad"), max_length=2, choices=categories.BATCH_PERIODICITY, default='no',
+    periodicity  = models.CharField(_("Periodicidad"), max_length=2, choices=categories.BATCH_PERIODICITY, default='no',
                    help_text=_("¿Es uan oferta única o tiene periodicidad?"))
     milestones   = models.ManyToManyField(Milestone, verbose_name=_("Movimientos"), blank=True)
 
     class Meta:
         verbose_name_plural = "Batches"
 
+    def batch_id(self):
+        """Returns the id of the Batch instance."""
+        return "%04d" % self.pk
+
     def __str__(self):
           """Sets string representation of model instances."""
-          return self.space.name + " · Material: " + (self.material.name if self.material else "NULL") + " # " + str(self.id)
+          return self.material.name  + ", ref.: " + self.batch_id()
 
     @property
     def material_family(self):
         """Returns the family of the Material object associated with the Batch instance."""
         return self.material.family
-
-    def batch_id(self):
-        """Returns the id of the Batch instance."""
-        return "%03d" % self.pk
 
     def edit_permissions(self, user):
         """Returns users allowed to edit an instance of this model."""
@@ -316,13 +300,55 @@ class Batch(models.Model):
             )
             self.milestones.add(milestone)
 
-        # TODO:
-        # if self.public_quantity is not None and self.public_quantity > 0:
-        #     batches = Batch.objects.filter(material=self.material).filter(public_quantity=0)
-        #     for batch in batches:
-        #         msg = ProjectMessage()
-        #         msg.body = "Es un mensaje automático para indicarte que se ha creado un lote que se ajusta a una necesidad tuya"
-        #         msg.category = 'of'
-        #         msg.emissor = self.project
-        #         msg.receiver = batch.project
-        #         msg.save()
+
+class Sms(models.Model):
+    """Messages sent to nodes of the network"""
+
+    author       = models.ForeignKey(User, blank=True, null=True, editable=False)
+    datetime     = models.DateTimeField(blank=True, default=now)
+    batch        = models.ForeignKey(Batch, verbose_name=_("Lote"), null=True, blank=True,
+                   help_text=_("Si mandas el mensaje en relación a una oferta/demanda puedes especificarla aquí."))
+    emissor      = models.ForeignKey(Space, verbose_name=_("Remitente"), related_name="emissor", null=True, blank=True,
+                   help_text=_("Especifica el espacio al que representas."))
+    receiver     = models.ForeignKey(Space, verbose_name=_("Destinatario"), related_name="receiver", null=True,
+                   help_text=_("Espacio al que envias el mensaje"))
+    body         = models.TextField(_("Mensaje"), blank=False,
+                   help_text=_("Texto del mensaje. No está permitido usar HTML. Las URLs se convertirán directamente en enlaces."))
+    replies      = models.ForeignKey('self', blank=True, null=True)
+    notification = models.BooleanField(default=False)
+
+    def __str__(self):
+        """String representation of model instances."""
+        if self.emissor:
+            return "Mensaje de " + self.emissor.name + " a " + self.receiver.name + " #" + str(self.datetime)
+        return "Notificación a " + self.receiver.name + " #" + str(self.datetime)
+
+@receiver(post_save, sender=Batch)
+def notify_batch(sender, instance, **kwargs):
+    # Notify to Space users of related activity
+    msg = Sms()
+    msg.body = _("Es un mensaje automático para indicarte que se ha creado un lote en uno de tus espacios")
+    msg.emissor = None
+    msg.receiver = instance.space
+    msg.batch = instance
+    msg.notification = True
+    msg.save()
+    # Notify matches
+    if instance.category == 'of':
+        match = 'de'
+        sms = _("Es un mensaje automático para indicarte que se ha creado una oferta de materiales que se ajusta a las necesidades de uno de tus espacios")
+    else:
+        match = 'of'
+        sms = _("Es un mensaje automático para indicarte que se ha creado una demanda de materiales que se ofertan en uno de tus espacios")
+    # matches = Batch.objects.filter(category='de', material=instance.material).space_set.all()
+    batches = Batch.objects.filter(category=match, material=instance.material)
+    matches = Space.objects.distinct().filter(batch__in=batches)
+    if len(matches)>0:
+        for space in matches:
+            msg = Sms()
+            msg.body = sms
+            msg.emissor = None
+            msg.receiver = space
+            msg.batch = instance
+            msg.notification = True
+            msg.save()

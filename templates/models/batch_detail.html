@@ -141,8 +141,8 @@
 
     <div class="batch-detail__actions">
         <p class="batch-detail__action-sms">
-            <a href="{% url 'models:send_sms_to' object.space.slug %}">
-                {% trans 'Contacta con este espacio' %}
+            <a href="{% url 'models:batch_sms' object.space.slug object.pk %}">
+                {% trans 'Pregunta por este lote' %}
             </a>
         </p>
         <p class="batch-detail__action-transfer">

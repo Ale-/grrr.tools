@@ -2,6 +2,14 @@
 
 {% block region_content %}
     <div class="region-toolbar__right">
+        {% if sms > 0 %}
+            <p class="unseen-messages">
+                <a href="{% url 'dashboard' %}" title="{% trans 'Lee los mensajes sin leer' %}">
+                    <span class="unseen-messages__icon icon-speech-bubble"></span>
+                    <span class="unseen-messages__count">{{ sms }}</span>
+                </a>
+            <p>
+        {% endif %}
         {% include 'menus/menu-user.html' %}
     </div>
 {% endblock %}

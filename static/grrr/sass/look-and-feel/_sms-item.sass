@@ -5,23 +5,20 @@
 @import compass/css3/border-radius
 
 .sms-item
+  +links_normal
+  position: relative
   .inner
-    padding: $m
-    +border-radius($m/6)
-    color: white
+    background: #eee
     margin-bottom: $m/4
+    +clearfix
 
-.sms-item--me
+.sms-item--n12n
   .inner
-    background-color: $color_calm
+    background: $palette_yellow
 
-.sms-item--of
+.sms-item--new
   .inner
-    background-color: $color_success
-
-.sms-item--de
-  .inner
-    background-color: $color_warning
+    outline: 2px solid $color_text
 
 .sms-item__date,
 .sms-item__nodes
@@ -29,4 +26,41 @@
   font-size: $size_small
 
 .sms-item__nodes
-  margin-bottom: $m/2
+  background-color: rgba(black, .05)
+  padding: $m/4 $m/2
+
+.sms-replies
+  margin-left: $m/2
+  padding-left: $m/2
+  position: relative
+  border-left: 1px dashed #999
+  +border-radius(0 0 0 $m/2)
+h4 + .sms-replies
+  margin-left: 0
+  padding-left: 0
+  border-left: 0
+
+.sms-item__date
+  color: #222
+  float: left
+  padding: 0 $m/2 $m/2 $m/2
+  text-align: center
+  border: 1px solid $color_text
+  margin: $m/2
+
+.sms-item__date-day
+  font-size: 2em
+  +h(2)
+.sms-item__date-month
+  +h(4)
+.sms-item__date-time
+  +h(6)
+.sms-item__body
+  padding: $m/2
+.sms-item__new
+  text-transform: uppercase
+  +h(6)
+.sms-item__reply
+  position: absolute
+  right: $m/2
+  bottom: $m/2

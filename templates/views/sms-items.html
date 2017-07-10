@@ -1,0 +1,6 @@
+<div class="sms-replies">
+    {% for item in items %}
+        {% include 'views/sms-item.html' with item=item %}
+        {% include 'views/sms-items.html' with items=item.sms_set.all %}
+    {% endfor %}
+</div>

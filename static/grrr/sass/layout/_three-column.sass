@@ -1,0 +1,11 @@
+// Layouts with three even columns layout
+// layouts/sidebar-left-fixed
+// layouts/sidebar-right-fixed
+
+.three-column-fixed
+  .layout-sidebar-left
+    +column(3, 'sm', $m*2)
+  .layout-sidebar-right
+    +column(3, 'sm', $m*2)
+  .layout-main
+    +column(6, 'sm', $m*2)

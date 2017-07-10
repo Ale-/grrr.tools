@@ -1,16 +1,18 @@
 {# Extend basic page #}
-{% extends 'layouts/sidebar-left-fixed.html' %} {% load i18n utils %}
+{% extends 'layouts/three-column-fixed.html' %} {% load i18n utils %}
 {% block body_classes %}dashboard{% endblock %}
 
 {# Preface #}
 {% block preface %}
     {% breadcrumb %}
+    {% include 'blocks/page-title.html' with text=username icon="user" %}
 {% endblock %}
 
 {# Sidebar #}
-{% block sidebar %}
+{% block sidebar_left %}
+    {% trans 'Tu perfil' as profile_name %}
+    <h4 class="profile_name"> {{ profile_name }} </h4>
     <div class="userprofile">
-        {% include 'blocks/page-title.html' with text=username icon="user" %}
         <div class="userprofile__field">
             <p class="userprofile-field-date">
                 {% trans 'Te diste de alta el '%}{{ date_joined|date:'d/m/Y' }}
@@ -33,12 +35,118 @@
             </a>
         </div>
     </div>
-    {% trans 'Tus nodos' as nodes_title %}
-    {% view items=nodes classname_modifier="dashboard" title=nodes_title %}
 {% endblock %}
 
 {# Content #}
 {% block main %}
-    <h3>{% trans 'Mensajes recibidos por tus nodos' %}</h3>
-    {% view items=sms user=request.user %}
+    <ul class="tabs">
+        <li class="tabs__item active">
+            <span class="label">{% trans 'Mensajes recibidos' %}</span> ({{ total_received }})
+        </li>
+        <li class="tabs__item">
+            <span class="label">{% trans 'Mensajes enviados' %}</span>
+        </li>
+    </ul>
+    <ul class="sms-filters">
+        <li class="sms-filters__filter sms-filters__filter--all active" data-filter="all">
+            {% trans 'Ver todos' %}
+        </li>
+        <li class="sms-filters__filter sms-filters__filter--new" data-filter="new">
+            {% trans 'Ver sólo nuevos' %}
+        </li>
+        <li class="sms-filters__filter sms-filters__filter--n12n" data-filter="n12n">
+            {% trans 'Ver sólo notificaciones' %}
+        </li>
+    </ul>
+    <div class="profile-tab active">
+        {% regroup received_sms by receiver as space_list %}
+        {% if space_list|length > 0 %}
+            {% for space in space_list %}
+                <h4>{{ space.grouper }}</h4>
+                {% include 'views/sms-items.html' with items=space.list %}
+                <div class="empty-filters hidden">
+                    {% trans 'No hay resultados que cumplan las condiciones de filtrado' %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-results">
+                <p class="no-results__text">
+                    {% trans 'Todavía no se han subido a la plataforma contenidos de este tipo.' %}
+                </p>
+            </div>
+        {% endif %}
+    </div>
+    <div class="profile-tab">
+        {% regroup sent_sms by emissor as space_list %}
+        {% if space_list|length > 0 %}
+            {% for space in space_list %}
+                <h4>{{ space.grouper }}</h4>
+                {% include 'views/sms-items.html' with items=space.list %}
+                <div class="empty-filters hidden">
+                    {% trans 'No hay resultados que cumplan las condiciones de filtrado' %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-results">
+                <p class="no-results__text">
+                    {% trans 'Todavía no se han subido a la plataforma contenidos de este tipo.' %}
+                </p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block sidebar_right %}
+    {% trans 'Tus espacios' as nodes_title %}
+    {% view items=spaces classname_modifier="dashboard" title=nodes_title %}
+    {% trans 'Tus colectivos' as nodes_title %}
+    {% view items=nodes classname_modifier="dashboard" title=nodes_title %}
+{% endblock %}
+
+{# page scripts #}
+{% block page_scripts %}
+    {% jquery %}
+    <script type="text/javascript">
+        !(function($){
+          var tabs         = document.querySelectorAll('.tabs__item');
+          var tabs_content = document.querySelectorAll('.profile-tab');
+          tabs.forEach( function(tab, i){
+              tab.addEventListener('click', function(event)
+              {
+                  // Add active state to selected tab
+                  tabs.forEach( function(tab){
+                      tab.classList.remove('active');
+                  });
+                  tabs[i].classList.add('active');
+                  // Add active state to selected tab content
+                  tabs_content.forEach( function(content){
+                      content.classList.remove('active');
+                  });
+                  tabs_content[i].classList.add('active');
+              });
+          })
+          $('.sms-filters__filter').click( function(){
+              // Add active class to clicked filter
+              $('.sms-filters__filter').removeClass('active');
+              $(this).addClass('active');
+
+              // Filter SMS
+              var target = $(this).attr('data-filter');
+              $('.sms-item').removeClass('hidden');
+              if(target != 'all'){
+                  $('.sms-item').each( function(index, item){
+                      if( !$(item).hasClass('sms-item--' + target) )
+                          $(item).addClass('hidden');
+                  });
+              }
+              $('.profile-tab > .sms-replies').each( function(i, it){
+                  if( $(it).height() == 0){
+                      $(it).siblings('.empty-filters').removeClass('hidden');
+                  } else {
+                      $(it).siblings('.empty-filters').addClass('hidden');
+                  }
+              });
+          });
+        })(jQuery);
+    </script>
 {% endblock %}
