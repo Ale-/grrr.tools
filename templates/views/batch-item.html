@@ -1,11 +1,11 @@
 {# Render a Blog post in a view #} {% load utils i18n imagekit %}
 
 <div class="batch-item">
+    {% user_actions item user %}
     <div class="inner">
         <div class="batch-item__header">
             <span class="batch-item__field-icon icon-{{ item.material_family }}"></span>
             <span class="batch-item__field-id">ref. {{ item.batch_id }}</span>
-            {% user_actions item user %}
         </div>
         {% if item.image %}
             <div class="batch-item__field-image">

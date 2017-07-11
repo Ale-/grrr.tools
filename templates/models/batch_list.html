@@ -20,8 +20,8 @@
 {% endblock %}
 
 {% block main %}
-    <h2>{% trans 'Ofertas y demandas actuales' %}</h2>
-    {% view items=object_list user=request.user classname_modifier="search"  %}
+    {% trans 'Ofertas y demandas actuales' as search_title %}
+    {% view items=object_list user=request.user title=search_title %}
 {% endblock %}
 
 {# Scripts #}
