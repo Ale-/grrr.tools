@@ -1,0 +1,27 @@
+@import columns_masonry
+
+.view-batch--inventory__content,
+.view-batch--needs__content,
+.view-batch--recovered__content,
+.view-batch--active__content
+  +columns_masonry(1, 2, 2, 2, 'batch-item--space-dashboard', 'few', 0)
+
+.batch-item--space-dashboard
+  margin-bottom: 15px
+  .inner
+    +clearfix
+    border: 1px dotted $color_text
+    +links_normal
+  padding-bottom: $m
+  position: relative
+  [class*='node-actions--']
+    position: absolute
+    background: white
+    right: 0
+    top: 0
+    padding: $m/4
+  [class*='node-actions__action--']
+    padding-left: $m/3
+    font-size: 1rem
+  .batch-item__field-caducity
+    padding: $m/2

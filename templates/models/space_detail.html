@@ -26,12 +26,12 @@
         </li>
         {% if needs|length > 0 %}
         <li class="tabs__item">
-            <span class="label">{% trans 'Necesidades' %}</span> ({{ needs|length }})
+            <span class="label">{% trans 'Demandas' %}</span> ({{ needs|length }})
         </li>
         {% endif %}
         {% if inventory|length > 0 %}
         <li class="tabs__item">
-            <span class="label">{% trans 'Inventario' %}</span> ({{ inventory|length }})
+            <span class="label">{% trans 'Ofertas' %}</span> ({{ inventory|length }})
         </li>
         {% endif %}
         {% if activated|length > 0 %}
@@ -50,12 +50,12 @@
     </div>
     {% if needs|length > 0 %}
     <div class="profile-tab">
-        {% view items=needs user=request.user title=needs_title %}
+        {% view items=needs user=request.user title=needs_title classname_modifier="needs" %}
     </div>
     {% endif %}
     {% if inventory|length > 0 %}
     <div class="profile-tab">
-        {% view items=inventory user=request.user %}
+        {% view items=inventory user=request.user classname_modifier="inventory" %}
     </div>
     {% endif %}
     {% if activated|length > 0 %}
@@ -65,7 +65,7 @@
     {% endif %}
     {% if recovered|length > 0 %}
     <div class="profile-tab">
-        {% view items=recovered user=request.user %}
+        {% view items=recovered user=request.user classname_modifier="recovered" %}
     </div>
     {% endif %}
 {% endblock %}
@@ -98,5 +98,4 @@
         })
     </script>
     {% leaflet_js %}
-    {% include 'scripts/masonry.html' with grid_class='view-batch__content' item_class='batch-item' %}
 {% endblock %}

@@ -1,7 +1,6 @@
 @import breakpoints
 @import compass/css3/box-sizing
-@import compass/css3/column-break-inside
-@import compass/css3/column-count
+@import compass/css3/columns
 
 =columns_masonry($cols_sm, $cols_md, $cols_lg, $cols_xl, $grid_item_class, $few_items_class: 'few', $padding: $m)
   &:not(.#{$few_items_class})
@@ -18,6 +17,7 @@
       +column-break-inside(avoid)
       break-inside: avoid
       page-break-inside: avoid
+      display: table
   &.#{$few_items_class}
     .#{$grid_item_class}
       +breakpoint('xs')

@@ -21,7 +21,7 @@
         </div>
         <div class="batch-item__field-offer">
             <h5 class="batch-item__field-label">
-                {% trans 'Materiales activados' %}
+                {% trans 'Necesita' %}
             </h5>
             <p><a href="{% url 'batch' item.id %}">
                 {% if item.quantity %}
@@ -31,5 +31,10 @@
                 {% endif %}
             </a></p>
         </div>
+        {% if item.expiration %}
+            <div class="batch-item__field-caducity">
+                <em>{% trans 'Hasta el' %} {{ item.expiration }}</em>
+            </div>
+        {% endif %}
     </div>
 </div>

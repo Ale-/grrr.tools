@@ -21,7 +21,7 @@
         </div>
         <div class="batch-item__field-offer">
             <h5 class="batch-item__field-label">
-                {% trans 'Materiales activados' %}
+                {% trans 'Materiales recuperados' %}
             </h5>
             <p><a href="{% url 'batch' item.id %}">
                 {% if item.quantity %}
@@ -30,6 +30,10 @@
                     {{ item.material.name }}
                 {% endif %}
             </a></p>
+        </div>
+        <div class="batch-item__field-space">
+          <h5 class="batch-item__field-label">{% trans 'Fueron a:' %}</h5>
+          <p><a href="{% url 'space' item.space.slug %}">{{ item.space.name }}</a>, {{ item.space.place }}</p>
         </div>
     </div>
 </div>
