@@ -13,16 +13,35 @@
   [class*='node-actions__action--']
     padding-left: $m/3
     font-size: 1rem
-.batch-item__field-offer,
-.batch-item__field-space
-  margin: $m/2
-  h5
-    text-transform: uppercase
-    margin: 0
 
 .batch-item__header
-  padding: $m/3 $m/2
+  padding: $m/6 $m/2
+  +clearfix
 
 .batch-item__field-icon
   font-size: 1.5em
+  line-height: 1em
   float: left
+
+.batch-item__field-id
+  +h(5)
+  margin-left: $m/3
+
+.batch-item__field-date
+  position: absolute
+  padding: $m/4 $m/2
+  top: 34px
+  background: white
+  font-size: $size_small
+  text-transform: uppercase
+
+.batch-item__field-label
+  text-transform: uppercase
+  margin: $m/4 0 0
+
+.batch-item__field-offer,
+.batch-item__field-space
+  margin: 0 $m/2 $m/2
+
+.batch-item__field-image
+  text-align: center
