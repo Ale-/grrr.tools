@@ -139,6 +139,19 @@ class SpaceItemView(DetailView):
         context['blogposts'] = models.Post.objects.filter(space=obj)
         context['needs']     = models.Batch.objects.filter(category='de', space=obj)
         context['inventory'] = models.Batch.objects.filter(category='of', space=obj)
+        context['activated'] = models.Batch.objects.filter(category='ac', space=obj)
+        milestones = models.Milestone.objects.filter(space=obj)
+        context['recovered'] = models.Batch.objects.filter(milestones__in=milestones)
+        total_activated = 0
+        for batch in context['activated']:
+            total_activated += batch.quantity * batch.material.weight
+        context['total_activated'] = total_activated/1000
+        total_recovered = 0
+        for batch in context['recovered']:
+            for milestone in batch.milestones.all():
+                if milestone.space == obj:
+                    total_recovered += milestone.quantity * batch.material.weight
+        context['total_recovered'] = total_recovered/1000
         return context
 
 class BatchItemView(DetailView):
@@ -167,6 +180,7 @@ class TransferBatchView(View):
     @method_decorator(login_required)
     def get(self, request, pk):
         batch = get_object_or_404(models.Batch, pk=pk)
+        print(batch)
         form = self.form()
         return render(request, 'pages/modelform-batches.html', {
             'form': form,
@@ -197,20 +211,26 @@ class TransferBatchView(View):
                 public_info  = batch.public_info,
                 expiration   = None,
             )
+
+            batch_milestones = batch.milestones.all()
+            if len(batch_milestones) > 0:
+                new_batch.milestones.add( *[milestone.pk for milestone in batch_milestones] )
+
             milestone = models.Milestone.objects.create(
                 date     = form.cleaned_data['date'],
                 space    = batch.space,
                 category = 'TR',
                 quantity = form.cleaned_data['quantity'],
             )
-            new_batch.milestones.add(milestone)
+            new_batch.milestones.add(milestone.pk)
 
             # Update current batch
-            batch.quantity = batch.quantity - form.cleaned_data['quantity']
+            batch.quantity -= form.cleaned_data['quantity']
+            if batch.total:
+                batch.total    -= form.cleaned_data['quantity']
             if batch.quantity == 0:
-                batch.delete()
                 return HttpResponseRedirect(reverse('space', args=[space.slug]))
-            batch.save(update_fields=('quantity',))
+            batch.save(update_fields=('quantity', 'total'))
             return HttpResponseRedirect(reverse('batch', args=[batch.pk]))
 
         return render(request, 'pages/modelform-batches.html', {
@@ -238,6 +258,47 @@ class ActivateBatchView(View):
         batch = get_object_or_404(models.Batch, pk=pk)
         return render(request, 'pages/modelform-batches.html', {
             'form': self.form,
+            'form__html_class' : self.form__html_class,
+            'title' : self.title,
+            'batch' : batch,
+            'submit_text' : _('Activa'),
+            'explanation' : _(self.explanation)
+        })
+
+    @method_decorator(login_required)
+    def post(self, request, pk):
+        # Form
+        form = self.form(request.POST)
+        if form.is_valid():
+            # Origin node
+            batch = get_object_or_404(models.Batch, pk=pk)
+
+            # Create new active
+            new_batch = models.Batch.objects.create(
+                category     = 'ac',
+                space        = batch.space,
+                date         = form.cleaned_data['date'],
+                material     = batch.material,
+                image        = batch.image,
+                quantity     = form.cleaned_data['quantity'],
+            )
+
+            batch_milestones = batch.milestones.all()
+            if len(batch_milestones) > 0:
+                new_batch.milestones.add( *[milestone.pk for milestone in batch_milestones] )
+
+            # Update current batch
+            batch.quantity -= form.cleaned_data['quantity']
+            if batch.total:
+                batch.total -= form.cleaned_data['quantity']
+
+            if batch.quantity == 0:
+                return HttpResponseRedirect(reverse('space', args=[space.slug]))
+            batch.save(update_fields=('quantity','total'))
+            return HttpResponseRedirect(reverse('batch', args=[batch.pk]))
+
+        return render(request, 'pages/modelform-batches.html', {
+            'form': form,
             'form__html_class' : self.form__html_class,
             'title' : self.title,
             'batch' : batch,

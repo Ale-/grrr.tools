@@ -19,7 +19,7 @@ class TransferBatchForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.base_fields['space'].empty_label = None
-        #self.base_fields['space'].queryset = models.Space.objects.exclude(pk=space.pk)
+        self.base_fields['space'].queryset = models.Space.objects.all().order_by('name')
         super(TransferBatchForm, self).__init__(*args, **kwargs)
 
 

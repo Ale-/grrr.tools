@@ -40,7 +40,25 @@
         });
         var lat = parseFloat({{ object.geom.coordinates.1 | escape }});
         var lon = parseFloat({{ object.geom.coordinates.0 | escape }});
-        map.setView([ lat, lon ], 12);
+        map.setView([ lat, lon ], 5);
+        {% if milestones|length > 0 %}
+            var step = L.divIcon({
+                iconSize    : [10, 10],
+                iconAnchor  : [5, 5],
+                popupAnchor : [0, -5],
+                className   : 'milestone'
+            })
+            var latlngs = []
+            {% for milestone in milestones %}
+                var _lat = {{ milestone.space.geom.coordinates.1 | escape }};
+                var _lon = {{ milestone.space.geom.coordinates.0 | escape }};
+                latlngs.push([_lat, _lon]);
+                L.marker([_lat, _lon], { icon: step }).bindPopup("<strong>{{ milestone.space.name | upper }}</strong><br/>{{ milestone.date }}").addTo(map);
+            {% endfor %}
+            latlngs.push([ lat, lon ]);
+            var history_line = L.polyline(latlngs, {color: 'yellow'}).addTo(map);
+        {% endif %}
+
         var marker = L.marker([ lat, lon ], {
             icon : icon,
         }).bindPopup("{{ object.name }}").addTo(map);

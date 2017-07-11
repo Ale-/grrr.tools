@@ -21,6 +21,24 @@
     <div class="space-profile__summary">
         {{ object.summary  }}
     </div>
+    {% if total_activated > 0 or total_recovered > 0 %}
+        <div class="space-profile__numbers">
+            {% if total_activated > 0 %}
+            <div class="space-profile__numbers-activated">
+                <span class="space-profile__numbers-icon icon-activados"></span>
+                <p class="space-profile__numbers-label">{% trans 'Mat. activados' %}
+                <p class="space-profile__numbers-cipher">{{ total_activated|floatformat:2 }} Tn.</p>
+            </div>
+            {% endif %}
+            {% if total_recovered > 0 %}
+            <div class="space-profile__numbers-recovered">
+                <span class="space-profile__numbers-icon icon-recuperados"></span>
+                <p class="space-profile__numbers-label">{% trans 'Mat. recuperados' %}
+                <p class="space-profile__numbers-cipher">{{ total_recovered|floatformat:2 }} Tn.</p>
+            </div>
+            {% endif %}
+        </div>
+    {% endif %}
     <ul class="space-profile__nodes">
         <h4 class="space-profile__nodes-title">
             {% trans 'Nodos relacionados' %}

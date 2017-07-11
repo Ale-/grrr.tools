@@ -24,27 +24,55 @@
         <li class="tabs__item active">
             <span class="label">{% trans 'Blog' %}</span> ({{ blogposts|length }})
         </li>
+        {% if needs|length > 0 %}
         <li class="tabs__item">
             <span class="label">{% trans 'Necesidades' %}</span> ({{ needs|length }})
         </li>
+        {% endif %}
+        {% if inventory|length > 0 %}
         <li class="tabs__item">
             <span class="label">{% trans 'Inventario' %}</span> ({{ inventory|length }})
         </li>
+        {% endif %}
+        {% if activated|length > 0 %}
+            <li class="tabs__item">
+                <span class="label">{% trans 'Activados' %}</span> ({{ activated|length }})
+            </li>
+        {% endif %}
+        {% if recovered|length > 0 %}
+            <li class="tabs__item">
+                <span class="label">{% trans 'Recuperados' %}</span> ({{ recovered|length }})
+            </li>
+        {% endif %}
     </ul>
     <div class="profile-tab active">
-        {% view items=blogposts user=request.user classname_modifier="space" view_id=""%}
+        {% view items=blogposts user=request.user classname_modifier="space" %}
     </div>
+    {% if needs|length > 0 %}
     <div class="profile-tab">
         {% view items=needs user=request.user title=needs_title %}
     </div>
+    {% endif %}
+    {% if inventory|length > 0 %}
     <div class="profile-tab">
         {% view items=inventory user=request.user %}
     </div>
+    {% endif %}
+    {% if activated|length > 0 %}
+    <div class="profile-tab">
+        {% view items=activated user=request.user classname_modifier="active" %}
+    </div>
+    {% endif %}
+    {% if recovered|length > 0 %}
+    <div class="profile-tab">
+        {% view items=recovered user=request.user %}
+    </div>
+    {% endif %}
 {% endblock %}
 
 {# Sidebar #}
 {% block sidebar %}
-    {% include 'blocks/space-profile.html' with object=object %}
+    {% include 'blocks/space-profile.html' with object=object total_activated=total_activated total_recovered=total_recovered %}
 {% endblock %}
 
 {# page scripts #}

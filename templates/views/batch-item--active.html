@@ -1,0 +1,35 @@
+{# Render a Blog post in a view #} {% load utils i18n imagekit %}
+
+<div class="batch-item">
+    {% user_actions item user %}
+    <div class="inner">
+        <div class="batch-item__header">
+            <span class="batch-item__field-icon icon-{{ item.material_family }}"></span>
+            <span class="batch-item__field-id">ref. {{ item.batch_id }}</span>
+        </div>
+        {% if item.image %}
+            <div class="batch-item__field-image">
+                {% thumbnail '400x' item.image %}
+            </div>
+        {% elif item.material.image %}
+            <div class="batch-item__field-image">
+                {% thumbnail '400x' item.material.image %}
+            </div>
+        {% endif %}
+        <div class="batch-item__field-date">
+            <p>{{ item.date }}</p>
+        </div>
+        <div class="batch-item__field-offer">
+            <h5 class="batch-item__field-label">
+                {% trans 'Materiales activados' %}
+            </h5>
+            <p><a href="{% url 'batch' item.id %}">
+                {% if item.quantity %}
+                    {{ item.quantity }} {{ item.material.get_unit_display|lower }} {% trans 'de' %} {{ item.material.name|lower }}
+                {% else %}
+                    {{ item.material.name }}
+                {% endif %}
+            </a></p>
+        </div>
+    </div>
+</div>

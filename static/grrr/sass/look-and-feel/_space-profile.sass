@@ -97,3 +97,30 @@
 
 .space-profile .inner
   margin-bottom: $m
+
+.space-profile__numbers
+  margin: $m/2 0 $m
+  background: #f5f5f5
+  color: #555
+  padding: 0 $m/3 $m/3
+  +clearfix
+
+.space-profile__numbers-icon
+  font-size: 72px
+
+.space-profile__numbers-activated,
+.space-profile__numbers-recovered
+  width: 50%
+  float: left
+  text-align: center
+
+.space-profile__numbers-label
+  text-transform: uppercase
+.space-profile__numbers-cipher
+  +h(4)
+
+.space-profile
+  .milestone
+    border: 2px solid #111
+    background-color: rgba($palette_yellow, .25)
+    +border-radius(50%)

@@ -58,7 +58,7 @@
               {% trans 'Peso unitario' %}
             </p>
             {% if object.material.weight %}
-                {{ object.material.weight }}
+                {{ object.material.weight }} kg. / {{ object.material.unit | lower }}
             {% else %}
                 {% blocktrans trimmed %}
                     <em>No se ha constatado el peso unitario de este material.</em>
@@ -72,34 +72,42 @@
         </h4>
         <div class="batch-detail__quantity">
             <p class="batch-detail__label">
-              {% trans 'Cantidad disponible' %}
+                {% if object.category == 'of' %}
+                    {% trans 'Se ofrecen' %}
+                {% elif object.category == 'de' %}
+                    {% trans 'Se necesitan' %}
+                {% else %}
+                    {% trans 'Se activaron' %}
+                {% endif %}
             </p>
             {{ object.quantity }} {{ object.material.get_unit_display | lower }}
         </div>
-        <div class="batch-detail__expiracion">
-            <p class="batch-detail__label">
-              {% trans 'Fecha de expiración' %}
-            </p>
-            {% if object.expiration %}
-                {{ object.expiration }}
-            {% else %}
-                {% blocktrans trimmed %}
-                    <em>La oferta de este lote no tiene una fecha límite.</em>
-                {% endblocktrans %}
-            {% endif %}
-        </div>
-        <div class="batch-detail__periodicity">
-            <p class="batch-detail__label">
-              {% trans 'Periodicidad' %}
-            </p>
-            {% if object.periodicity %}
-                {{ object.get_periodicity_display }}
-            {% else %}
-                {% blocktrans trimmed %}
-                    <em>No hay periodicidad.</em>
-                {% endblocktrans %}
-            {% endif %}
-        </div>
+        {% if object.category != 'ac' %}
+            <div class="batch-detail__expiracion">
+                <p class="batch-detail__label">
+                  {% trans 'Fecha de expiración' %}
+                </p>
+                {% if object.expiration %}
+                    {{ object.expiration }}
+                {% else %}
+                    {% blocktrans trimmed %}
+                        <em>La oferta de este lote no tiene una fecha límite.</em>
+                    {% endblocktrans %}
+                {% endif %}
+            </div>
+            <div class="batch-detail__periodicity">
+                <p class="batch-detail__label">
+                  {% trans 'Periodicidad' %}
+                </p>
+                {% if object.periodicity %}
+                    {{ object.get_periodicity_display }}
+                {% else %}
+                    {% blocktrans trimmed %}
+                        <em>No hay periodicidad.</em>
+                    {% endblocktrans %}
+                {% endif %}
+            </div>
+        {% endif %}
         <div class="batch-detail__description">
             <p class="batch-detail__label">
               {% trans 'Descripción del lote' %}
@@ -150,7 +158,7 @@
 
 {# Sidebar #}
 {% block sidebar %}
-    {% include 'blocks/space-profile-short.html' with object=object.space %}
+    {% include 'blocks/space-profile-short.html' with object=object.space milestones=history %}
     {% if request.user|has_permissions:object %}
 
     <div class="batch-detail__actions">
