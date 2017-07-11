@@ -7,11 +7,18 @@
 #map-header,
 .space-profile
   font-family: $font_text
-  h5
-    text-transform: uppercase
   .leaflet-popup-content-wrapper
     +border-radius(0)
-    font-size: 1rem
+    font-size: .9rem
+  .leaflet-popup-content
+    +links_normal
+  .leaflet-popup-content h5
+    text-transform: uppercase
+    margin: $m/3 0 $m/4
+  .leaflet-popup-content p
+    margin-top: 0
+  .leaflet-popup-content img
+    margin-top: $m/3
   .leaflet-bar
     +links(white, $palette_yellow, .15s ease)
     a

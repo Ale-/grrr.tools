@@ -43,6 +43,6 @@
         map.setView([ lat, lon ], 12);
         var marker = L.marker([ lat, lon ], {
             icon : icon,
-        }).addTo(map);
+        }).bindPopup("{{ object.name }}").addTo(map);
     }
 </script>

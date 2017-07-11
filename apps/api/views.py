@@ -18,8 +18,8 @@ def nodes(request):
               item = {}
               item['lat']   =  node.geom['coordinates'][1]
               item['lon']   =  node.geom['coordinates'][0]
-              item['popup'] =  "<h5><a href='" + reverse('node', args=[node.slug]) + "'>" + node.name + "</a></h5>" + \
-                                   "<p>" + node.description + "</p>"
+              item['popup'] =  "<h5>" + node.name + "</h5>" + \
+                               "<p>" + node.description + "</p>"
               jsondump.append(item)
       return HttpResponse(json.dumps(jsondump, indent=4), content_type="application/json")
   else:
@@ -36,8 +36,9 @@ def reuses(request):
               item = {}
               item['lat']   =  node.geom['coordinates'][1]
               item['lon']   =  node.geom['coordinates'][0]
-              item['popup'] =  "<h5><a href='" + reverse('node', args=[node.slug]) + "'>" + node.name + "</a></h5>" + \
-                                   "<p>" + node.summary + "</p>"
+              item['popup'] =  "<img src='" + node.image.url + "' />" + \
+                               "<h5><a href='" + reverse('space', args=[node.slug]) + "'>" + node.name + "</a></h5>" + \
+                               "<p>" + node.summary + "</p>"
               jsondump.append(item)
       return HttpResponse(json.dumps(jsondump, indent=4), content_type="application/json")
   else:
