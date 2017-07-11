@@ -51,10 +51,7 @@ ready( function()
 
     // Add tile layer to map
     L.tileLayer('https://api.mapbox.com/styles/v1/ale/cj3rpgd2n00142slekpjya98f/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWxlIiwiYSI6ImpKQ2dnekEifQ.GjyY2X3Wa6pgoHTPOrUBdA', {
-        'attribution': "Map tiles by <a href='http://stamen.com'>Stamen Design</a>," +
-                       "under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>." +
-                       "Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>," +
-                       "under <a href='http://www.openstreetmap.org/copyright'>ODbL</a>."
+        'attribution': '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a> <a href="http://www.openstreetmap.org/about/" target="_blank">© OpenStreetMap</a>'
     }).addTo(map);
 
     // Add data to map

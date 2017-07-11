@@ -3,28 +3,36 @@
 
 @import compass/css3/border-radius
 
-#map-header
+// Reset general styles of maps
+#map-header,
+.space-profile
   font-family: $font_text
-  +links_remarked
+  h5
+    text-transform: uppercase
   .leaflet-popup-content-wrapper
     +border-radius(0)
     font-size: 1rem
-  h5
-    text-transform: uppercase
-  .leaflet-bar a
-    .leaflet-popup-content
-    background-color: #f5e800
-    +border-radius(0)
+  .leaflet-bar
+    +links(white, $palette_yellow, .15s ease)
+    a
+      background-color: #1a1a1a
+      +border-radius(0 !important)
   .leaflet-control-attribution
-    +links($palette_yellow, white, .15s ease)
-    background-color: #111
-    color: white
-
-.leaflet-div-icon
-  border: 0 !important
-  background: none !important
+    +links(white, $palette_yellow, .15s ease)
+    background-color: #1A1A1A !important
+  .leaflet-div-icon
+    border: 0
+    background: none
+  // Remove reinit view zoom button
+  .leaflet-control-zoom + .leaflet-control-zoom
+    display: none
+  // Custom inverted image in the control
+  .leaflet-control-fullscreen a
+    background: #1a1a1a url('../img/fullscreen.png') no-repeat 0 0
 
 .frontmap-legend
+  +breakpoint('xs')
+    display: none
   position: absolute
   top: $m/2
   left: $m*2
@@ -33,14 +41,16 @@
   width: $m*12
   padding: $m/2 $m/2 0
 .frontmap-legend__label
-  margin: 0 0 $m/6
+  margin: 0 0 $m/2
   text-transform: uppercase
+  +h(6)
   border-bottom: 1px solid $color_text
 .frontmap-legend__filters
   margin-bottom: $m/2
 .frontmap-legend__filter
   margin-bottom: 4px
   line-height: 1.5rem
+  position: relative
   &.active
     .frontmap-legend__filter-text
       background-color: $palette_yellow
@@ -50,7 +60,7 @@
   font-size: 1.5rem
   vertical-align: middle
 .frontmap-legend__filter-text
-  color: $color_text
+  color: #555
   text-transform: uppercase
   font-size: .75rem
   vertical-align: middle
@@ -62,3 +72,17 @@
   text-transform: uppercase
   font-size: $size_small
   margin-bottom: $m/4
+.frontmap-legend__filter.icon-otr
+  padding-left: 28px
+.frontmap-legend .icon-offer,
+.frontmap-legend .icon-demand
+  +inline-block
+  width: $m
+  text-align: center
+  font-size: 1.5rem
+  vertical-align: middle
+  + .inner
+    width: 10px
+    height: 10px
+    top: 4px
+    left: 9px

@@ -5,6 +5,46 @@
      {% leaflet_css %}
 {% endblock %}
 
+{% block map_legend %}
+    <div class="frontmap-legend">
+        <p class="frontmap-legend__label">{% trans 'Leyenda' %}</p>
+        <ul class="frontmap-legend__filters">
+            <li class="frontmap-legend__filter frontmap-legend__filter--legend" data-key="of">
+                <span class="icon-offer"></span><span class="inner"></span>
+                <span class="frontmap-legend__filter-text">
+                    {% trans 'Ofertas de materiales' %}
+                </span>
+            </li>
+            <li class="frontmap-legend__filter frontmap-legend__filter--legend" data-key="de">
+                <span class="icon-demand"></span><span class="inner"></span>
+                <span class="frontmap-legend__filter-text">
+                    {% trans 'Necesidades de materiales' %}
+                </span>
+            </li>
+            <li class="frontmap-legend__filter frontmap-legend__filter--legend active" data-key="all">
+                <span class="frontmap-legend__filter-text">
+                    {% trans 'Ver todo' %}
+                </span>
+            </li>
+        </ul>
+        <p class="frontmap-legend__label">{% trans 'Filtra' %}</p>
+        <ul class="frontmap-legend__filters">
+            {% for key, material in materials %}
+                <li class="frontmap-legend__filter frontmap-legend__filter--filter icon-{{ key|lower }}" data-key="{{ key|lower }}">
+                    <span class="frontmap-legend__filter-text">
+                        {{ material }}
+                    </span>
+                </li>
+            {% endfor %}
+            <li class="frontmap-legend__filter frontmap-legend__filter--filter active" data-key="all">
+                <span class="frontmap-legend__filter-text">
+                    {% trans 'Ver todo' %}
+                </span>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
 {% block main %}
     <div class="front__top">
         <div class="front__top-left">
@@ -44,6 +84,7 @@
 
 {% block page_scripts %}
     {% leaflet_js  %}
+    {% jquery %}
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
     <script type="text/javascript" src="{% js 'batches-map.js' %}"></script>

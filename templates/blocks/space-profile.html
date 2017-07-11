@@ -69,9 +69,18 @@
         map_widget.classList.toggle('active');
     });
     function space_map_init(map, options) {
-        var lat = parseFloat({{ object.geom.coordinates.1 }});
-        var lon = parseFloat({{ object.geom.coordinates.0 }});
-        map.setView([ lat, lon ], 10);
-        var marker = L.marker([ lat, lon ]).addTo(map);
+        // Map icon
+        var icon = L.divIcon({
+            html        : '<span class="icon-reuse"></span><span class="inner"></span>',
+            iconSize    : [25, 40],
+            iconAnchor  : [13, 40],
+            popupAnchor : [0, -25],
+        });
+        var lat = {{ object.geom.coordinates.1 | escape }};
+        var lon = {{ object.geom.coordinates.0 | escape }};
+        map.setView([ lat, lon ], 12);
+        var marker = L.marker([ lat, lon ], {
+            icon : icon,
+        }).addTo(map);
     }
 </script>
