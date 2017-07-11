@@ -143,7 +143,7 @@ class Space(models.Model):
                     help_text=_("¿Este reuso es un proceso en marcha o se da por finalizado? Los proyectos en marcha tienen mayor visibilidad en la plataforma."))
     published     = models.BooleanField(_("Publicado"), default=True, blank=False,
                     help_text=_("Sólo los contenidos 'publicados' son visibles. Desmarca esta casilla para generar un contenido provisional que podrás hacer público más adelante."))
-    nodes         = models.ManyToManyField(Node, verbose_name="Nodos", blank=False, related_name="Nodos",
+    nodes         = models.ManyToManyField(Node, verbose_name="Nodos", blank=False, related_name="spaces",
                     help_text=_("¿Qué nodos de la red participan en este espacio? Mantén presionado 'Control' o 'Command' en un Mac, para seleccionar más de una opción."))
     image         = models.ImageField(_("Imagen"), blank=False, upload_to="images/news/",
                     help_text=_("Una imagen significativa del espacio para las vistas de resúmenes de contenido y el encabezado de la vista completa. Puedes añadir más imágenes al texto completo del reuso."))

@@ -2,74 +2,33 @@
 
 <div class="node-item">
     <div class="inner">
-        <div class="inner__left">
-            <div class="node-item__field-thumbnail">
-                <a href="{% url 'node' item.slug %}" title="{% trans 'Ir al perfil del nodo' %}">
-                    <img src="{{ item.thumbnail.url }}" alt="Imagen representativa de {{ item.name }}" />
-                </a>
-            </div>
-            <h4 class="node-item__field-title">
-                {{ item.name }}
-            </h4>
+        <div class="node-item__field-thumbnail">
+            <img src="{{ item.image.url }}" alt="Imagen representativa de {{ item.name }}" />
         </div>
-        <div class="inner__center">
-            <div class="node-item__field-members">
+        <p class="node-item__field-place">
+            {{ item.place }}
+        </p>
+        <h4 class="node-item__field-title">
+            {{ item.name }}
+        </h4>
+        <p class="node-item__field-description">
+            {{ item.description }}
+        </p>
+        {% if item.spaces.all|length > 0 %}
+            <div class="node-item__field-spaces">
                 <p class="node-item__field-label">
-                    <span class="icon-personas"></span>
-                    <span>{% trans 'Miembros' %}</span>
+                    {% trans 'Espacios de' %} {{ item.name }}
                 </p>
-                <p class="node-item__field-value node-item__field-value--members">
-                    {{ item.members }}
+                {% for space in item.spaces.all %}
+                    <p class="node-item__space">
+                        <a href="{% url 'space' space.slug %}">
+                            <img class="node-item__space-thumbnail" src="{{ space.thumbnail.url }}" />
+                            <span class="node-item__space-name">{{ space.name }}</span>
+                        </a>
+                    </p>
+                {% endfor %}
                 </p>
             </div>
-            <div class="node-item__field-recovered">
-                <p class="node-item__field-label">
-                    <span class="icon-recuperados"></span>
-                    <span>{% trans 'Materiales recuperados' %}</span>
-                </p>
-                <p class="node-item__field-value node-item__field-value--recovered">
-                    0 <small>tn.</small>
-                </p>
-            </div>
-            <div class="node-item__field-activated">
-                <p class="node-item__field-label">
-                    <span class="icon-activados"></span>
-                    <span>{% trans 'Materiales activados' %}</span>
-                </p>
-                <p class="node-item__field-value node-item__field-value--activated">
-                    0 <small>tn.</small>
-                </p>
-            </div>
-        </div>
-        <div class="inner__right">
-            <p class="node-item__field-creation-date">
-                <p class="node-item__field-label">
-                    {% trans 'Fecha de alta' %}
-                </p>
-                <p class="node-item__field-value">
-                    {{ item.creation_date }}
-                </p>
-            </p>
-            <p class="node-item__field-manager">
-                <p class="node-item__field-label">
-                    {% trans 'Coordinador' %}
-                </p>
-                <p class="node-item__field-value">
-                    {{ item.manager.username }}
-                </p>
-            </p>
-            <div class="node-item__actions">
-                <p class="node-item__action">
-                    <a href="{% url 'models:send_sms_to' item.slug %}" >
-                        {% trans 'Envía un mensaje' %}
-                    </a>
-                </p>
-                <p class="node-item__action">
-                    <a href="{% url 'node' item.slug %}">
-                        {% trans 'Ir al perfil del nodo' %}
-                    </a>
-                </p>
-            </div>
-        </div>
+        {% endif %}
     </div>
 </div>

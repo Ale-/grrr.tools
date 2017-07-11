@@ -4,65 +4,37 @@
 @import compass/css3/border-radius
 
 .node-item
-  +links_remarked
-  .inner
-    display: block
-    +clearfix
-    padding: $m
-    background-color: #eee
-    margin-bottom: $m
-  [class^='inner__']
-    text-align: center
-  .inner__left
-    +column(2, 'sm', 20px)
-    padding-right: $m !important
-  .inner__center
-    +column(8, 'sm', 20px)
-    vertical-align: center
-    margin-top: $m
-    border-left: 1px solid #555
-    border-right: 1px solid #555
-  .inner__right
-    +column(2, 'sm', 20px)
-    padding-left: $m !important
+  +view_item_normal
+  +view_item_3-2-1
+  .inner:hover
+    outline: 0
+.node-item__space-thumbnail
+  width: $m*2
+  display: inline-block
+  +border-radius(50%)
+  margin-right: $m/3
+.node-item__field-thumbnail
+  text-align: center
+.node-item__space-name
+  display: inline-block
+  line-height: $m*2
+  vertical-align: top
+
+.node-item__space a
+  display: block
+
+.node-item__field-label
+  margin: $m 0 $m/2
+  +h(6)
+  text-transform: uppercase
+
+.node-item__space a:hover
+  outline: 2px solid $color_text
+
+.node-item__field-place
+  margin: $m 0 $m/4
+  font-size: $size_small
+  text-transform: uppercase
 
 .node-item__field-title
-  margin: 0
-
-.node-item__field-activated,
-.node-item__field-recovered,
-.node-item__field-members
-  +column(4, 'sm', 20px)
-  text-align: center
-  text-transform: uppercase
-
-.node-item__field-value--activated,
-.node-item__field-value--recovered,
-.node-item__field-value--members
-  +h(1)
-.node-item__field-label--activated,
-.node-item__field-label--recovered,
-.node-item__field-label--members
-  font-size: .75em
-
-.node-item .inner__center
-  [class^='icon']::before
-    display: block
-    font-size: $m*3
-
-.node-item__field-thumbnail
-  img
-    +border-radius(50%)
-
-.node-item__actions
-  border-top: 1px solid $color_text
-  margin-top: $m/2
-
-.node-item__action
-  font-size: .8rem
-  text-transform: uppercase
-  margin-top: $m/2
-
-.inner__right .node-item__field-label
-  +h(5)
-  margin-top: $m/2
+  margin-top: 0

@@ -24,4 +24,6 @@
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
     <script type="text/javascript" src="{% js 'nodes-map.js' %}"></script>
+    {% jquery %}
+    {% include 'scripts/masonry.html' with grid_class='view-node__content' item_class='node-item' %}
 {% endblock %}
