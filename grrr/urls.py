@@ -34,6 +34,7 @@ urlpatterns += i18n_patterns(
     url(r'^acerca$', TemplateView.as_view(template_name="pages/about.html"), name='about'),
     url(r'^recursos$', views.ResourcesView.as_view(), name='resources'),
     url(r'^glosario$', views.GlossaryView.as_view(), name='glossary'),
+    url(r'^como-funciona$', TemplateView.as_view(template_name="pages/how.html"), name='how-it-works'),
 
     # General views
     url(r'^blog$', views.BlogView.as_view(), name='blog'),

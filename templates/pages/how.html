@@ -1,0 +1,22 @@
+{# About section #}
+{% extends 'layouts/single-fixed-column.html' %} {% load i18n static utils %}
+{% block body_classes %}how-works{% endblock %} {% block htmltitle %}{% trans 'Cómo funciona' %}{% endblock %}
+
+{# Preface #}
+{% block preface %}
+    {% breadcrumb %}
+    {# Title #}
+    {% trans 'Cómo funciona' as page_title %}
+    {% include 'blocks/page-title.html' with text=page_title icon="grrr" %}
+{% endblock %}
+
+{# Content #}
+{% block main %}
+    <div class="how-it-works__building">
+        {% blocktrans trimmed %}
+            <strong>En construcción.</strong>
+            Hemos actualizado las funcionalidades de la plataforma recientemente.
+            Subiremos lo antes posible instrucciones actuales sobre la plataforma
+        {% endblocktrans %}
+    </div>
+{% endblock %}
