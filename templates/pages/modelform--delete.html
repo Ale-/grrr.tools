@@ -1,0 +1,31 @@
+{# Modelform page #} {% extends 'layouts/single-fixed-column.html' %} {% load static i18n utils %}
+{% block body_classes %}modelform{% endblock %} {% block htmltitle %}Borra contenido{% endblock %}
+
+ℹ
+{# Main content #}
+{% block main %}
+    {% trans 'Cancelar' as breadcrumb_text %} {% fake_breadcrumb breadcrumb_text %}
+    {% trans title as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="square-plus" %}
+    {% if explanation %}
+        {% include 'blocks/explanation.html' with icon='ℹ' classname='modelform' text=explanation %}
+    {% endif %}
+    <form enctype="multipart/form-data" action="{{ action }}" method="post" class="form-{{ form__html_class }}--delete">
+        {% csrf_token %}
+        <div class="inner">
+            <div class="modelform-delete__text">
+                {% blocktrans trimmed %}
+                    ¿Estás segur@ de que quieres borrar este contenido? Esta acción no se puede deshacer.
+                {% endblocktrans %}
+            </div>
+            {{ form }}
+            <div class="form__buttons">
+                <input class="form__submit" type="submit" value="{% trans 'Sí, estoy segur@, quiero borrar este contenido' %}" />
+                <a class="form__cancel" onclick="history.go(-1)">{% trans 'Cancelar' %}</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block page_scripts %}
+  {{ form.media }}
+{% endblock %}

@@ -5,20 +5,33 @@
 
 .page-title
   line-height: 50px
+  padding-bottom: $m/2
   margin-bottom: $m*2
+  font-size: 1.4rem
+
+  +clearfix
 
 .page-title__icon
   font-size: 50px
   margin-right: $m/2
+  vertical-align: middle
+  line-height: 1rem
+  float: left
+  width: $m*2
 .page-title__text
+  display: inline-block
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+  max-width: calc(100% - #{$m*3})
   text-transform: uppercase
   color: white
   background: #111
+  line-height: 1.4
   padding: $m/4 $m
-  vertical-align: top
+  vertical-align: middle
 
 // Exclude blog items for title styling
-
 .post-detail,
 .reuse-detail
   .page-title

@@ -12,6 +12,14 @@ from apps.utils import widgets as utils
 from apps.utils.fields import GroupedModelChoiceField
 from . import categories
 
+
+class AgreementForm(forms.ModelForm):
+    """Form to create/update Agreement objects"""
+
+    class Meta:
+        model = models.Agreement
+        fields = '__all__'
+
 class NodeCreateForm(forms.ModelForm):
     """Form to create/update Node objects"""
 
@@ -73,10 +81,21 @@ class PostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs['initial'].pop('user')
         self.base_fields['space'].queryset = models.Space.objects.filter(nodes__in = user.users.all() )
+        self.base_fields['space'].empty_label = None
         super(PostForm, self).__init__(*args, **kwargs)
 
 class SpaceForm(forms.ModelForm):
     """Form to create/update Blog posts"""
+
+    def group_label(key):
+        return dict(categories.AGREEMENT_CATEGORIES)[key]
+
+    agreement = GroupedModelChoiceField(queryset=models.Agreement.objects.order_by('category', 'title'),
+                                       label=_('Acuerdos asociados'),
+                                       help_text=_('Puedes adjuntar acuerdos de cesión que hayan sido empleados por este espacio.'),
+                                       group_by_field='category', group_label=group_label,
+                                       empty_label=_("No se han empleado acuerdos de cesión por ahora"),
+                                       widget = utils.SelectOrAddWidget(view_name='models:create_agreement_popup', link_text=_("Añade un acuerdo")))
 
     class Meta:
         model   = models.Space
@@ -127,7 +146,7 @@ class BatchForm(forms.ModelForm):
         return dict(categories.MATERIALS_BY_FAMILY)[material_key]
 
     material = GroupedModelChoiceField(queryset=models.Material.objects.order_by('family', 'name'),
-                                       label='Material',
+                                       label=_('Material'),
                                        help_text=_('El material del que se compone el lote.'),
                                        group_by_field='family', group_label=group_label,
                                        empty_label=" ", widget = utils.SelectOrAddWidget(view_name='models:create_material_popup', link_text=_("Añade un material")))

@@ -16,6 +16,7 @@ from . import models, forms
 from apps.utils.views import GenericCreate, GenericUpdate, GenericDelete
 
 generic_template = 'pages/modelform.html'
+delete_template  = 'pages/modelform--delete.html'
 
 #
 # Node
@@ -90,6 +91,7 @@ class NodeDelete(GenericDelete):
   """ Modelform view to delete a Project object"""
 
   title = _('Borra el nodo')
+  template_name = delete_template
   model = models.Node
 
   def get_context_data(self, **kwargs):
@@ -165,6 +167,7 @@ class SpaceDelete(GenericDelete):
 
   title = _('Borra el reuso')
   model = models.Space
+  template_name = delete_template
 
   def get_initial(self):
     super(SpaceDelete, self).get_initial()
@@ -215,7 +218,9 @@ class MaterialCreate(GenericCreate):
 # Post
 #
 
-post_explanation = "Los posts son los artículos que nutren el Blog de la plataforma."
+post_explanation = ("Los posts son los artículos que nutren el Blog de la plataforma. "
+                    "Todos los espacios tienen un blog asociado en el que pueden publicar "
+                    "sus logros, fallos, convocatorias, etc.")
 
 class PostCreate(GenericCreate):
   """ Modelform view to create Blog posts"""
@@ -248,7 +253,7 @@ class PostEdit(GenericUpdate):
   form_class = forms.PostForm
   model = models.Post
   template_name = generic_template
-  form__html_class = 'blogpost'
+  form__html_class = 'post'
 
   def get_initial(self):
     super(PostEdit, self).get_initial()
@@ -261,7 +266,7 @@ class PostEdit(GenericUpdate):
     context['title'] = self.title + (' ') + self.object.title
     context['explanation'] = _(post_explanation)
     context['submit_text'] = _('Edita este post')
-    context['form__html_class'] = 'blogpost'
+    context['form__html_class'] = 'post'
     context['delete_button_arg'] = self.object.id
     return context
 
@@ -274,16 +279,19 @@ class PostDelete(GenericDelete):
 
   title = _('Borra el post')
   model = models.Post
+  template_name = delete_template
 
   def get_success_url(self):
-    return reverse('nodes')
+     if self.object.space:
+         return reverse('space', args=(self.object.space.slug,))
+     return reverse('blog')
 
   def get_context_data(self, **kwargs):
     context = super(GenericDelete, self).get_context_data(**kwargs)
     context['title'] = self.title + (' ') + self.object.title
     context['explanation'] = _(post_explanation)
     context['submit_text'] = _('Borrar')
-    context['form__html_class'] = 'blogpost'
+    context['form__html_class'] = 'post'
     return context
 
 
@@ -429,12 +437,13 @@ class BatchEdit(GenericUpdate):
 class BatchDelete(GenericDelete):
   """ Modelform view to delete a Batch object"""
 
-  title = _('Borra el nodo')
+  title = _('Borra el lote')
   model = models.Batch
+  template_name = delete_template
 
   def get_context_data(self, **kwargs):
     context = super(GenericDelete, self).get_context_data(**kwargs)
-    context['title'] = self.title + (' ') + self.object.name
+    context['title'] = self.title + (' ') + self.object.batch_id()
     context['form__html_class'] = 'batch'
     context['submit_text'] = _('Borrar este contenido')
     return context

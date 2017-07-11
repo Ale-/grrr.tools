@@ -1,0 +1,16 @@
+{# Modelform page #} {% extends 'layouts/single-fixed-column.html' %} {% load static i18n utils  %}
+{% block body_classes %}modelform{% endblock %} {% block htmltitle %}Añade un acuerdo{% endblock %}
+
+{# Main content #}
+{% block main %}
+    {% trans 'Añade un acuerdo' as title_text %} {% include 'blocks/page-title.html' with text=title_text icon="square-plus" %}
+    {% if explanation %}
+        {% include 'blocks/explanation.html' with icon='ℹ' classname='modelform' text=explanation %}
+    {% endif %}
+    {% trans 'Añade este acuerdo' as submit_text %}
+    {% include "forms/form.html" with form=form form_class='agreement' submit_text=submit_text %}
+{% endblock %}
+
+{% block page_scripts %}
+  {{ form.media }}
+{% endblock %}

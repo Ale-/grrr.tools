@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from . import views
-from .forms import MaterialForm
+from .forms import MaterialForm, AgreementForm
 from apps.utils.views import PopupFormView
 
 urlpatterns = [
@@ -36,6 +36,8 @@ urlpatterns = [
     # Add material form
     url(r'^crea/material$', views.MaterialCreate.as_view(), name="create_material"),
     url(r'^anade/material$', PopupFormView.as_view(form_class=MaterialForm, template_name="pages/modelform-popup-material.html"), name="create_material_popup"),
+
+    url(r'^crea/acuerdo$', PopupFormView.as_view(form_class=AgreementForm, template_name="pages/modelform-popup-agreement.html"), name="create_agreement_popup"),
 
     # Send SMS form
     url(r'^envia/sms$', views.SmsCreate.as_view(), name="create_sms"),

@@ -5,15 +5,7 @@
 @import compass/css3/animation
 @import compass/css3/filter
 
-
-.form--node,
-.form--blogpost,
-.form--material,
-.form--space,
-.form--sms,
-.form--batch,
-.form--transfer,
-.form--activate
+[class^='form-']
   +generic_form
   +animation(showup 1s 1)
 
@@ -75,3 +67,13 @@
   .sms-item__nodes
     background: none
     border-bottom: 1px solid $color_text
+
+.modelform-delete__text
+  font-size: 1.2em
+  padding: $m
+  margin-bottom: $m
+  text-align: center
+
+.add-related
+  +button_add_related
+  margin-left: $m/2

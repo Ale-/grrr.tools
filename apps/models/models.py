@@ -152,8 +152,8 @@ class Space(models.Model):
                     help_text=_("Puedes asociar documentos de acuerdos de cesión al espacio."))
     summary       = models.TextField(_("Resumen"), blank=False,
                     help_text=_("Un resumen de la noticia para las vistas de contenidos, si no lo usas se usará un recorte del cuerpo."))
-    place         = models.CharField(_("Localidad"), max_length=128, blank=True, null=True,
-                    help_text=_("El nombre de la localidad —ciudad, pueblo, ámbito— donde se hizo el reuso. Aunque es opcional, esta información ayuda al resto de usuari@s a contextualizar la iniciativa rápidamente."))
+    place         = models.CharField(_("Localidad"), max_length=128, blank=False, null=True,
+                    help_text=_("El nombre de la localidad —ciudad, pueblo, ámbito— donde se sitúa el espacio."))
     address       = models.CharField(_("Dirección"), max_length=128, blank=True, null=True,
                     help_text=_("Dirección del nodo. No es necesario que incluyas la localidad anterior."))
     geom          = PointField(_("Ubicación"), blank=False, null=True,
@@ -179,7 +179,7 @@ class Post(models.Model):
 
     title         = models.CharField(_("Título"), max_length=128,
                     help_text=_("El titulo del post."))
-    space         = models.ForeignKey(Space, verbose_name=_("Espacio"), null=True,
+    space         = models.ForeignKey(Space, verbose_name=_("Espacio"), blank=True, null=True,
                     help_text=_("¿Al blog de qué espacio está asociado este post?"))
     slug          = models.SlugField(editable=False, blank=True)
     creation_date = models.DateField(_("Fecha"), default=date.today,
@@ -187,8 +187,8 @@ class Post(models.Model):
     author        = models.ForeignKey(User, related_name="author", verbose_name=_("Autor-"), null=True, blank=False)
     published     = models.BooleanField(_("Publicado"), default=True, blank=False,
                     help_text=_("Sólo los contenidos publicados serán visibles. Desmarca esta casilla para generar un borrador que podrás publicar más adelante, cuando esté acabado."))
-    grrr_blog     = models.BooleanField(_("Blog del GRRR"), default=False, blank=False,
-                    help_text=_("Indica si es un post para el blog principal de la web."))
+    grrr_blog     = models.BooleanField(_("Destacado"), default=False, blank=False,
+                    help_text=_("Indica si es un post del equipo editorial. La selección de espacio se ignora si marcas esta opción."))
     image         = models.ImageField(_("Imagen"), blank=True, upload_to="images/blog/",
                                       help_text="Una imagen representativa para las vistas de contenido y para la cabecera de la vista del post completo.")
     thumbnail     = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
@@ -253,9 +253,9 @@ class Batch(models.Model):
                    help_text=_("El material del que se compone el lote"))
     image        = models.ImageField(_("Imagen"), blank=True, upload_to="images/batches/")
     total        = models.PositiveIntegerField(_("Cantidad total"), blank=True, null=True,
-                   help_text=_("Especifica en las unidades del material cuánta cantidad hay en total en el lote."))
+                   help_text=_("En caso de lotes de oferta puedes especificar aquí una cantidad total mayor a la ofertada si se da el caso."))
     quantity     = models.PositiveIntegerField(_("Cantidad"), blank=True, null=True,
-                   help_text=_("Especifica en las unidades del material cuánto se ofrece/necesita (opcional en este último caso)."))
+                   help_text=_("Especifica en las unidades del material cuánto se ofrece o necesita (opcional en este último caso)."))
     public_info  = models.TextField(_("Información pública"), blank=True, null=True,
                    help_text=_("Informa en este campo de características del lote."))
     private_info = models.TextField(_("Información privada"), blank=True, null=True,

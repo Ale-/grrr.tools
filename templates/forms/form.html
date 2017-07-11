@@ -18,14 +18,14 @@
     {% endfor %}
 {% endif %}
 
-<form enctype="multipart/form-data" action="{{ action }}" method="post" class="form form--{{ form_class }}">
+<form enctype="multipart/form-data" action="{{ action }}" method="post" class="form-{{ form_class }}">
     {% csrf_token %}
     <div class="inner">
         {% with 'forms/fields-'|add:form_class|add:'.html' as fields %}
             {% include fields with form_class=form_class %}
         {% endwith %}
         <div class="form__buttons">
-        <input class="form__submit" type="submit" value="{{ submit_text }}" />
+            <input class="form__submit" type="submit" value="{{ submit_text }}" />
             {% if delete_arg %}
                 {% with 'models:'|add:'delete_'|add:form__html_class as edit_url %}
                 <a class="form__delete" href="{% url edit_url delete_arg %}">
