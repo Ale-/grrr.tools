@@ -122,6 +122,21 @@
     border-color: transparent
     cursor: pointer
 
+=button_add_related
+  +h(6)
+  text-transform: uppercase
+  border: 1px solid #333
+  top: 2px
+  padding: $m/8 $m/4
+  margin-bottom: $m/2
+  +transition(background-color .15s ease)
+  &, &:link, &:visited, &:hover
+    color: $color_text
+  &:hover
+    background-color: rgba(black, .05)
+    border-color: transparent
+    cursor: pointer
+
 // Views
 =view_item_3-2-1
   display: inline-block

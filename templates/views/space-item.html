@@ -16,7 +16,8 @@
         </h4>
         <div class="space-item__field-summary">
             {% if item.active %}
-                <span class="space-item__field-active icon-repeat"></span>
+                {% trans 'Espacio activo' as active_text %}
+                {% icon icon="repeat" text=active_text %}
             {% endif %}
             {{ item.summary }}
         </div>

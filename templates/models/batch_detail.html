@@ -74,7 +74,7 @@
             <p class="batch-detail__label">
               {% trans 'Cantidad disponible' %}
             </p>
-            {{ object.quantity }} {{ object.material.get_unit_display }}
+            {{ object.quantity }} {{ object.material.get_unit_display | lower }}
         </div>
         <div class="batch-detail__expiracion">
             <p class="batch-detail__label">
@@ -93,7 +93,7 @@
               {% trans 'Periodicidad' %}
             </p>
             {% if object.periodicity %}
-                {{ object.periodicity }}
+                {{ object.get_periodicity_display }}
             {% else %}
                 {% blocktrans trimmed %}
                     <em>No hay periodicidad.</em>
@@ -112,25 +112,39 @@
                 {% endblocktrans %}
             {% endif %}
         </div>
-        <hr/>
-        <div class="batch-detail__description">
-            <p class="batch-detail__label">
-              {% trans 'Cantidad total' %}
-            </p>
-            {{ object.total }}
-        </div>
-        <div class="batch-detail__private-info">
-            <p class="batch-detail__label">
-              {% trans 'Información privada' %}
-            </p>
-            {% if object.private_info %}
-                {{ object.private.info }}
-            {% else %}
-                {% blocktrans trimmed %}
-                    <em>No hay información privada sobre el lote.</em>
-                {% endblocktrans %}
-            {% endif %}
-        </div>
+        {% if request.user|has_permissions:object %}
+            <div class="batch-private">
+                <h5 class="batch-private__label">
+                    {% trans 'Información privada' %}
+                </h5>
+                <p class="batch-private__text">{% blocktrans trimmed %}
+                    <em>Estos datos son sólo visibles para usuari@s con permisos sobre
+                    este espacio</em>
+                {% endblocktrans %}</p>
+                <div class="batch-detail__description">
+                    <p class="batch-detail__label">
+                      {% trans 'Cantidad total' %}
+                    </p>
+                    {% if object.total %}
+                        {{ object.total }} {{ object.material.get_unit_display | lower }}
+                    {% else %}
+                        {{ object.quantity }} {{ object.material.get_unit_display | lower }}
+                    {% endif %}
+                </div>
+                <div class="batch-detail__private-info">
+                    <p class="batch-detail__label">
+                      {% trans 'Información privada' %}
+                    </p>
+                    {% if object.private_info %}
+                        {{ object.private.info }}
+                    {% else %}
+                        {% blocktrans trimmed %}
+                            <em>No hay información privada sobre el lote.</em>
+                        {% endblocktrans %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
