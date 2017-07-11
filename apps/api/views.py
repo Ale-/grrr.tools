@@ -52,10 +52,15 @@ def batches(request):
       for node in nodes:
           if(node.space.geom):
               item = {}
-              item['lat']   =  node.space.geom['coordinates'][1]
-              item['lon']   =  node.space.geom['coordinates'][0]
-              item['popup'] =  "<h5><a href='" + reverse('node', args=[node.pk]) + "'>" + node.material.name + "</a></h5>" + \
-                                   "<p>" + node.public_info + "</p>"
+              item['lat'] = node.space.geom['coordinates'][1]
+              item['lon'] = node.space.geom['coordinates'][0]
+              item['cat'] = node.category
+              item['lnk'] = reverse('batch', args=[node.pk])
+              item['nam'] = node.material.name
+              item['mat'] = node.material.family
+              item['des'] = node.public_info
+              item['spa'] = node.space.name
+              item['img'] = node.image.url if node.image else node.material.image.url
               jsondump.append(item)
       return HttpResponse(json.dumps(jsondump, indent=4), content_type="application/json")
   else:

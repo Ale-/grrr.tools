@@ -30,15 +30,60 @@ function get(url, callback, error_callback)
    ajax.send();
 }
 
+var l = 'all';
+var f = 'all';
+
+var toggleMarkers = function(){
+  $('.leaflet-marker-icon').hide();
+  var selected = '.leaflet-marker-icon';
+  if(l != 'all')
+      selected += '.' + l;
+  if(f != 'all')
+      selected += '.' + f;
+  $(selected).show();
+}
+
+$('.frontmap-legend__filter--legend').click( function(){
+    l = $(this).attr('data-key');
+    $('.frontmap-legend__filter--legend').each( function(i, it){
+        $(it).removeClass('active');
+    })
+    $(this).addClass('active');
+    toggleMarkers();
+});
+
+$('.frontmap-legend__filter--filter').click( function(){
+    f = $(this).attr('data-key');
+    $('.frontmap-legend__filter--filter').each( function(i, it){
+        $(it).removeClass('active');
+    })
+    $(this).addClass('active');
+    toggleMarkers();
+});
+
+
+
 ready( function()
 {
-    // Map icon
-    var icon = L.divIcon({
-        html        : '<span class="icon-node"></span><span class="inner"></span>',
-        iconSize    : [25, 40],
-        iconAnchor  : [13, 40],
-        popupAnchor : [0, -25],
-    });
+  //Markers
+  var offer_marker = function(material){
+      return L.divIcon({
+          html: '<span class="icon-offer"></span><i class="inner"></i>',
+          iconSize: [25, 40],
+          iconAnchor: [13, 40],
+          popupAnchor: [0, -25],
+          className: "of " + material.toLowerCase(),
+      });
+  }
+  var need_marker = function(material){
+      return L.divIcon({
+          html: '<span class="icon-demand"></span><i class="inner"></i>',
+          iconSize: [25, 40],
+          iconAnchor: [13, 40],
+          popupAnchor: [0, -25],
+          className: "de " + material.toLowerCase(),
+      });
+  }
 
     // Map initial settings
     var map = L.map("map-header", {
@@ -59,9 +104,14 @@ ready( function()
 
     // Add data to map
     get("/api/batches", function(response)
-    {   
+    {
         JSON.parse(response).forEach(function(i){
-            var marker = L.marker([ i.lat, i.lon ], { icon: icon }).bindPopup( i.popup ).addTo(map);
+            var icon = i.cat == 'of' ? offer_marker(i.mat) : need_marker(i.mat);
+            var message = "<img src='" + i.img + "' />" +
+                          "<p class='batch-category'>" + i.spa + (i.cat == 'of' ? ' ofrece' : ' necesita') + "</p>" +
+                          "<h5 class='batch-name'><a href='" + i.lnk + "'>" + i.nam + "</a></h5>" +
+                          "<p>" + i.des + "</p>";
+            var marker = L.marker([ i.lat, i.lon ], { icon: icon }).bindPopup( message ).addTo(map);
         });
     }, function(error){
         console.log(error);

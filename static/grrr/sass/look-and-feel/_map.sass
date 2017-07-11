@@ -6,19 +6,59 @@
 #map-header
   font-family: $font_text
   +links_remarked
-  .leaflet-div-icon
-    border: 0
-    background: none
   .leaflet-popup-content-wrapper
     +border-radius(0)
-  .leaflet-popup-content
     font-size: 1rem
   h5
     text-transform: uppercase
   .leaflet-bar a
+    .leaflet-popup-content
     background-color: #f5e800
     +border-radius(0)
   .leaflet-control-attribution
     +links($palette_yellow, white, .15s ease)
     background-color: #111
     color: white
+
+.leaflet-div-icon
+  border: 0 !important
+  background: none !important
+
+.frontmap-legend
+  position: absolute
+  top: $m/2
+  left: $m*2
+  z-index: 1000
+  background: white
+  width: $m*12
+  padding: $m/2 $m/2 0
+.frontmap-legend__label
+  margin: 0 0 $m/6
+  text-transform: uppercase
+  border-bottom: 1px solid $color_text
+.frontmap-legend__filters
+  margin-bottom: $m/2
+.frontmap-legend__filter
+  margin-bottom: 4px
+  line-height: 1.5rem
+  &.active
+    .frontmap-legend__filter-text
+      background-color: $palette_yellow
+  &:hover
+    cursor: pointer
+.frontmap-legend__filter:before
+  font-size: 1.5rem
+  vertical-align: middle
+.frontmap-legend__filter-text
+  color: $color_text
+  text-transform: uppercase
+  font-size: .75rem
+  vertical-align: middle
+.frontmap-legend [data-key='all']
+  text-align: right
+.leaflet-popup-content .batch-name
+  margin-top: 0
+.leaflet-popup-content .batch-category
+  text-transform: uppercase
+  font-size: $size_small
+  margin-bottom: $m/4

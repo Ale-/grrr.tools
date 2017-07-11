@@ -8,7 +8,9 @@
 
     <div class="region-map">
         <div class="container-fluid">
-              <div id="map-header"></div>
+            <div id="map-header">
+                {% block map_legend %}{% endblock %}
+            </div>
         </div>
     </div>
 
