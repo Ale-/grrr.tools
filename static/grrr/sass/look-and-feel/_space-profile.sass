@@ -4,9 +4,6 @@
 @import compass/css3/transition
 @import compass/css3/border-radius
 
-.space-profile
-  +links_normal
-
 .space-profile__location
   margin-bottom: 0
   position: relative
@@ -124,3 +121,14 @@
     border: 2px solid #111
     background-color: rgba($palette_yellow, .25)
     +border-radius(50%)
+      
+.space-profile__agreements
+  +links_remarked
+.space-profile__agreements-item
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+  line-height: $m
+
+.space-profile__agreements-text
+  vertical-align: top
