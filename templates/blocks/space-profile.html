@@ -52,12 +52,14 @@
     </ul>
     <ul class="space-profile__agreements">
         <h4 class="space-profile__agreements-title">
-            {% trans 'Acuerdos relacionados' %}
+            {% trans 'Acuerdos empleados' %}
         </h4>
-        {% for agreement in agreements %}
+        {% for agreement in object.agreement.all %}
             <li class="space-profile__agreements-item">
-                <span class="space-profile__agreements-icon icon-acuerdo"></span>
-                <span class="space-profile__agreements-text">{{ agreement.name }}</span>
+                <a href="{{ agreement.document.url }}" target="_blank" title="{% trans 'Ver acuerdo' %}">
+                    <span class="space-profile__agreements-icon icon-acuerdo"></span>
+                    <span class="space-profile__agreements-text">{{ agreement.title }}</span>
+                </a>
             </li>
         {% empty %}
             {% url 'agreements' as agreements_link %}
