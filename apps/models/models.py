@@ -171,6 +171,8 @@ class Space(models.Model):
 
     def edit_permissions(self, user):
         """Returns users allowed to edit an instance of this model."""
+        if user.is_anonymous:
+            return False
         user_in_groups = self.nodes.filter(users__in = [user]).count() > 0
         return user_in_groups or user.is_staff
 
