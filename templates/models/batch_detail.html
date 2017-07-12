@@ -159,23 +159,24 @@
 {# Sidebar #}
 {% block sidebar %}
     {% include 'blocks/space-profile-short.html' with object=object.space milestones=history %}
-    {% if request.user|has_permissions:object %}
-
+    {% if not request.user.is_anonymous %}
     <div class="batch-detail__actions">
         <p class="batch-detail__action-sms">
             <a href="{% url 'models:batch_sms' object.space.slug object.pk %}">
                 {% trans 'Pregunta por este lote' %}
             </a>
         </p>
-        <p class="batch-detail__action-transfer">
-            <a href="{% url 'transfer_batch' object.pk %}">
-                {% trans 'Mueve materiales de este lote' %}</a>
-        </p>
-        <p class="batch-detail__action-activate">
-            <a href="{% url 'activate_batch' object.pk %}">
-                {% trans 'Activa materiales de este lote' %}
-            </a>
-        </p>
+        {% if request.user|has_permissions:object and object.category == 'of' %}
+            <p class="batch-detail__action-transfer">
+                <a href="{% url 'transfer_batch' object.pk %}">
+                    {% trans 'Mueve materiales de este lote' %}</a>
+            </p>
+            <p class="batch-detail__action-activate">
+                <a href="{% url 'activate_batch' object.pk %}">
+                    {% trans 'Activa materiales de este lote' %}
+                </a>
+            </p>
+        {% endif %}
     </div>
     {% endif %}
 {% endblock %}
