@@ -26,4 +26,5 @@
     <script type="text/javascript" src="{% js 'nodes-map.js' %}"></script>
     {% jquery %}
     {% include 'scripts/masonry.html' with grid_class='view-node__content' item_class='node-item' %}
+    <script type="text/javascript">document.querySelectorAll('.menu-main__link')[1].classList.add('active')</script>
 {% endblock %}
