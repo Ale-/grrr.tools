@@ -11,6 +11,8 @@ from django.views.decorators.cache import never_cache
 from django.forms import formset_factory, modelformset_factory
 from django.utils.html import escape
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import FormView
 
 from . import models, forms
 from apps.utils.views import GenericCreate, GenericUpdate, GenericDelete
@@ -456,3 +458,24 @@ class BatchDelete(GenericDelete):
 
   def get_success_url(self):
     return reverse('reuses')
+
+
+class PopupMaterialFormView(LoginRequiredMixin, FormView):
+    """Popup to create Material objects."""
+
+    def form_valid(self, form):
+        instance = form.save()
+        return HttpResponse('<script type="text/javascript">opener.dismissAddRelatedObjectPopup(window, "%s", "%s");</script>' % (\
+                            escape(instance.id),
+                            escape(instance.name)
+        ))
+
+class PopupAgreementFormView(LoginRequiredMixin, FormView):
+    """Popup to create Agreement objects."""
+
+    def form_valid(self, form):
+        instance = form.save()
+        return HttpResponse('<script type="text/javascript">opener.dismissAddRelatedObjectPopup(window, "%s", "%s");</script>' % (\
+                            escape(instance.id),
+                            escape(instance.title)
+        ))

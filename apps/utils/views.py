@@ -73,13 +73,3 @@ class GenericDelete(LoginRequiredMixin, DeleteView):
     if not self.object.edit_permissions(self.request.user):
       raise PermissionDenied
     return self.initial
-
-
-class PopupFormView(LoginRequiredMixin, FormView):
-
-    def form_valid(self, form):
-        instance = form.save()
-        return HttpResponse('<script type="text/javascript">opener.dismissAddRelatedObjectPopup(window, "%s", "%s");</script>' % (\
-                            escape(instance.id),
-                            escape(instance.name)
-        ))

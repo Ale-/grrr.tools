@@ -153,8 +153,9 @@ class SelectOrAddWidget(forms.Select):
 class SelectOrAddMultipleWidget(forms.SelectMultiple):
     """A widget that extends regular select multiple with an icon to launch a popup to add new options."""
 
-    def __init__(self, attrs=None, view_name=None):
+    def __init__(self, attrs=None, view_name=None, link_text="+"):
         self.view_name = view_name
+        self.link_text = link_text
         super(SelectOrAddMultipleWidget, self).__init__(attrs)
 
     class Media:
