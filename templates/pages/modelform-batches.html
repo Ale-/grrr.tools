@@ -23,9 +23,9 @@
     </div>
     <div class="batch-detail__quantity">
         <p class="batch-detail__label">
-          {% trans 'Cantidad disponible' %}
+          {% trans 'Cantidad total' %}
         </p>
-        {{ batch.quantity }} {{ batch.material.get_unit_display }}
+        {{ batch.total }} {{ batch.material.get_unit_display }}
     </div>
     <div class="batch-detail__description">
         <p class="batch-detail__label">

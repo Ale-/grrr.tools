@@ -298,7 +298,8 @@ class Batch(models.Model):
                 date     = self.date,
                 space    = self.space,
             )
-
+        if self.category == 'of' and self.quantity and not self.total:
+            self.total = self.quantity
         super(Batch, self).save(*args, **kwargs)
         if milestone:
             self.milestones.add(milestone)

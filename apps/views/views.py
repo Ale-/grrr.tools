@@ -180,8 +180,7 @@ class TransferBatchView(View):
     @method_decorator(login_required)
     def get(self, request, pk):
         batch = get_object_or_404(models.Batch, pk=pk)
-        print(batch)
-        form = self.form()
+        form = self.form(pk=pk)
         return render(request, 'pages/modelform-batches.html', {
             'form': form,
             'form__html_class' : self.form__html_class,
@@ -193,11 +192,11 @@ class TransferBatchView(View):
 
     @method_decorator(login_required)
     def post(self, request, pk):
+        # Origin node
+        batch = get_object_or_404(models.Batch, pk=pk)
         # Form
-        form = self.form(request.POST)
+        form = self.form(pk=pk, data=request.POST)
         if form.is_valid():
-            # Origin node
-            batch = get_object_or_404(models.Batch, pk=pk)
             # Target node
             space = form.cleaned_data['space']
             # Create new batch in target node
@@ -237,13 +236,14 @@ class TransferBatchView(View):
             target_batch.milestones.add(milestone.pk)
 
             # Update current batch
-            batch.quantity -= form.cleaned_data['quantity']
-            if batch.total:
-                batch.total -= form.cleaned_data['quantity']
-            if batch.quantity == 0:
-                return HttpResponseRedirect(reverse('space', args=[space.slug]))
+            quantity = form.cleaned_data['quantity']
+            batch.total -= quantity
+            if quantity > batch.quantity:
+                batch.quantity -= form.cleaned_data['quantity']
+            batch.quantity = max(batch.quantity - quantity , 0)
             batch.save(update_fields=('quantity', 'total'))
-            return HttpResponseRedirect(reverse('batch', args=[batch.pk]))
+
+            return HttpResponseRedirect(reverse('space', args=[batch.space.slug]))
 
         return render(request, 'pages/modelform-batches.html', {
             'form': form,
@@ -269,7 +269,7 @@ class ActivateBatchView(View):
     def get(self, request, pk):
         batch = get_object_or_404(models.Batch, pk=pk)
         return render(request, 'pages/modelform-batches.html', {
-            'form': self.form,
+            'form': self.form(pk=pk),
             'form__html_class' : self.form__html_class,
             'title' : self.title,
             'batch' : batch,
@@ -279,12 +279,11 @@ class ActivateBatchView(View):
 
     @method_decorator(login_required)
     def post(self, request, pk):
+        # Origin node
+        batch = get_object_or_404(models.Batch, pk=pk)
         # Form
-        form = self.form(request.POST)
+        form = self.form(pk=pk, data=request.POST)
         if form.is_valid():
-            # Origin node
-            batch = get_object_or_404(models.Batch, pk=pk)
-
             # Create new active
             new_batch = models.Batch.objects.create(
                 category     = 'ac',
@@ -300,14 +299,14 @@ class ActivateBatchView(View):
                 new_batch.milestones.add( *[milestone.pk for milestone in batch_milestones] )
 
             # Update current batch
-            batch.quantity -= form.cleaned_data['quantity']
-            if batch.total:
-                batch.total -= form.cleaned_data['quantity']
+            quantity = form.cleaned_data['quantity']
+            batch.total -= quantity
+            if quantity > batch.quantity:
+                batch.quantity -= form.cleaned_data['quantity']
+            batch.quantity = max(batch.quantity - quantity , 0)
+            batch.save(update_fields=('quantity', 'total'))
 
-            if batch.quantity == 0:
-                return HttpResponseRedirect(reverse('space', args=[space.slug]))
-            batch.save(update_fields=('quantity','total'))
-            return HttpResponseRedirect(reverse('batch', args=[batch.pk]))
+            return HttpResponseRedirect(reverse('space', args=[batch.space.slug]))
 
         return render(request, 'pages/modelform-batches.html', {
             'form': form,

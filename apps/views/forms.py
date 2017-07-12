@@ -17,10 +17,19 @@ class TransferBatchForm(forms.Form):
     quantity = forms.IntegerField(label=_("Cantidad"), initial=0,
                help_text=_("¿Qué cantidad de materiales del lote se mueven?"))
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, pk, *args, **kwargs):
+        self.batch_id = pk
         self.base_fields['space'].empty_label = None
-        self.base_fields['space'].queryset = models.Space.objects.all().order_by('name')
+        space = models.Batch.objects.filter(pk=self.batch_id).first().space
+        self.base_fields['space'].queryset = models.Space.objects.exclude(pk=space.pk).order_by('name')
         super(TransferBatchForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(TransferBatchForm, self).clean()
+        quantity = cleaned_data.get('quantity')
+        batch = models.Batch.objects.filter(pk=self.batch_id).first()
+        if quantity and quantity > batch.total:
+            raise forms.ValidationError(_("No puedes transferir más material del que tienes, Einstein."))
 
 
 class ActivateBatchForm(forms.Form):
@@ -28,3 +37,14 @@ class ActivateBatchForm(forms.Form):
                help_text=_("Fecha aproximada en que los materiales se reutilizaron"))
     quantity = forms.IntegerField(label=_("Cantidad"), initial=0,
                help_text=_("¿Qué cantidad de materiales del lote se han reutilizado?"))
+
+    def __init__(self, pk, *args, **kwargs):
+        self.batch_id = pk
+        super(ActivateBatchForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(ActivateBatchForm, self).clean()
+        quantity = cleaned_data.get('quantity')
+        batch = models.Batch.objects.filter(pk=self.batch_id).first()
+        if quantity and quantity > batch.total:
+            raise forms.ValidationError(_("No puedes activar más material del que tienes, huevo."))

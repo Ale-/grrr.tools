@@ -162,3 +162,13 @@ class BatchForm(forms.ModelForm):
             self.base_fields['space'].queryset = models.Space.objects.filter( nodes__in=user.users.all() ).order_by('name')
         self.base_fields['date'].widget.attrs['placeholder'] = _("Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015")
         super(BatchForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(BatchForm, self).clean()
+        quantity = cleaned_data.get("quantity")
+        total    = cleaned_data.get("total")
+        category = cleaned_data.get("category")
+        if total and category == 'de' :
+            raise forms.ValidationError(_("El campo 'Cantidad total' no se usa en demandas, usa sólo el campo 'Cantidad'"))
+        if total and quantity and total < quantity:
+            raise forms.ValidationError(_("La cantidad total no puede ser inferior a la ofrecida, melón!"))

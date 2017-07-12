@@ -133,11 +133,8 @@
                     <p class="batch-detail__label">
                       {% trans 'Cantidad total' %}
                     </p>
-                    {% if object.total %}
-                        {{ object.total }} {{ object.material.get_unit_display | lower }}
-                    {% else %}
-                        {{ object.quantity }} {{ object.material.get_unit_display | lower }}
-                    {% endif %}
+                      {{ object.total }} {{ object.material.get_unit_display | lower }}
+                    </p>
                 </div>
                 <div class="batch-detail__private-info">
                     <p class="batch-detail__label">
