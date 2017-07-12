@@ -87,23 +87,14 @@ class PostForm(forms.ModelForm):
 class SpaceForm(forms.ModelForm):
     """Form to create/update Blog posts"""
 
-    def group_label(key):
-        return dict(categories.AGREEMENT_CATEGORIES)[key]
-
-    agreement = GroupedModelChoiceField(queryset=models.Agreement.objects.order_by('category', 'title'),
-                                       label=_('Acuerdos asociados'),
-                                       help_text=_('Puedes adjuntar acuerdos de cesión que hayan sido empleados por este espacio.'),
-                                       group_by_field='category', group_label=group_label,
-                                       empty_label=_("No se han empleado acuerdos de cesión por ahora"),
-                                       widget = utils.SelectOrAddWidget(view_name='models:create_agreement_popup', link_text=_("Añade un acuerdo")))
-
     class Meta:
         model   = models.Space
         fields = '__all__'
         widgets = {
-            'geom'    : utils.GeocodedLeafletWidget(submit_text='Localiza el reuso', provider="google", sources="id_place id_address"),
-            'image'   : utils.PictureWithPreviewWidget(),
-            'summary' : utils.LimitedTextareaWidget(limit=500),
+            'geom'      : utils.GeocodedLeafletWidget(submit_text='Localiza el reuso', provider="google", sources="id_place id_address"),
+            'image'     : utils.PictureWithPreviewWidget(),
+            'summary'   : utils.LimitedTextareaWidget(limit=500),
+            'agreement' : utils.SelectOrAddMultipleWidget(view_name='models:create_agreement_popup', link_text=_("Añade un acuerdo"))
         }
 
     def __init__(self, *args, **kwargs):
