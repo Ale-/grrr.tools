@@ -121,12 +121,12 @@ class ReusesView(ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_anonymous:
-            return models.Space.objects.filter(published=True, reuse=True).all().order_by('-active', '-creation_date')
+            return models.Space.objects.filter(published=True).all().order_by('name', '-creation_date')
         elif user.is_staff:
-            return models.Space.objects.filter(reuse=True).order_by('-active', '-creation_date')
-        published = models.Space.objects.filter(published=True, reuse=True)
+            return models.Space.objects.all().order_by('name', '-creation_date')
+        published = models.Space.objects.filter(published=True)
         own       = models.Space.objects.filter(nodes__in=user.node_set)
-        return (published | own).order_by('-active', '-creation_date')
+        return (published | own).order_by('name', '-creation_date')
 
 class SpaceItemView(DetailView):
     """View of a Reuse model instance."""
@@ -138,19 +138,19 @@ class SpaceItemView(DetailView):
         obj     = super(SpaceItemView, self).get_object()
         context['blogposts'] = models.Post.objects.filter(space=obj)
         context['needs']     = models.Batch.objects.filter(category='de', space=obj)
-        context['inventory'] = models.Batch.objects.filter(category='of', space=obj)
+        if obj.edit_permissions(self.request.user):
+            context['inventory'] = models.Batch.objects.filter(category='of', space=obj)
+        else:
+            context['inventory'] = models.Batch.objects.filter(category='of', space=obj, quantity__gt=0)
         context['activated'] = models.Batch.objects.filter(category='ac', space=obj)
-        milestones = models.Milestone.objects.filter(space=obj)
-        context['recovered'] = models.Batch.objects.filter(milestones__in=milestones)
+        context['recovered'] = models.Batch.objects.filter(category='re', space=obj)
         total_activated = 0
         for batch in context['activated']:
             total_activated += batch.quantity * batch.material.weight
         context['total_activated'] = total_activated/1000
         total_recovered = 0
         for batch in context['recovered']:
-            for milestone in batch.milestones.all():
-                if milestone.space == obj:
-                    total_recovered += milestone.quantity * batch.material.weight
+            total_recovered += (batch.quantity * batch.material.weight)
         context['total_recovered'] = total_recovered/1000
         return context
 
@@ -201,33 +201,45 @@ class TransferBatchView(View):
             # Target node
             space = form.cleaned_data['space']
             # Create new batch in target node
-            new_batch = models.Batch.objects.create(
+            target_batch = models.Batch.objects.create(
                 category     = 'of',
                 space        = space,
+                date         = form.cleaned_data['date'],
+                material     = batch.material,
+                image        = batch.image,
+                quantity     = 0,
+                total        = form.cleaned_data['quantity'],
+                public_info  = batch.public_info,
+                expiration   = None,
+            )
+
+            # Create recovered batch in source node
+            source_batch = models.Batch.objects.create(
+                category     = 're',
+                space        = batch.space,
                 date         = form.cleaned_data['date'],
                 material     = batch.material,
                 image        = batch.image,
                 quantity     = form.cleaned_data['quantity'],
                 public_info  = batch.public_info,
                 expiration   = None,
+                target       = space
             )
 
+            # Update milestones
             batch_milestones = batch.milestones.all()
+            print(batch_milestones)
             if len(batch_milestones) > 0:
-                new_batch.milestones.add( *[milestone.pk for milestone in batch_milestones] )
+                target_batch.milestones.add( *[milestone.pk for milestone in batch_milestones] )
+                source_batch.milestones.add( *[milestone.pk for milestone in batch_milestones] )
 
-            milestone = models.Milestone.objects.create(
-                date     = form.cleaned_data['date'],
-                space    = batch.space,
-                category = 'TR',
-                quantity = form.cleaned_data['quantity'],
-            )
-            new_batch.milestones.add(milestone.pk)
+            milestone = models.Milestone.objects.create(date=form.cleaned_data['date'], space=batch.space)
+            target_batch.milestones.add(milestone.pk)
 
             # Update current batch
             batch.quantity -= form.cleaned_data['quantity']
             if batch.total:
-                batch.total    -= form.cleaned_data['quantity']
+                batch.total -= form.cleaned_data['quantity']
             if batch.quantity == 0:
                 return HttpResponseRedirect(reverse('space', args=[space.slug]))
             batch.save(update_fields=('quantity', 'total'))

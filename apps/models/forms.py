@@ -156,6 +156,9 @@ class BatchForm(forms.ModelForm):
         self.base_fields['category'].choices = categories.BATCH_FORM_CATEGORIES
         self.base_fields['material'].empty_label = None
         self.base_fields['space'].empty_label = None
-        self.base_fields['space'].queryset = models.Space.objects.filter( nodes__in=user.users.all() ).order_by('name')
+        if user.is_staff:
+            self.base_fields['space'].queryset = models.Space.objects.all().order_by('name')
+        else:
+            self.base_fields['space'].queryset = models.Space.objects.filter( nodes__in=user.users.all() ).order_by('name')
         self.base_fields['date'].widget.attrs['placeholder'] = _("Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015")
         super(BatchForm, self).__init__(*args, **kwargs)

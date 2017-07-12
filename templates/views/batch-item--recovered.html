@@ -33,7 +33,7 @@
         </div>
         <div class="batch-item__field-space">
           <h5 class="batch-item__field-label">{% trans 'Fueron a:' %}</h5>
-          <p><a href="{% url 'space' item.space.slug %}">{{ item.space.name }}</a>, {{ item.space.place }}</p>
+          <p><a href="{% url 'space' item.target.slug %}">{{ item.target.name }}</a>, {{ item.target.place }}</p>
         </div>
     </div>
 </div>

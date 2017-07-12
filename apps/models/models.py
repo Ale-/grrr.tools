@@ -237,13 +237,13 @@ class Milestone(models.Model):
 
     def __str__(self):
         """String representation of model instances."""
-        return self.get_category_display() + " | " + self.space.name + " | " + str(self.date)
+        return self.space.name + " | " + str(self.date)
 
 
 class Batch(models.Model):
     """Batches of the same material associated to spaces."""
 
-    category     = models.CharField(_("¿Oferta o demanda?"), max_length=2, choices=categories.BATCH_CATEGORIES, default='de',
+    category     = models.CharField(_("¿Oferta o demanda?"), max_length=2, choices=categories.BATCH_CATEGORIES, default='of',
                    help_text=_("¿Ofreces o necesitas materiales?"))
     space        = models.ForeignKey(Space, verbose_name=_("Espacio"), null=True,
                    help_text=_("¿Qué espacio ofrece o demanda?"))
@@ -266,7 +266,7 @@ class Batch(models.Model):
                    help_text=_("¿Es uan oferta única o tiene periodicidad?"))
     milestones   = models.ManyToManyField(Milestone, verbose_name=_("Movimientos"), blank=True)
     # Only for recovered materials, to store target space
-    target       = models.OneToOneField(Space, verbose_name="Objectivo", related_name="source", null=True)
+    target       = models.ForeignKey(Space, verbose_name="Objectivo", related_name="source", blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Batches"
@@ -290,16 +290,17 @@ class Batch(models.Model):
 
     def save(self, *args, **kwargs):
         """Notifies the creation of the instance to nodes that demand the material of the batch."""
-        super(Batch, self).save(*args, **kwargs)
 
+        milestone = {}
         # If creating a new batch and it's an offer, add a new milestone to the list of milestones
         if not self.id and self.category == 'of':
             milestone = Milestone.objects.create(
                 date     = self.date,
                 space    = self.space,
-                category = 'TR',
-                quantity = self.quantity,
             )
+
+        super(Batch, self).save(*args, **kwargs)
+        if milestone:
             self.milestones.add(milestone)
 
 
