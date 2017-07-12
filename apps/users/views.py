@@ -26,7 +26,7 @@ class UserAccount(View):
         profile           = get_object_or_404(UserProfile, user=request.user)
         unseen_date       = profile.last_message_seen_datetime
         last_sms          = models.Sms.objects.order_by('-datetime').first()
-        if last_sms and last_sms.datetime > profile.last_message_seen_datetime:
+        if not profile.last_message_seen_datetime or last_sms and last_sms.datetime > profile.last_message_seen_datetime:
             profile.last_message_seen_datetime = last_sms.datetime
             profile.save(update_fields=('last_message_seen_datetime',))
 
