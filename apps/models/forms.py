@@ -172,3 +172,5 @@ class BatchForm(forms.ModelForm):
             raise forms.ValidationError(_("El campo 'Cantidad total' no se usa en demandas, usa sólo el campo 'Cantidad'"))
         if total and quantity and total < quantity:
             raise forms.ValidationError(_("La cantidad total no puede ser inferior a la ofrecida, melón!"))
+        if category == 'of' and not total and not quantity:
+            raise forms.ValidationError(_("Las entradas de lotes han de tener al menos una cantidad asociada, sea la ofrecida o la total"))

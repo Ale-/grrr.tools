@@ -80,9 +80,15 @@
                     {% trans 'Se activaron' %}
                 {% endif %}
             </p>
-            {{ object.quantity }} {{ object.material.get_unit_display | lower }}
+            {% if object.quantity %}
+                {{ object.quantity }} {{ object.material.get_unit_display | lower }}
+            {% else %}
+                {% blocktrans trimmed %}
+                    <em>No se ha especificado una cantidad exacta en el lote.</em>
+                {% endblocktrans %}
+            {% endif %}
         </div>
-        {% if object.category != 'ac' %}
+        {% if object.category != 'ac' or object.category != 're' %}
             <div class="batch-detail__expiracion">
                 <p class="batch-detail__label">
                   {% trans 'Fecha de expiración' %}
@@ -91,7 +97,7 @@
                     {{ object.expiration }}
                 {% else %}
                     {% blocktrans trimmed %}
-                        <em>La oferta de este lote no tiene una fecha límite.</em>
+                        <em>La oferta/demanda de este lote no tiene una fecha límite.</em>
                     {% endblocktrans %}
                 {% endif %}
             </div>
@@ -116,7 +122,7 @@
                 {{ object.public_info }}
             {% else %}
                 {% blocktrans trimmed %}
-                    <em>Parece que no hay disponible una descripción del lote.</em>
+                    <em>Actualmente no disponemos de una descripción del lote.</em>
                 {% endblocktrans %}
             {% endif %}
         </div>
@@ -129,6 +135,7 @@
                     <em>Estos datos son sólo visibles para usuari@s con permisos sobre
                     este espacio</em>
                 {% endblocktrans %}</p>
+                {% if item.category == 'of' %}
                 <div class="batch-detail__description">
                     <p class="batch-detail__label">
                       {% trans 'Cantidad total' %}
@@ -136,6 +143,7 @@
                       {{ object.total }} {{ object.material.get_unit_display | lower }}
                     </p>
                 </div>
+                {% endif %}
                 <div class="batch-detail__private-info">
                     <p class="batch-detail__label">
                       {% trans 'Información privada' %}
