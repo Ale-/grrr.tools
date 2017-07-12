@@ -1,6 +1,10 @@
 {# Render a Blog post in a view #} {% load utils i18n imagekit %}
 
-<div class="space-item {% if not item.published %}unpublished{% endif %}">
+<div class="space-item
+            {% if item.reuse %}reuse{% else %}not-reuse{% endif %}
+            {% if item.active %}active{% endif %}
+            {% if not item.published %}unpublished{% endif %}
+            {% if item.ratings.all.0.average >= 4.0 %}seal{% endif %}">
     {% user_actions item user %}
     <a class="inner" href="{% url 'space' item.slug %}">
         {% if item.image %}
@@ -15,10 +19,23 @@
             {{ item.name }}
         </h4>
         <div class="space-item__field-summary">
-            {% if item.active %}
-                {% trans 'Espacio activo' as active_text %}
-                {% icon icon="repeat" text=active_text %}
-            {% endif %}
+            <span class="space-item__field-category {% if item.active %}active{% endif %}">
+                {% if item.reuse %}
+                    {% if item.active %}
+                      {% trans 'Reuso activo' as active_text %}
+                    {% else %}
+                      {% trans 'Reuso' as active_text %}
+                    {% endif %}
+                    {% icon icon="repeat" text=active_text %}
+                {% else %}
+                    {% if item.active %}
+                      {% trans 'Almacén activo' as active_text %}
+                    {% else %}
+                      {% trans 'Almacen' as active_text %}
+                    {% endif %}
+                    {% icon icon="box" text=active_text %}
+                {% endif %}
+            </span>
             {{ item.summary }}
         </div>
         {% if not item.published %}
