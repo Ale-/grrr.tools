@@ -162,6 +162,7 @@ class BatchForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs['initial']['user']
+        self.base_fields['category'].choices = categories.BATCH_FORM_CATEGORIES
         self.base_fields['material'].empty_label = None
         self.base_fields['space'].empty_label = None
         self.base_fields['space'].queryset = models.Space.objects.filter( nodes__in=user.users.all() ).order_by('name')

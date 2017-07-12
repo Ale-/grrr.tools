@@ -232,8 +232,6 @@ class Milestone(models.Model):
 
     date     = models.DateField(null = True)
     space    = models.ForeignKey(Space, null = True)
-    category = models.CharField(max_length=2, choices=categories.MILESTONE_CATEGORIES, default='TR')
-    quantity = models.PositiveIntegerField(null = True)
 
     def __str__(self):
         """String representation of model instances."""
@@ -265,6 +263,8 @@ class Batch(models.Model):
     periodicity  = models.CharField(_("Periodicidad"), max_length=2, choices=categories.BATCH_PERIODICITY, default='no',
                    help_text=_("¿Es uan oferta única o tiene periodicidad?"))
     milestones   = models.ManyToManyField(Milestone, verbose_name=_("Movimientos"), blank=True)
+    # Only for recovered materials, to store target space
+    target       = models.OneToOneField(Space, verbose_name="Objectivo", related_name="source", null=True)
 
     class Meta:
         verbose_name_plural = "Batches"

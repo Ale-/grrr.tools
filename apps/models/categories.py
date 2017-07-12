@@ -44,7 +44,13 @@ MATERIAL_UNITS = (
 BATCH_CATEGORIES = (
     ('of', _('Oferta de materiales')),
     ('de', _('Demanda de materiales')),
-    ('ac', _('Lote activado'))
+    ('ac', _('Lote activado')),
+    ('re', _('Lote recuperado'))
+)
+
+BATCH_FORM_CATEGORIES = (
+    ('of', _('Oferta de materiales')),
+    ('de', _('Demanda de materiales')),
 )
 
 BATCH_PERIODICITY = (
@@ -52,9 +58,4 @@ BATCH_PERIODICITY = (
     ('se', _('Semanal')),
     ('me', _('Mensual')),
     ('an', _('Anual')),
-)
-
-MILESTONE_CATEGORIES = (
-    ('TR', _('Materiales transferidos')),
-    ('RE', _('Materiales recibidos'))
 )
