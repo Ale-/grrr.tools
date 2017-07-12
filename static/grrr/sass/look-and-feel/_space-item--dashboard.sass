@@ -5,13 +5,13 @@
 @import compass/css3/inline-block
 
 .space-item--dashboard
-  +links_remarked
+  +links_none
 
 .space-item__field-thumbnail--dashboard
-  margin: 0 $m/2
+  margin-right: 8px
   img
     +border-radius(50%)
-    max-width: 50px
+    max-width: 36px
 
 .space-item__field-thumbnail--dashboard,
 .space-item__field-title--dashboard
@@ -21,4 +21,11 @@
   display: block
   +transition(background-color .15s ease)
   &:hover
-    background-color: #eee
+    .space-item__field-title--dashboard
+      background-color: $palette_yellow
+
+.space-item__field-title--dashboard
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+  max-width: calc(100% - 50px)
