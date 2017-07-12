@@ -1,0 +1,21 @@
+.space-filters
+  margin: $m
+  border-bottom: 1px solid $color_text
+.space-filters__item
+  line-height: 1rem
+  padding: 0 $m/3
+  +breakpoint('sm')
+    display: inline
+    margin-right: $m/2
+.space-filters__item-text
+  text-transform: uppercase
+  font-size: $size_small
+.space-filters .icon-active:before
+  content: " "
+  display: inline-block
+  width: 1rem
+  height: 1rem
+  +border-radius(50%)
+  background: $palette_yellow
+.space-filters__item-icon
+  margin-right: $m/3

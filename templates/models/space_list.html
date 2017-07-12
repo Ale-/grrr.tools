@@ -13,18 +13,43 @@
 
 {# Content #}
 {% block main %}
-    {% trans 'Reusos' as title_text %}
+    {% trans 'Espacios' as title_text %}
     {% include 'blocks/page-title.html' with text=title_text icon="repeat" %}
-    {# {% view user=current.user view_class="reuse" items=object_list template="reuse-item" %}#}
+    {# Space filters #}
+    <ul class="space-filters">
+        <li class="space-filters__item" data-target="reuse">
+            <span class="space-filters__item-icon icon-repeat"></span>
+            <span class="space-filters__item-text">{% trans 'Reusos' %}</span>
+        </li>
+        <li class="space-filters__item" data-target="not-reuse">
+            <span class="space-filters__item-icon icon-box"></span>
+            <span class="space-filters__item-text">{% trans 'Almacenes' %}</span>
+        </li>
+        <li class="space-filters__item" data-target="active">
+            <span class="space-filters__item-icon icon-active"></span>
+            <span class="space-filters__item-text">{% trans 'Espacios activos' %}</span>
+        </li>
+        <li class="space-filters__item" data-target="seal">
+            <span class="space-filters__item-icon icon-grrr"></span>
+            <span class="space-filters__item-text">{% trans 'Sello calidad' %}</span>
+        </li>
+    </ul>
+
+    {# View of spaces#}
     {% view items=object_list user=request.user %}
 {% endblock %}
 
 {# Scripts #}
 {% block page_scripts %}
+    {# Masonry and filters #}
     {% jquery %}
     {% include 'scripts/masonry.html' with grid_class='view-space__content' item_class='space-item' %}
+    {# Header map scripts #}
     {% leaflet_js  %}
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
     <script type="text/javascript" src="{% js 'reuses-map.js' %}"></script>
+    {# Active links #}
+    <script type="text/javascript">document.querySelectorAll('.menu-main__link')[0].classList.add('active')</script>
+
 {% endblock %}
