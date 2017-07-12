@@ -19,18 +19,26 @@
         <div class="batch-item__field-date">
             <p>{{ item.date }}</p>
         </div>
+        {% if user|has_permissions:item and item.total %}
+        <div class="batch-item__field-offer">
+            <h5 class="batch-item__field-label">
+                {% trans 'Total' %}
+            </h5>
+            <p><a href="{% url 'batch' item.id %}">
+                {{ item.total }} {{ item.material.get_unit_display|lower }}
+            </a></p>
+        </div>
+        {% endif %}
+        {% if item.quantity %}
         <div class="batch-item__field-offer">
             <h5 class="batch-item__field-label">
                 {% trans 'Ofrece' %}
             </h5>
             <p><a href="{% url 'batch' item.id %}">
-                {% if item.quantity %}
-                    {{ item.quantity }} {{ item.material.get_unit_display|lower }} {% trans 'de' %} {{ item.material.name|lower }}
-                {% else %}
-                    {{ item.material.name }}
-                {% endif %}
+                {{ item.quantity }} {{ item.material.get_unit_display|lower }} {% trans 'de' %} {{ item.material.name|lower }}
             </a></p>
         </div>
+        {% endif %}
         {% if item.expiration %}
             <div class="batch-item__field-caducity">
                 <em>{% trans 'Hasta el' %} {{ item.expiration }}</em>
