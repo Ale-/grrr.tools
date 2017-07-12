@@ -47,7 +47,7 @@ def reuses(request):
 def batches(request):
   """API endpoint to get all batches in the site"""
 
-  nodes = models.Batch.objects.all()
+  nodes = models.Batch.objects.exclude(category__in=['ac', 're'])
   if len(nodes) > 0:
       jsondump = []
       for node in nodes:
