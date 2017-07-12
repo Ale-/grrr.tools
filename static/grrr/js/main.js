@@ -12,4 +12,5 @@ var trigger = document.querySelector('.trigger-navigation');
 trigger.addEventListener('click', function(){
     var header = document.querySelector('.region-header');
     header.classList.toggle('region-header--unfolded');
+    document.querySelector('.trigger-navigation').classList.toggle('active');
 });

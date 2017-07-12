@@ -2,12 +2,12 @@
 // regions/header.html
 
 .trigger-navigation
-  +button_headers
   position: fixed
   top: $m
   right: $m
   z-index: 90000
-  background-color: $palette_yellow
+  &:hover
+    cursor: pointer
 
 .toolbar
   .trigger-navigation
@@ -18,3 +18,19 @@
 @media all and (min-width: #{$menu_breakpoint})
   .trigger-navigation
     display: none
+
+.trigger-navigation
+  p
+    width: $m
+    height: 4px
+    background-color: #333
+    margin-bottom: 4px
+    +transition(transform .25s ease)
+
+.region-header--unfolded
+  .b1
+    +transform(translateY(6px) rotate(45deg))
+  .b2
+    opacity: 0
+  .b3
+    +transform(translateY(-10px) rotate(-45deg))
