@@ -105,8 +105,8 @@ class SmsForm(forms.ModelForm):
     """Sms modelforms"""
 
     batch = GroupedModelChoiceField(queryset=models.Batch.objects.order_by('space'),
-                                    label=_("Oferta/demanda"),
-                                    help_text=_('Si mandas el mensaje en relación a una oferta o demanda puedes especificarla aquí.'),
+                                    label=_("Lote relacionado"),
+                                    help_text=_('Si mandas el mensaje en relación a una oferta o demanda puedes especificar aquí el lote.'),
                                     group_by_field='space',
                                     empty_label=_("El mensaje no está relacionado con ningún lote"), )
 

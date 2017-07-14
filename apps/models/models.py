@@ -314,7 +314,7 @@ class Sms(models.Model):
 
     author       = models.ForeignKey(User, blank=True, null=True, editable=False)
     datetime     = models.DateTimeField(blank=True, default=now)
-    batch        = models.ForeignKey(Batch, verbose_name=_("Lote"), null=True, blank=True,
+    batch        = models.ForeignKey(Batch, verbose_name=_("Lote relacionado"), null=True, blank=True,
                    help_text=_("Si mandas el mensaje en relación a una oferta/demanda puedes especificarla aquí."))
     emissor      = models.ForeignKey(Space, verbose_name=_("Remitente"), related_name="emissor", null=True, blank=True,
                    help_text=_("Especifica el espacio al que representas."))
