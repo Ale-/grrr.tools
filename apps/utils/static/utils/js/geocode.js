@@ -54,6 +54,7 @@ function Geocoder(map, marker, geometry_field)
              }
              marker = L.marker([lat, lng], { 'draggable' : true });
              marker.on('dragend', function(e){
+                 e.stopPropagation();
                  var latlng = e.target.getLatLng();
                  geometry_field.value = coords_to_geojson(latlng.lat, latlng.lng);
              });
