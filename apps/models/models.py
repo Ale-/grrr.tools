@@ -252,7 +252,7 @@ class Batch(models.Model):
     space        = models.ForeignKey(Space, verbose_name=_("Espacio"), null=True,
                    help_text=_("¿Qué espacio ofrece o demanda?"))
     date         = models.DateField(_("Fecha de entrada"), default=date.today,
-                   help_text=_("Fecha de entrada del lote en tu inventario"))
+                   help_text=_("Fecha de entrada del lote en tu inventario. Usa el formato dd/mm/aaaa, por ejemplo '01/05/2015' para el 1 de Mayo de 2015."))
     material     = models.ForeignKey(Material, verbose_name=_("Material"), blank=False, null=True, on_delete=models.SET_NULL,
                    help_text=_("El material del que se compone el lote"))
     image        = models.ImageField(_("Imagen"), blank=True, upload_to="images/batches/")
