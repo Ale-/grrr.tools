@@ -1,6 +1,7 @@
 # Import python packages
 import time
 from datetime import date
+from twitter import Twitter, OAuth, TwitterHTTPError
 
 # Import django packages
 from django.db import models
@@ -11,6 +12,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.timezone import now
+from django.urls import reverse
 
 # Import contrib apps
 from djgeojson.fields import PointField
@@ -21,6 +23,8 @@ from star_ratings.models import Rating
 
 # Import site apps
 from apps.models import categories
+from grrr import private_settings as tw
+from django.conf import settings
 
 class Node(models.Model):
     """Nodes of the GRRR network, participated by users."""
@@ -344,7 +348,6 @@ def notify_batch(sender, instance, **kwargs):
     else:
         match = 'of'
         sms = _("Es un mensaje automático para indicarte que se ha creado una demanda de materiales que se ofertan en uno de tus espacios")
-    # matches = Batch.objects.filter(category='de', material=instance.material).space_set.all()
     batches = Batch.objects.filter(category=match, material=instance.material)
     matches = Space.objects.distinct().filter(batch__in=batches)
     if len(matches)>0:
@@ -356,3 +359,15 @@ def notify_batch(sender, instance, **kwargs):
             msg.batch = instance
             msg.notification = True
             msg.save()
+
+    # Twitter notifications
+    if settings.TWITTER_NOTIFICATIONS:
+        try:
+            t = Twitter(auth=OAuth(tw.TWITTER_ACCESS_TOKEN, tw.TWITTER_ACCESS_TOKEN_SECRET, tw.TWITTER_API_KEY, tw.TWITTER_API_SECRET))
+            url = 'https://grrr.tools' + reverse('batch',args=(instance.pk,))
+            material = instance.material.name.lower()
+            cat = "oferta de " if instance.category == 'of' else "demanda de "
+            tuit = "Se ha creado una " + cat + material + " en " + instance.space.place + ". Ver en: " + url
+            t.statuses.update(status=tuit)
+        except:
+            print("Parece que hay un error en la conexión a Twitter")
