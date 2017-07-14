@@ -231,7 +231,7 @@ class PostCreate(GenericCreate):
   form_class = forms.PostForm
   model = models.Post
   template_name = generic_template
-  form__html_class = 'blogpost'
+  form__html_class = 'post'
 
   def get_initial(self):
     super(PostCreate, self).get_initial()
