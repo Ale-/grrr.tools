@@ -49,7 +49,7 @@ class Node(models.Model):
     members       = models.PositiveIntegerField(_("Número de miembros"), default=1,
                     help_text=_("Cuánta gente trabaja en el nodo."))
     users         = models.ManyToManyField(User, related_name="users", verbose_name=_("Usuarios del proyecto"), blank=True,
-                    help_text=_("Especifica aquí a usuari-s de la red que pertenecen a este Proyecto. Mantén presionado 'Control' o 'Command' en un Mac, para seleccionar más de una opción."))
+                    help_text=_("Especifica aquí a usuari-s de la red que pertenecen a este Proyecto. Mantén presionado 'Control' o 'Command' en un Mac, para deseleccionar o seleccionar más de una opción."))
 
 
     def __str__(self):
@@ -148,14 +148,14 @@ class Space(models.Model):
     published     = models.BooleanField(_("Publicado"), default=True, blank=False,
                     help_text=_("Sólo los contenidos 'publicados' son visibles. Desmarca esta casilla para generar un contenido provisional que podrás hacer público más adelante."))
     nodes         = models.ManyToManyField(Node, verbose_name="Nodos", blank=False, related_name="spaces",
-                    help_text=_("¿Qué nodos de la red participan en este espacio? Mantén presionado 'Control' o 'Command' en un Mac, para seleccionar más de una opción."))
+                    help_text=_("¿Qué colectivos de la red participan en este espacio? Mantén presionado 'Control' o 'Command' en un Mac, para deseleccionar o seleccionar más de una opción."))
     image         = models.ImageField(_("Imagen"), blank=False, upload_to="images/news/",
                     help_text=_("Una imagen significativa del espacio para las vistas de resúmenes de contenido y el encabezado de la vista completa. Puedes añadir más imágenes al texto completo del reuso."))
     thumbnail     = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
     agreement     = models.ManyToManyField(Agreement, verbose_name="Acuerdos", related_name="agreement", blank=True,
-                    help_text=_("Puedes asociar documentos de acuerdos de cesión al espacio."))
+                    help_text=_("Puedes asociar documentos de acuerdos de cesión al espacio. Mantén presionado 'Control' o 'Command' en un Mac, para deseleccionar o seleccionar más de una opción."))
     summary       = models.TextField(_("Resumen"), blank=False,
-                    help_text=_("Un resumen de la noticia para las vistas de contenidos, si no lo usas se usará un recorte del cuerpo."))
+                    help_text=_("Describe brevemente el espacio y su actividad. Puedes usar el blog del espacio para ampliar la información sobre el mismo."))
     place         = models.CharField(_("Localidad"), max_length=128, blank=False, null=True,
                     help_text=_("El nombre de la localidad —ciudad, pueblo, ámbito— donde se sitúa el espacio."))
     address       = models.CharField(_("Dirección"), max_length=128, blank=True, null=True,
