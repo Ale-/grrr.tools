@@ -8,6 +8,13 @@
                     {% thumbnail '400x' item.image %}
             </div>
         {% endif %}
+        <div class="post-item__space">
+            {% if item.space %}
+                {{ item.space.name }}
+            {% else %}
+                {% trans 'Colectivo editorial' %}
+            {% endif %}
+        </div>
         <h4 class="post-item__field-title">
             {{ item.title }}
         </h4>

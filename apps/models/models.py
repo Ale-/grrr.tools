@@ -185,16 +185,14 @@ class Post(models.Model):
 
     title         = models.CharField(_("Título"), max_length=128,
                     help_text=_("El titulo del post."))
-    space         = models.ForeignKey(Space, verbose_name=_("Espacio"), blank=True, null=True,
-                    help_text=_("¿Al blog de qué espacio está asociado este post?"))
+    space         = models.ForeignKey(Space, verbose_name=_("Blog"), blank=True, null=True,
+                    help_text=_("¿A qué blog está asociado este post?"))
     slug          = models.SlugField(editable=False, blank=True)
     creation_date = models.DateField(_("Fecha"), default=date.today,
                     help_text=_("Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015."))
     author        = models.ForeignKey(User, related_name="author", verbose_name=_("Autor-"), null=True, blank=False)
     published     = models.BooleanField(_("Publicado"), default=True, blank=False,
                     help_text=_("Sólo los contenidos publicados serán visibles. Desmarca esta casilla para generar un borrador que podrás publicar más adelante, cuando esté acabado."))
-    grrr_blog     = models.BooleanField(_("Destacado"), default=False, blank=False,
-                    help_text=_("Indica si es un post del equipo editorial. La selección de espacio se ignora si marcas esta opción."))
     image         = models.ImageField(_("Imagen"), blank=True, upload_to="images/blog/",
                                       help_text="Una imagen representativa para las vistas de contenido y para la cabecera de la vista del post completo.")
     thumbnail     = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})

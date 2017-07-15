@@ -80,8 +80,12 @@ class PostForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs['initial'].pop('user')
-        self.base_fields['space'].queryset = models.Space.objects.filter(nodes__in = user.users.all() )
-        self.base_fields['space'].empty_label = None
+        if user.is_staff:
+            self.base_fields['space'].queryset = models.Space.objects.all().order_by('name')
+            self.base_fields['space'].empty_label = _("Es un post del equipo editorial")
+        else:
+            self.base_fields['space'].queryset = models.Space.objects.filter(nodes__in = user.users.all() )
+            self.base_fields['space'].empty_label = None
         super(PostForm, self).__init__(*args, **kwargs)
 
 class SpaceForm(forms.ModelForm):
