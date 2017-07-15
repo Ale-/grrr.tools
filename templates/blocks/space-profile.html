@@ -43,7 +43,7 @@
         <h4 class="space-profile__nodes-title">
             {% trans 'Nodos relacionados' %}
         </h4>
-        {% for node in object.nodes.all %}
+        {% for node in object.nodes.all|dictsort:"name" %}
             <li class="space-profile__nodes-item">
                 <img class="space-profile__nodes-image" src="{{ node.thumbnail.url }}" />
                 <span class="space-profile__nodes-text">{{ node.name }}</span>
