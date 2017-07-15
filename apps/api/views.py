@@ -3,6 +3,7 @@ import json
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponse
+from django.db.models import Q
 
 from apps.models import models
 
@@ -47,7 +48,7 @@ def reuses(request):
 def batches(request):
   """API endpoint to get all batches in the site"""
 
-  nodes = models.Batch.objects.exclude(category__in=['ac', 're'])
+  nodes = models.Batch.objects.filter( Q(category='of', quantity__gt=0) | Q(category='de'))
   if len(nodes) > 0:
       jsondump = []
       for node in nodes:
