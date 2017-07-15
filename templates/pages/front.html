@@ -50,18 +50,10 @@
         <div class="front__top-left">
             <h4 class="front_label">
               <a href="{% url 'batches' %}" title="{% trans 'Busca ofertas y demandas' %}">
-                  {% trans 'Se ofrece' %}
+                  {% trans 'Ofertas y demandas' %}
               </a>
             </h4>
-            {% view items=offers user=request.user %}
-        </div>
-        <div class="front__top-center">
-          <h4 class="front_label">
-            <a href="{% url 'batches' %}" title="{% trans 'Busca ofertas y demandas' %}">
-                {% trans 'Se necesita' %}
-            </a>
-          </h4>
-            {% view items=demands user=request.user %}
+            {% view items=batches user=request.user %}
         </div>
         <div class="front__top-right">
           <h4 class="front_label">
@@ -85,6 +77,7 @@
 {% block page_scripts %}
     {% leaflet_js  %}
     {% jquery %}
+      {% include 'scripts/masonry.html' with grid_class='view-batch__content' item_class='batch-item' %}
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
     <script type="text/javascript" src="{% js 'batches-map.js' %}"></script>

@@ -17,8 +17,7 @@ class FrontView(View):
     """View of frontpage."""
 
     def get(self, request):
-        offers    = models.Batch.objects.filter(category='of')[:3]
-        demands   = models.Batch.objects.filter(category='de')[:3]
+        batches    = models.Batch.objects.filter(category__in=['of','de'])[:6]
         spaces    = models.Space.objects.filter(published=True)[:3]
         posts     = models.Post.objects.filter(published=True).order_by('-creation_date')[:3]
         materials = categories.MATERIALS_BY_FAMILY
