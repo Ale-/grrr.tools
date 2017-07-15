@@ -8,6 +8,7 @@
     {% endif %}
 
     <div class="view-{{ view_class }}{% if classname_modifier %}--{{ classname_modifier }}{% endif %}__content">
+        <div class="view-sizer"></div> {# for masonry templates #}
         {% with 'views/'|add:template|add:'.html' as template %}
             {% for item in items %}
                 {% include template with item=item %}

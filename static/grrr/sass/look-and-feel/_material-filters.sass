@@ -19,8 +19,10 @@
   text-transform: uppercase
   +h(5)
 
-.materials .batch-item
+.materials .view-sizer
   +view_item_3-2-1
+    
+.materials .batch-item
   padding: $m/2
   .node-actions--batch
     top: $m/2
@@ -29,6 +31,17 @@
     top: 46px
 
 .materials .view-batch__title
+  text-transform: uppercase
+  border-bottom: 2px solid $color_text
+  margin-top: $m*2
+
+.material-filters__empty-view
+  max-width: 480px
+  margin: $m*3 auto
+  font-size: 1.5em
+  text-align: center
+
+.material-filters__title
   text-transform: uppercase
   border-bottom: 2px solid $color_text
   margin-top: $m*2

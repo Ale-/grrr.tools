@@ -9,6 +9,7 @@
     </select>
     {% trans 'de elementos' %}
     <select class="material-filters__search-field--subfamily">
+        <option value="all">{% trans 'de cualquier tipo' %}</option>
         <option value="lo">{% trans 'longitudinales' %}</option>
         <option value="su">{% trans 'superficiales' %}</option>
         <option value="co">{% trans 'contenedores' %}</option>
@@ -16,6 +17,7 @@
     </select>
     {% trans 'de' %}
     <select class="material-filters__search-field--family">
+        <option value="all">{% trans 'de cualquier material' %}</option>
         <option value="mad">{% trans 'madera' %}</option>
         <option value="met">{% trans 'metal' %}</option>
         <option value="pla">{% trans 'plástico' %}</option>

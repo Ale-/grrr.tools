@@ -6,6 +6,9 @@
     {% breadcrumb %}
     {% trans 'Busca' as pagetitle %}
     {% include 'blocks/page-title.html' with text=pagetitle icon='box' %}
+{% endblock %}
+
+{% block main %}
     {% url 'contact_form' as contact_url %}
     {% trans 'Contacta con el equipo GRRR' as contact_title%}
     <div class="page-explanation">{% blocktrans trimmed %}
@@ -17,28 +20,50 @@
         target="_blank">coméntanoslo</a>.
     {% endblocktrans %}</div>
     {% include 'blocks/material-filters.html' %}
-{% endblock %}
-
-{% block main %}
-    {% trans 'Ofertas y demandas actuales' as search_title %}
-    {% view items=object_list user=request.user title=search_title %}
+    <h4 class="material-filters__title">{% trans 'Ofertas y demandas actuales' %}</h4>
+    <div class="material-filters__empty-view hidden">
+        {% blocktrans trimmed %}
+            No hay lotes que se correspondan con los filtros deseados
+        {% endblocktrans %}
+    </div>
+    {% view items=object_list user=request.user classname_modifier='search' %}
 {% endblock %}
 
 {# Scripts #}
 {% block page_scripts %}
     {% jquery %}
-    {% include 'scripts/masonry.html' with grid_class='view-batch__content' item_class='batch-item' %}
+    <script type="text/javascript" src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
     <script type="text/javascript">
         !(function($){
             $(document).ready( function(){
+                var $grid = $('.view-batch--search__content').imagesLoaded(
+                    function() {
+                        $grid.masonry({ itemSelector : '.batch-item', percentPosition : true, columnWidth: '.view-sizer' });
+                    }
+                );
+
                 $('.material-filters__search-submit').click( function(e){
                     e.preventDefault();
-                    $('.batch-item').hide('slow');
-                    var query = '.sub-' + $('.material-filters__search-field--subfamily').val() +
-                                '.mat-' + $('.material-filters__search-field--family').val();
-                    if($('.material-filters__search-field--type').val() != 'all' )
-                        query += '.cat-' + $('.material-filters__search-field--type').val()
-                    $(query).show('slow');
+                    var query = '';
+                    if( $('.material-filters__search-field--family').val() != 'all' )
+                        query += '.mat-' + $('.material-filters__search-field--family').val();
+                    if( $('.material-filters__search-field--subfamily').val() != 'all' )
+                        query += '.sub-' + $('.material-filters__search-field--subfamily').val();
+                    if( $('.material-filters__search-field--type').val() != 'all' )
+                        query += '.cat-' + $('.material-filters__search-field--type').val();
+                    if(query !== ''){
+                        $('.batch-item').hide();
+                        $(query).show();
+                    } else {
+                        $('.batch-item').show();
+                    }
+                    $grid.masonry();
+                    if( $('.batch-item:visible').length === 0 ){
+                        $('.material-filters__empty-view').removeClass('hidden');
+                    } else {
+                        $('.material-filters__empty-view').addClass('hidden');
+                    };
                 });
             });
         })(jQuery);

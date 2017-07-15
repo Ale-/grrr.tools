@@ -5,41 +5,41 @@
     <div class="inner">
         <div class="batch-item__header">
             <span class="batch-item__field-icon icon-{{ item.material_family }}"></span>
-            {% if item.category == 'of' %}
-                <span class="batch-item__field-id">Ref. {{ item.batch_id }}</span>
-            {% endif %}
+            <span class="batch-item__field-id">ref. {{ item.batch_id }}</span>
         </div>
         {% if item.image %}
             <div class="batch-item__field-image">
                 {% thumbnail '400x' item.image %}
             </div>
-        {% elif item.material.img %}
+        {% elif item.material.image %}
             <div class="batch-item__field-image">
                 {% thumbnail '400x' item.material.image %}
             </div>
         {% endif %}
+        <div class="batch-item__field-date">
+            <p>{{ item.date }}</p>
+        </div>
         <div class="batch-item__field-offer">
             {% if item.category == 'of' %}
-                <h5>{% trans 'Se ofrecen' %}</h5>
-                <p><a href="{% url 'batch' item.id %}">
-                    {{ item.quantity }} {{ item.material.get_unit_display }} de {{ item.material.name }}
-                </a></p>
+                <h5 class="batch-item__field-label">
+                    {% trans 'Se ofrece' %}
+                </h5>
             {% else %}
-                <h5>{% trans 'Se necesitan' %}</h5>
-                {% if item.quantity %}
-                    <p><a href="{% url 'batch' item.id %}">
-                        {{ item.quantity }} {{ item.material.get_unit_display }} de {{ item.material.name }}
-                    </a></p>
-                {% else %}
-                    <p><a href="{% url 'batch' item.id %}">
-                        {{ item.material.name }}
-                    </a></p>
-                {% endif %}
+                <h5 class="batch-item__field-label">
+                    {% trans 'Se necesita' %}
+                </h5>
             {% endif %}
+            <p><a href="{% url 'batch' item.id %}">
+                {% if item.quantity %}
+                    {{ item.quantity }} {{ item.material.get_unit_display|lower }} {% trans 'de' %} {{ item.material.name|lower }}
+                {% else %}
+                    {{ item.material.name }}
+                {% endif %}
+            </a></p>
         </div>
         <div class="batch-item__field-space">
-            <h5>{% trans 'En' %}</h5>
-            <p><a href="{% url 'space' item.space.slug %}">{{ item.space.name }}</a></p>
+          <h5 class="batch-item__field-label">{% trans 'En' %}</h5>
+          <p><a href="{% url 'space' item.space.slug %}">{{ item.space.name }}</a>, {{ item.space.place }}</p>
         </div>
     </div>
 </div>
