@@ -19,14 +19,19 @@
                 <img src="{{ object.image.url }}" />
             </figure>
         {% endif %}
+        <div class="post-detail__space">
+            {{ object.creation_date|date:"d-M-Y" }} >>> 
+            {% if object.space %}
+                <a href="{% url 'space' object.space.slug %}">{% trans 'Blog de ' %}{{ object.space.name }}</a>
+            {% else %}
+                {% trans 'Blog del colectivo editorial' %}
+            {% endif %}
+        </div>
         {% include 'blocks/page-title.html' with text=object.title %}
         <div class="post-detail__summary">
             {{ object.summary }}
         </div>
         <div class="post-detail__body">
-            <span class="post-detail__date">
-                {{ object.creation_date|date:"d-M-Y" }}
-            </span>
             {{ object.wysiwyg | safe }}
         </div>
     </div>
