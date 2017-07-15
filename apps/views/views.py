@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 # Import site apps
 from apps.models import models, categories
@@ -17,7 +18,7 @@ class FrontView(View):
     """View of frontpage."""
 
     def get(self, request):
-        batches    = models.Batch.objects.filter(category__in=['of','de'])[:6]
+        batches   = models.Batch.objects.filter( Q(category='of', quantity__gt=0) | Q(category='de')).order_by('-date')[:6]
         spaces    = models.Space.objects.filter(published=True)[:3]
         posts     = models.Post.objects.filter(published=True).order_by('-creation_date')[:3]
         materials = categories.MATERIALS_BY_FAMILY
