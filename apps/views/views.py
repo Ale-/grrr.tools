@@ -19,7 +19,7 @@ class FrontView(View):
 
     def get(self, request):
         batches   = models.Batch.objects.filter( Q(category='of', quantity__gt=0) | Q(category='de')).order_by('-date')[:6]
-        spaces    = models.Space.objects.filter(published=True)[:3]
+        spaces    = models.Space.objects.filter(published=True, reuse=True).order_by('-creation_date')[:3]
         posts     = models.Post.objects.filter(published=True).order_by('-creation_date')[:3]
         materials = categories.MATERIALS_BY_FAMILY
         return render(request, 'pages/front.html', locals())
