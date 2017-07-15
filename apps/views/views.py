@@ -105,7 +105,7 @@ class BatchesView(ListView):
     model = models.Batch
 
     def get_queryset(self):
-        queryset = models.Batch.objects.filter(quantity__gt=0)
+        queryset = models.Batch.objects.filter(Q(category='of', quantity__gt=0) | Q(category='de'))
         return queryset
 
 class ReferencesView(ListView):
