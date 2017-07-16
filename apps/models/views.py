@@ -58,7 +58,7 @@ class NodeCreate(GenericCreate):
     return context
 
   def get_success_url(self):
-    return reverse('node', args=(self.object.slug,))
+    return reverse('nodes')
 
 class NodeEdit(GenericUpdate):
   """ Modelform view to edit a Project object"""
@@ -78,7 +78,7 @@ class NodeEdit(GenericUpdate):
     }
 
   def get_success_url(self):
-    return reverse('node', args=(self.object.slug,))
+    return reverse('nodes')
 
   def get_context_data(self, **kwargs):
     context = super(GenericUpdate, self).get_context_data(**kwargs)
