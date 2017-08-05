@@ -41,7 +41,7 @@
     {% endif %}
     <ul class="space-profile__nodes">
         <h4 class="space-profile__nodes-title">
-            {% trans 'Nodos relacionados' %}
+            <a href="{% url 'nodes' %}">{% trans 'Comunidad relacionada' %}</a>
         </h4>
         {% for node in object.nodes.all|dictsort:"name" %}
             <li class="space-profile__nodes-item">
@@ -52,7 +52,7 @@
     </ul>
     <ul class="space-profile__agreements">
         <h4 class="space-profile__agreements-title">
-            {% trans 'Acuerdos empleados' %}
+            <a href="{% url 'agreements' %}">{% trans 'Acuerdos relacionados' %}</a>
         </h4>
         {% for agreement in object.agreement.all %}
             <li class="space-profile__agreements-item">
@@ -65,16 +65,20 @@
             {% url 'agreements' as agreements_link %}
             {% blocktrans trimmed %}
                 No hay acuerdos relacionados con este espacio actualmente.
-                Ver todos los <a href="{{ agreements_link }}" target="_blank">
-                acuerdos</a>
             {% endblocktrans %}
         {% endfor %}
     </ul>
     <div class="space-profile__ratings">
         <h4 class="space-profile__ratings-title">
-            {% trans 'Valora este espacio' %}
+            {% trans 'Valora este nodo' %}
         </h4>
         {% ratings object %}
+        <p class="space-profile__ratings-help">
+            {% blocktrans trimmed %}
+            Los nodos con más de cuatro puntos de media de valoración reciben
+            un sello de calidad para mejorar su visibilidad.
+            {% endblocktrans %}
+        </p>
     </div>
     <div class="space-profile__share">
         {% share object.name|escape request.build_absolute_uri|urlencode  %}

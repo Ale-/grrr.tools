@@ -12,7 +12,7 @@
 {% block preface %}
     {# Breadcrumb #}
     {% url 'reuses'  as url_2 %}
-    {% trans 'Espacios' as txt_2 %}
+    {% trans 'Nodos' as txt_2 %}
     {% breadcrumb url_2 txt_2 None object.name %}
     {# User actions on reuse #}
     {% user_actions object request.user %}

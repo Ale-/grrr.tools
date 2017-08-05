@@ -1,6 +1,6 @@
 {# Views of existing nodes in the GRRR network #}
 {% extends 'layouts/single-fixed-column--map.html' %} {% load i18n static leaflet_tags utils %}
-{% block body_classes %}nodes{% endblock %}{% block htmltitle %}{% trans 'Nodos' %}{% endblock %}
+{% block body_classes %}nodes{% endblock %}{% block htmltitle %}{% trans 'Comunidad' %}{% endblock %}
 
 {% block page_header %}
      {% leaflet_css %}
@@ -13,8 +13,12 @@
 
 {% block main %}
     <div class="container-fixed">
-        {% trans 'Nodos' as pagetitle %}
+        {% trans 'Comunidad' as pagetitle %}
         {% include 'blocks/page-title.html' with text=pagetitle icon='nodos' %}
+        <div class="page-explanation">{% blocktrans trimmed %}
+            La comunidad del GRRR son los colectivos de usuari@s que cooperan con los
+            nodos.
+        {% endblocktrans %}</div>
         {% view items=object_list user=request.user %}
     </div>
 {% endblock %}

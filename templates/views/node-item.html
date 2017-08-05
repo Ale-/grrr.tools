@@ -17,7 +17,7 @@
         {% if item.spaces.all|length > 0 %}
             <div class="node-item__field-spaces">
                 <p class="node-item__field-label">
-                    {% trans 'Espacios de' %} {{ item.name }}
+                    {% trans 'Nodos asociados a' %} {{ item.name }}
                 </p>
                 {% for space in item.spaces.all %}
                     <p class="node-item__space">
