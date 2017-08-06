@@ -97,10 +97,19 @@
 {% endblock %}
 
 {% block sidebar_right %}
-    {% trans 'Tus espacios' as nodes_title %}
-    {% view items=spaces classname_modifier="dashboard" title=nodes_title %}
-    {% trans 'Tus colectivos' as nodes_title %}
-    {% view items=nodes classname_modifier="dashboard" title=nodes_title %}
+    <h4 class="view-space--dashboard__title">
+        <a href="{% url 'reuses' %}">
+            {% trans 'Tus nodos' %}
+        </a>
+    </h4>
+    {% view items=spaces classname_modifier="dashboard" %}
+
+    <h4 class="view-node--dashboard__title">
+        <a href="{% url 'nodes' %}">
+            {% trans 'Tu comunidad'%}
+        </a>
+    </h4>
+    {% view items=nodes classname_modifier="dashboard" %}
 {% endblock %}
 
 {# page scripts #}

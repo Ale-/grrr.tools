@@ -1,12 +1,10 @@
 {# Render a Node post in a view #} {% load utils i18n imagekit %}
 
 <div class="node-item--dashboard">
-    <a class="inner" href="{% url 'node' item.slug %}">
-        <div class="node-item__field-thumbnail--dashboard">
-            <img src="{{ item.thumbnail.url }}" />
-        </div>
-        <p class="node-item__field-title--dashboard">
-            {{ item.name }}
-        </p>
-    </a>
+    <div class="node-item__field-thumbnail--dashboard">
+        <img src="{{ item.thumbnail.url }}" />
+    </div>
+    <p class="node-item__field-title--dashboard">
+        {{ item.name }}
+    </p>
 </div>

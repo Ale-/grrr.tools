@@ -80,3 +80,13 @@
   max-height: 500px
   overflow-y: auto
   overflow-x: hidden
+
+.view-space--dashboard__title,
+.view-node--dashboard__title
+  +links_remarked
+  &::after
+    content: "↗"
+    color: #999
+    font-size: 13px
+    vertical-align: top
+    line-height: $m
