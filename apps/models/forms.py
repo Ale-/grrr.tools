@@ -25,7 +25,7 @@ class NodeCreateForm(forms.ModelForm):
 
     class Meta:
         model   = models.Node
-        exclude = ('users'),
+        fields = '__all__'
         widgets = {
             'geom'        : utils.GeocodedLeafletWidget(submit_text='Localiza el nodo', provider="google", sources="id_place id_address"),
             'image'       : utils.PictureWithPreviewWidget(),
@@ -33,6 +33,7 @@ class NodeCreateForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        self.base_fields['users'].queryset = User.objects.all().exclude(pk=kwargs['initial']['manager'].pk).order_by('username')
         self.base_fields['manager'].widget.attrs['disabled'] = True
         self.base_fields['manager'].widget.attrs['readonly'] = True
         super(NodeCreateForm, self).__init__(*args, **kwargs)

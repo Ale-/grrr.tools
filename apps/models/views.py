@@ -74,7 +74,7 @@ class NodeEdit(GenericUpdate):
   def get_initial(self):
     super(NodeEdit, self).get_initial()
     return {
-        'project_users' : self.object.users.all()
+        'manager' : self.request.user
     }
 
   def get_success_url(self):
@@ -86,7 +86,7 @@ class NodeEdit(GenericUpdate):
     context['explanation'] = self.explanation
     context['form__html_class'] = 'node'
     context['delete_button_arg'] = self.object.id
-    context['submit_text'] = _('Edita este nodo')
+    context['submit_text'] = _('Guarda los cambios')
     return context
 
 class NodeDelete(GenericDelete):
