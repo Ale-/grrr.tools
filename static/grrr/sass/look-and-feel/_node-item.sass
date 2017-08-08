@@ -8,6 +8,9 @@
   +view_item_3-2-1
   .inner:hover
     outline: 0
+  .inner
+    background: #f5f5f5
+    margin: $m/2
 .node-item__space-thumbnail
   width: $m*2
   display: inline-block
@@ -28,6 +31,16 @@
   +h(6)
   text-transform: uppercase
 
+.node-item__field-url
+  margin-top: $m/3
+  font-weight: bold
+  &::after
+    content: "↗"
+    color: #999
+    font-size: 13px
+    vertical-align: top
+    line-height: $m
+
 .node-item__space a:hover
   outline: 2px solid $color_text
 
@@ -38,3 +51,7 @@
 
 .node-item__field-title
   margin-top: 0
+
+.node-item__field-spaces
+  border-top: 1px solid $color_text
+  margin-top: $m/2
