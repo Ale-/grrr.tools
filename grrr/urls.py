@@ -6,6 +6,9 @@ from django.conf.urls.i18n import i18n_patterns
 from django.views.generic.base import TemplateView
 from django.contrib.auth.views import password_change
 
+from contact_form.forms import AkismetContactForm
+from contact_form.views import ContactFormView
+
 from apps.users import views as userviews
 from apps.views import views
 
@@ -54,6 +57,7 @@ urlpatterns += i18n_patterns(
     url(r'^api/', include('apps.api.urls', namespace='api')),
 
     # Contact form
+    url(r'^contacta$', ContactFormView.as_view(form_class=AkismetContactForm), name='contact_form'),
     url(r'^contacta/', include('contact_form.urls')),
 
     # ratings
