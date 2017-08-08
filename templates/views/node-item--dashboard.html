@@ -5,6 +5,8 @@
         <img src="{{ item.thumbnail.url }}" />
     </div>
     <p class="node-item__field-title--dashboard">
-        {{ item.name }}
+        <a href="{% url 'models:edit_node' item.pk %}">
+            {{ item.name }} {% icon 'cog' 'Edita este colectivo' %}
+        </a>
     </p>
 </div>
