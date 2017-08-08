@@ -46,11 +46,12 @@ class Node(models.Model):
                     help_text=_("Una descripción corta de la actividad del nodo. Se usará de resumen en el perfil del nodo."))
     geom          = PointField(_("Ubicación"), blank=False, null=True,
                     help_text=_("Añade la ubicación del nodo. Usa el botón inferior para localizar el punto a partir de la localidad y dirección introducidos anteriormente. Podrás ajustar posteriormente el punto arrastrándolo."))
-    members       = models.PositiveIntegerField(_("Número de miembros"), default=1,
+    members       = models.PositiveIntegerField(_("Número de miembros"), default=1, blank=True,
                     help_text=_("Cuánta gente trabaja en el nodo."))
     users         = models.ManyToManyField(User, related_name="users", verbose_name=_("Usuarios del proyecto"), blank=True,
                     help_text=_("Especifica aquí a usuari-s de la red que pertenecen a este Proyecto. Mantén presionado 'Control' o 'Command' en un Mac, para deseleccionar o seleccionar más de una opción."))
-
+    url           = models.URLField(_("Enlace"), max_length=200, blank=True, null=True,
+                    help_text="Dirección opcional para ampliar información sobre este colectivo.")
 
     def __str__(self):
         """String representation of model instances."""

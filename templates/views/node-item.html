@@ -14,10 +14,15 @@
         <p class="node-item__field-description">
             {{ item.description }}
         </p>
+        {% if item.url %}
+        <p class="node-item__field-url">
+            <a href="{{ item.url }}" target="_blank">{{ item.url }}</a>
+        </p>
+        {% endif %}
         {% if item.spaces.all|length > 0 %}
             <div class="node-item__field-spaces">
                 <p class="node-item__field-label">
-                    {% trans 'Nodos asociados a' %} {{ item.name }}
+                    {% trans 'Nodos del GRRR asociados' %}
                 </p>
                 {% for space in item.spaces.all %}
                     <p class="node-item__space">
