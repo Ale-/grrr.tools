@@ -70,13 +70,13 @@
 
 .space-profile__nodes-title,
 .space-profile__ratings-title,
-.space-profile__agreements-title
+.space-profile__agreements-title,
+.space-profile__numbers-title
   margin-bottom: $m/2
   border-bottom: 1px solid $color_text
 
 .space-profile__ratings .star-ratings
   text-align: center
-  background: #f5f5f5
   padding: $m/2 0
 
 .space-profile__share .share
@@ -97,10 +97,6 @@
   margin-bottom: $m
 
 .space-profile__numbers
-  margin: $m/2 0 $m
-  background: #f5f5f5
-  color: #555
-  padding: 0 $m/3 $m/3
   +clearfix
 
 .space-profile__numbers-icon
@@ -143,3 +139,13 @@
     font-size: 13px
     vertical-align: top
     line-height: $m
+
+.space-profile__numbers
+  .action
+    float: left
+
+.space-profile__ratings-explanation,
+.space-profile__numbers-explanation
+  font-size: .8em
+  clear: both
+  padding-top: $m

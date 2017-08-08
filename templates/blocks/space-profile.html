@@ -21,24 +21,28 @@
     <div class="space-profile__summary">
         {{ object.summary  }}
     </div>
-    {% if total_activated > 0 or total_recovered > 0 %}
-        <div class="space-profile__numbers">
-            {% if total_activated > 0 %}
-            <div class="space-profile__numbers-activated">
-                <span class="space-profile__numbers-icon icon-activados"></span>
-                <p class="space-profile__numbers-label">{% trans 'Mat. activados' %}
-                <p class="space-profile__numbers-cipher">{{ total_activated|floatformat:2 }} Tn.</p>
-            </div>
-            {% endif %}
-            {% if total_recovered > 0 %}
-            <div class="space-profile__numbers-recovered">
-                <span class="space-profile__numbers-icon icon-recuperados"></span>
-                <p class="space-profile__numbers-label">{% trans 'Mat. recuperados' %}
-                <p class="space-profile__numbers-cipher">{{ total_recovered|floatformat:2 }} Tn.</p>
-            </div>
-            {% endif %}
+    <div class="space-profile__numbers">
+        <h4 class="space-profile__numbers-title">
+            {% trans 'En cifras' %}
+        </h4>
+        <div class="space-profile__numbers-activated">
+            <span class="space-profile__numbers-icon icon-activados"></span>
+            <p class="space-profile__numbers-label">{% trans 'Mat. activados' %}</p>
+            <p class="space-profile__numbers-cipher">{{ total_activated|floatformat:2 }} Tn.</p>
         </div>
-    {% endif %}
+        <div class="space-profile__numbers-recovered">
+            <span class="space-profile__numbers-icon icon-recuperados"></span>
+            <p class="space-profile__numbers-label">{% trans 'Mat. recuperados' %}</p>
+            <p class="space-profile__numbers-cipher">{{ total_recovered|floatformat:2 }} Tn.</p>
+        </div>
+        <p class="space-profile__numbers-explanation">
+            {% blocktrans %}
+                Los materiales activados son aquéllos que este nodo ha puesto en
+                uso. Los materiales recuperados son aquellos que se han recirculado
+                desde este nodo a otro.
+            {% endblocktrans %}
+        </p>
+    </div>
     <ul class="space-profile__nodes">
         <h4 class="space-profile__nodes-title">
             <a href="{% url 'nodes' %}">{% trans 'Comunidad relacionada' %}</a>
@@ -73,10 +77,10 @@
             {% trans 'Valora este nodo' %}
         </h4>
         {% ratings object %}
-        <p class="space-profile__ratings-help">
-            {% blocktrans trimmed %}
-            Los nodos con más de cuatro puntos de media de valoración reciben
-            un sello de calidad para mejorar su visibilidad.
+        <p class="space-profile__ratings-explanation">
+            {% blocktrans %}
+                Los nodos con más de cuatro puntos de media de valoración
+                reciben un sello de calidad para mejorar su visibilidad.
             {% endblocktrans %}
         </p>
     </div>
