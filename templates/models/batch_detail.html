@@ -13,7 +13,7 @@
     {# Breadcrumb #}
     {% with pagetitle="Ref. "|add:object.batch_id|add:" "|add:object.material.name %}
         {% url 'reuses' as url_2 %}
-        {% trans 'Espacios' as txt_2 %}
+        {% trans 'Nodos' as txt_2 %}
         {% url 'reuse' object.space.slug as url_3 %}
         {% breadcrumb url_2 txt_2 url_3 object.space.name %}
         {# User actions on reuse #}
