@@ -146,7 +146,8 @@ class SpaceItemView(DetailView):
         context['recovered'] = models.Batch.objects.filter(category='re', space=obj)
         total_activated = 0
         for batch in context['activated']:
-            total_activated += batch.quantity * batch.material.weight
+            if batch.quantity and batch.material.weight:
+                total_activated += batch.quantity * batch.material.weight
         context['total_activated'] = total_activated/1000
         total_recovered = 0
         for batch in context['recovered']:
