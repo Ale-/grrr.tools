@@ -1,11 +1,9 @@
 {% load i18n %}
 
 {% blocktrans %}
-{{ name }}, Hemos recibido un mensaje de contacto en la plataforma GRRR.TOOLS. Te contestaremos
-con la mayor brevedad.
+Hay un mensaje de {{ name }} <{{ email }}> en {{ site }}:
 
-Mensaje:
-{{ body }}
+"{{ body }}"
 
-Gracias.
+Aupa, motherfuckers!
 {% endblocktrans %}

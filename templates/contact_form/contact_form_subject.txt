@@ -1,4 +1,4 @@
 {% load i18n %}
 {% blocktrans %}
-Gracias por contactar con {{ site }}!
+Hay un nuevo mensaje de contacto en {{ site }}!
 {% endblocktrans %}
