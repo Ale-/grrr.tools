@@ -1,0 +1,15 @@
+{# Extend basic page #} {% extends 'layouts/single-fixed-column.html' %} {% load static utils i18n %}
+{% block body_classes %}err500{% endblock %}
+
+{# Content #}
+{% block main %}
+    {% fake_breadcrumb %}
+    <div class="msg-500">
+          <p class="msg-500__image">
+            ❌
+          </p>
+          <p class="msg-500__text">
+            <strong>500</strong> # {% trans 'Algo no ha funcionado correctamente. Ponte en contacto con nosotras si el problema persiste.' %}
+          <p>
+    </div>
+{% endblock %}
