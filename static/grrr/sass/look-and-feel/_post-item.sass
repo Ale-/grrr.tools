@@ -1,21 +1,29 @@
 // Displays a Reuse item in a view
 // views/blog-item.html
 
+@import compass/css3/transition
+@import compass/css3/opacity
+
 .post-item
   +view_item_normal
+  .inner
+    +clearfix
 
 .blog .post-item,
 .front .post-item
   +view_item_3-2-1
 
 .post-item--space
-  +links_normal
+  +links_normal_noborder
+  +clearfix
+  +transition(background-color .25s ease)
+  background-color: white
   position: relative
-  padding: $m
   &:hover
-    outline: 2px solid $color_text
+    background-color: #f5f5f5
   .inner
-    +clearfix
+    display: block
+    padding: $m
   .inner__left
     position: relative
     +breakpoint('sm')
@@ -27,11 +35,10 @@
   [class*='node-actions--']
     position: absolute
     background: white
-    right: $m
+    right: 0
     top: 0
     padding: $m/4
   [class*='node-actions__action--']
-    padding-left: $m/3
     font-size: 1rem
   [class*='field-published']
     position: absolute

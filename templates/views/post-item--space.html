@@ -8,7 +8,6 @@
                         {% thumbnail '400x' item.image %}
                 </div>
             {% endif %}
-            {% user_actions item user %}
         </div>
         <div class="inner_right">
             <h4 class="post-item--space__field-title">
@@ -27,4 +26,5 @@
             {% endif %}
         </div>
     </a>
+    {% user_actions item user %}
 </div>
