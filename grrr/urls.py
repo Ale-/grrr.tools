@@ -49,9 +49,9 @@ urlpatterns += i18n_patterns(
     url(r'^referencias$', views.ReferencesView.as_view(), name='references'),
     url(r'^nodos$', views.ReusesView.as_view(), name='reuses'),
     url(r'^nodo/(?P<slug>.+)$', views.SpaceItemView.as_view(), name="space"),
-    url(r'^lote/(?P<pk>.+)$', views.BatchItemView.as_view(), name="batch"),
-    url(r'^transfiere/(?P<pk>.+)$', views.TransferBatchView.as_view(), name="transfer_batch"),
-    url(r'^activa/(?P<pk>.+)$', views.ActivateBatchView.as_view(), name="activate_batch"),
+    url(r'^lote/(?P<pk>[0-9]+)$', views.BatchItemView.as_view(), name="batch"),
+    url(r'^transfiere/(?P<pk>[0-9]+)$', views.TransferBatchView.as_view(), name="transfer_batch"),
+    url(r'^activa/(?P<pk>[0-9]+)$', views.ActivateBatchView.as_view(), name="activate_batch"),
 
     # API services
     url(r'^api/', include('apps.api.urls', namespace='api')),
