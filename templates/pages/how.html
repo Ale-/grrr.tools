@@ -12,11 +12,216 @@
 
 {# Content #}
 {% block main %}
-    <div class="how-it-works__building">
+    <div class="how-it-works">
+        {% url 'nodes' as community_link %}
         {% blocktrans trimmed %}
-            <strong>En construcción.</strong>
-            Hemos actualizado las funcionalidades de la plataforma recientemente.
-            Subiremos lo antes posible instrucciones actuales sobre la plataforma
+        Para entender cómo funciona esta herramienta vamos a partir de una situación
+        hipotética, en la que Eva y Fatima pertenecen a la iniciativa <em>Huertodo</em>
+        que trabaja en horticultura urbana. Ambas trabajan en la consolidación de
+        un huerto comunitario en Sanlúcar de Barrameda.
+
+        <h2><small>I</small> Dar de alta una usuaria en la plataforma.</h2>
+        Una usuaria se caracteriza por una acreditación asociada —un nombre, una
+        contraseña y un correo, como en cualquier plataforma—. Están asociadas a
+        personas individuales y no a entidades colectivas. Remarcamos esto porque
+        es una confusión normal crear un usuario que represente a un colectivo
+        entero, pero esto no se ha de hacer así. ¿Por qué? Por una cuestión práctica
+        y por otra de seguridad. La de seguridad es muy sencilla: es una mala
+        práctica compartir cuentas digitales entre varias personas. Se suelen
+        escoger contraseñas débiles y se suelen compartir mediante mecanismos
+        vulnerables —por ejemplo, por correo electrónico—. La razón práctica es
+        igual de importante: permitir que un mismo usuario pueda colaborar con
+        nodos distintos, como veremos a continuación. Esto permite una mayor
+        flexibilidad y se parece más a las prácticas que sabemos que se dan en
+        la realidad. Así que en nuestro caso, en vez de crear un usuario para <em>
+        Huertodo</em>, tanto Eva como Fatima crean una usuaria en la plataforma,
+        porque las dos quieren colaborar en esta tarea.
+
+        <h2><small>II</small> El entorno de usuario</h2>
+        Cuando entras en la plataforma con tu usuaria registrada, esta te redirigirá
+        a la página de tu perfil, donde se centraliza información que te puede ser
+        útil y donde podrás cambiar la información asociada a tu usuaria. Verás
+        que también aparece una barra negra en la parte superior con un menú en
+        el extremo derecho. En este menú encontrarás atajos a casi todas las
+        acciones que tu usuaria puede hacer en la plataforma, así como los enlaces
+        que te permitirán volver en cualquier momento a tu perfil de usuaria o
+        cerrar la sesión de la misma.
+        En tu perfil verás tres columnas. La de la izquierda es tu información
+        de usuaria, ahí puedes cambiar tu contraseña si lo ves necesario. La central
+        es un muro de mensajes, que sirven para que los nodos de la red se comuniquen
+        entre ellos y que serán explicados en el punto VI, más abajo. La de la
+        derecha recoge los grupos de trabajo y los nodos a los que tu usuario pertenece.
+
+        <h2><small>III</small> Crear un grupo de trabajo</h2>
+        Los grupos de trabajo están formados por usuarias y están asociados a los
+        nodos de la red, que son espacios que existen en la realidad donde se
+        desarrollan las prácticas de cooperación de la red. Para actuar en la
+        plataforma necesitas pertenecer a un grupo de trabajo ya existente o crear
+        uno propio. Todos los miembros de un grupo de trabajo tienen permisos de
+        creación y edición en los nodos. Los grupos de trabajo aparecen listados
+        en la sección <a href="{{ community_link }}"><em>Comunidad</em></a>. A veces
+        son el reflejo digital de un colectivo
+        o grupo que ya existe en la realidad y a veces son grupos de usuarios que
+        sólo existen en la plataforma. En nuestro caso, Fatima crea el grupo <em>Huertodo</em>
+        usando el enlace del menú superior Añade un grupo a la comunidad. Para ello
+        completa los distintos campos descriptivos y, lo más importante de todo,
+        en la lista de 'Usarix del proyecto' añade a Eva.
+
+
+        <h2><small>IV</small> Añadir un nodo</h2>
+        Los espacios en los que la comunidad colabora son los nodos de la red.
+        En nuestro caso, Eva añade el solar en Sanlúcar a la lista de nodos.
+        Rellena los campos necesarios y marca la opción de 'Reuso', porque en
+        dicho espacio quieren reutilizar materiales.
+
+        Del mismo modo que no tenemos que confundir usuarios y grupos de los mismos,
+        no tenemos que confundir a los grupos con los espacios en los que colaboran.
+        Esta separación permite que un mismo grupo pueda trabajar en distintos
+        espacios, y que distintos grupos puedan colaborar en un mismo nodo. Por
+        ejemplo en nuestro caso, tenemos a Jesús, un carpintero de Sanlúcar,
+        que decide un dia que quiere colaborar en la gestión en el GRRR del
+        huerto comunitario se Sanlúcar. Para ello podría
+        hacerlo de dos maneras: la primera sería pedir a Eva o Fatima que añadieran
+        su usuario al grupo de Huertodo, la segunda sería añadir un grupo que
+        represente a su taller y pedirle a alguien del nodo que asocie su
+        grupo al mismo. En este caso Jesús conoce en la práctica a las
+        personas implicadas y puede llamarlas por teléfono o enviarles un mail.
+        Pero en otros casos podría mandar un mensaje a través de la plataforma y pedir
+        su inclusión en el grupo o de su grupo en el nodo.
+
+        <p class="how-it-works__note">Así que, resumiendo, tenemos tres tipos
+        conectados de actor en la plataforma: la usuaria, el grupo y el nodo.
+        La usuaria es una persona individual, el grupo es un conjunto de usuarias
+        y el nodo es un espacio <em>de la realidad</em> donde los grupos cooperan.
+        </p>
+
+        <p class="how-it-works__note">Los nodos tienen la opción de estar <em>no
+        publicados</em>. Esto permite que sólo los usuarios de los grupos que colaboran
+        en el nodo sean capaces de verlo en los listados. Serían 'privados', por así
+        decirlo. De este modo pueden trabajar en ellos a fuego lento si no tienen
+        claras algunas opciones. Usa esta opción la primera vez, así no tendrás
+        miedo a publicar tu nodo. ¡Date tiempo para revisar la información y
+        públicalo cuando quieras!
+        </p>
+
+        <h2><small>V</small> Crear ofertas y demandas</h2>
+        Las ofertas y demandas se crean con un mismo formulario, y ambas se engloban
+        en el concepto <em>lote</em>. Un lote es una partida de elementos de una cierta
+        homogeneidad que se tiene y puede ofertarse o puede pedirse. En nuestro
+        caso, Jesús un dia se da cuenta que si tuvieran tableros de madera podrían
+        avanzar la zona de bancales del huerto, así que crea un lote de demanda
+        de tableros de madera.
+        Aparece un nuevo personaje en escena, Paco, que trabaja en la gestión de
+        los almacenes municipales de Chipiona, muy cerca de Sanlúcar. Paco acaba
+        de conocer el GRRR y ha decidido que una forma de movilizar y darle un
+        sentido público a los materiales de su almacen es publicarlos en esta plataforma.
+        Registra un ususario, un grupo de trabajo para el personal del almacén y un
+        nodo (el almacén en sí mismo). Empieza por inventariar tableros
+        de encofrado añadiendo un lote de oferta. En cuanto se crea un
+        lote se actualiza el 'inventario' del nodo asociado —aparece bajo una de
+        las pestañas del perfil del nodo—. Estos inventarios permiten hacer públicos
+        los materiales de los que dispone un nodo. Los lotes también disponen de
+        perfiles propios, páginas donde se extiende la información de los mismos.
+        Cuando, como en este caso, una oferta y una demanda se cruzan —la de Paco
+        con la de Jesús—, se manda un mensaje automático a ambas partes. Este mensaje
+        lo recibirán todos los usuarios de todos los grupos asociados a los espacios
+        para mejorar su visibilidad. De manera que Eva, Fatima, Jesús y Paco reciben
+        en un mensaje que les alerta de que hay coincidencia entre lo que necesitan
+        ambos espacios de manera que se puedan poner en contacto entre ellos.
+        <p class="how-it-works__note">Los lotes también pueden tener un carácter
+        privado. Para ello, has de añadir una cantidad total, pero no una ofertada.
+        Esto esta diseñado así para que los nodos puedan gestionar los materiales
+        de un proyecto, aunque no los oferten. De esta manera el lote sólo es visible
+        para los grupos de trabajo asociados al nodo. Puedes usar esta opción para
+        crear un lote ficticio explorar la herramienta con mayor libertad.
+        El campo 'información privada' añade esta privacidad a nivel de campo, de manera
+        que los grupos puedan tener información útil para la gestión pero que no
+        necesariamente ha de ser pública.
+        </p>
+
+        <h2><small>VI</small> Crear mensajes</h2>
+        Los mensajes son exactamente lo que su nombre indica y permiten que los nodos
+        de la red se comuniquen entre ellos. Pueden usarse para pedir la inclusión
+        de un usuario en un grupo de trabajo, la inclusión de un grupo en un nodo,
+        para preguntar por un lote, para pedir información sobre un proyecto concreto...
+        Volviendo a nuestro ejemplo, Fatima ve en su perfil una notificación que
+        le indica que los almacenes de Chipiona tienen el material que necesitan para su huerto,
+        así que les envía un mensaje para pedir tableros. Paco le contesta y quedan para recogerlos.
+
+        <h2><small>VII</small> Subir acuerdos</h2>
+        En la realidad muchos de este tipo de movimientos de materiales se dan mediante
+        acuerdos informales y está bien así. Pero en otros casos, las entidades
+        necesitan documentos legales que recojan la transferencia que se ha hecho
+        y les liberen de responsabilidades sobre el uso de los materiales, entre
+        otras cosas. Uno de los objetivos de esta plataforma es recoger modelos
+        de acuerdo, de manera que los grupos de trabajo puedan adaptarlos a sus
+        contextos y usarlos.
+        En nuestro ejemplo, Fatima y Paco quedan en los almacenes públicos, donde
+        Fatima ve que los materiales se ajustan a lo que necesitan y Paco está
+        completamente de acuerdo en que se los lleven, le encanta la idea. Pero como
+        es un almacén público prefiere que haya un documento que acredite la cesión
+        y le libere de responsabilidades que puedan hipotecar futuras cesiones.
+        Fatima busca en la sección de Acuerdos de la plataforma y no encuentra ninguno
+        que se ajuste a lo que necesita así que redactan un documento con ayuda de
+        un funcionario del Ayuntamiento para sellar el acuerdo entre ambas partes.
+        Una vez hecho esto, Fatima edita el nodo del huerto comunitario —va al perfil
+        del nodo y arriba a la derecha hay un atajo con forma de engranaje que le
+        permite editar esta información— y en el campo 'Acuerdos' pulsa en
+        'Añade un acuerdo' de manera que puede subir un PDF con el documento que se
+        usó. De esta manera los acuerdos no sólo están recogidos en su sección sino
+        que aparecen vinculados a los perfiles de los nodos donde se emplearon.
+        Esto mejora su visibilidad y ayuda a que otras personas puedan encontrarlos y usarlos.
+        <p class="how-it-works__note">También es posible subir acuerdos no
+        vinculados a un nodo de la red desde la misma sección de 'Acuerdos'.</p>
+
+        <h2><small>VIII</small> Transferir y activar materiales</h2>
+        Uno de los objetivos de la plataforma es visibilizar estos movimientos de
+        materiales. Ver cuántos materiales se recuperan usando estas estrategias
+        y cuántos se activan, ver sus movimientos en un mapa: medir el impacto
+        sobre el entorno de estas prácticas y poner en valor esta cultura de la
+        reutilización, también a través los datos. Para ello podemos registrar las
+        transferencias en los perfiles de los lotes. En este caso, Paco visita el
+        perfil del lote de tableros de encofrado y clica en el botón 'Mueve
+        materiales de este lote' y en el formulario escoge como destinatario el
+        huerto de Sanlúcar. Automáticamente pasan varias cosas: el inventario del
+        almacén y el del huerto se actualizan, la cantidad de materiales recuperados
+        por el almacén registra la transacción y en lote que aparece en el inventario
+        del huerto podemos ver en un mapa que el lote llegó al huerto desde Chipiona.
+        Activar materiales se hace de manera similar y con similares efectos. En
+        nuestro caso, tras unos talleres participativos en que se construyen los
+        bancales y se usan casi todos los tableros, Eva visita el perfil del lote
+        de tableros del huerto y pulsa sobre 'Activa materiales de este lote'. De
+        manera similar a la recuperación, se producen una serie de operaciones
+        automáticas que ajustan las cantidades, de manera que ahora la cantidad de
+        'Materiales activados' del perfil del huerto refleja la cantidad de tableros
+        que se han 'activado'.
+
+        <h2><small>IX</small> Publicar en el blog</h2>
+        Otro de los objetivos de la herramienta es permitir a estas prácticas
+        publicar noticias relacionadas para potenciar y viralizar las acciones de
+        recuperación. Para ello cada nodo tiene un blog asociado, donde puede
+        publicar información sobre el proyecto. Por otro lado la herramienta tiene
+        un blog central nutrido por los distintos blogs de los nodos y por los
+        posts del equipo editorial, donde se informa de noticias relacionadas
+        con el proyecto GRRR.
+        En nuestro caso, Fatima publica un post en el blog con los resultados del
+        taller de construcción de bancales donde se puede ver como se reutilizaron
+        los tableros y los bonitos resultados del taller que realizaron.
+
+        <h2><small>X</small> Valorar el trabajo de los nodos</h2>
+        Por último, la herramienta tiene una herramienta de valoración que permite saber qué
+        proyectos gustan más a la comunidad del GRRR, usando un sistema de puntuación
+        que permite a cualquier usuario registrado asignar hasta 5 puntos a cada nodo.
+        Aquellos proyectos que tienen una media mayor a 4 reciben un 'sello de calidad'
+        que les de a una mayor visibilidad en los listados.
+        En nuestro caso, tenemos a Núria y Mamadou en Sevilla que un dia descubren
+        la herramienta y crean un grupo en la misma y un espacio, que representa
+        al instituto donde trabajan en Sevilla. Curioseando descubren el proyecto
+        de Sanlúcar, que les gusta mucho y deciden valorarlo positivamente. Una
+        vez lo han valorado se fijan en que en el inventario del grupo quedan
+        tableros que no se usaron en la construcción de bancales y piensan que
+        les vendrían genial para la adecuación que quieren hacer en el
+        patio del instituto. Así que mandan un mensaje a Eva y Fatima... y vuelta a empezar.
         {% endblocktrans %}
     </div>
 {% endblock %}
