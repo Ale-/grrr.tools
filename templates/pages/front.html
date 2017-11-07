@@ -1,5 +1,5 @@
 {# Site front page #} {% extends 'layouts/single-fixed-column--map.html' %} {% load i18n static utils leaflet_tags %}
-{% block body_classes %}front{% endblock %}
+{% block body_classes %}front{% endblock %} {% block htmltitle %}{% trans 'Bienvenid@!' %}{% endblock %}
 
 {% block page_header %}
      {% leaflet_css %}

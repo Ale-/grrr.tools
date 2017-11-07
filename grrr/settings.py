@@ -33,8 +33,8 @@ REGISTRATION_OPEN = True
 REGISTRATION_AUTO_LOGIN = True
 
 # Name of site in the document title
-DOCUMENT_TITLE = 'GRRR Tools'
-DOCUMENT_DESCRIPTION = _('Grupo para la reutilización y redistribución de recursos.')
+DEFAULT_HTML_TITLE = 'GRRR Tools'
+DEFAULT_HTML_DESCRIPTION = _('Grupo para la reutilización y redistribución de recursos.')
 
 # Sites ID
 SITE_ID = 1
@@ -97,6 +97,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.users.context_processors.unseen_messages',
+                'apps.utils.context_processors.site_info_processor',
             ],
         },
     },

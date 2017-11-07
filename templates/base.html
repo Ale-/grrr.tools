@@ -7,14 +7,13 @@
 
         {# Title and description #}
         <title>
-            {% if htmltitle %} {% block htmltitle %}{% endblock %} | {{ document_title }}
-            {% else %} {{ document_title }} {% endif %}
+            {% block htmltitle %}{% endblock %} | {{ default_html_title }}
         </title>
 
         {% if page_description %}
             <meta name="description" content="{{ page_description }}">
         {% else %}
-            <meta name="description" content="{{ document_description }}">
+            <meta name="description" content="{{ default_html_description }}">
         {% endif %}
 
         {# Robots and humans #}
