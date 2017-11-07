@@ -25,6 +25,21 @@ from star_ratings.models import Rating
 from apps.models import categories
 from grrr import private_settings as tw
 from django.conf import settings
+from .validators import ImageTypeValidator, ImageSizeValidator
+from .utils import RenameImage
+
+
+validate_image_size    = ImageSizeValidator({ 'min_width' : 600, 'min_height' : 300, 'max_width' : 1920, 'max_height' : 1280 })
+validate_image_type    = ImageTypeValidator(["jpeg", "png"])
+nodes_images_path      = RenameImage("featured_images/nodes/")
+materials_images_path  = RenameImage("featured_images/images/materials/")
+spaces_images_path     = RenameImage("featured_images/images/spaces/")
+posts_images_path      = RenameImage("featured_images/images/posts/")
+batches_images_path    = RenameImage("featured_images/images/batches/")
+references_images_path = RenameImage("featured_images/images/references/")
+images_help_text       = _("Sube una imagen representativa de la iniciativa haciendo click en la imagen inferior. "
+                           "La imagen ha de tener ancho mínimo de 300 píxeles y máximo de 1920, y altura mínima "
+                           "de 300 píxeles y máxima de 1280. Formatos permitidos: PNG, JPG, JPEG.")
 
 class Node(models.Model):
     """Nodes of the GRRR network, participated by users."""
@@ -39,8 +54,10 @@ class Node(models.Model):
     address       = models.CharField(_("Dirección"), max_length=128, blank=True, null=True,
                     help_text=_("Dirección del nodo. No es necesario que incluyas la localidad anterior."))
     slug          = models.SlugField(editable=False, blank=True)
-    image         = models.ImageField(_("Imagen"), blank=True, upload_to="images/projects/",
-                    help_text=_("Sube una imagen representativa del nodo: un logo, una foto..."))
+    image         = models.ImageField(_("Imagen"), blank=True,
+                    validators=[validate_image_size, validate_image_type],
+                    upload_to=nodes_images_path,
+                    help_text=images_help_text)
     thumbnail     = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
     description   = models.TextField(_("Descripción"), blank=True,
                     help_text=_("Una descripción corta de la actividad del nodo. Se usará de resumen en el perfil del nodo."))
@@ -76,7 +93,10 @@ class Material(models.Model):
     name          = models.CharField(_("Nombre"), max_length=128)
     creation_date = models.DateField(editable=False, blank=True, null=True)
     slug          = models.SlugField(editable=False, blank=True)
-    image         = models.ImageField(_("Imagen"), blank=True, upload_to="images/materials/")
+    image         = models.ImageField(_("Imagen"), blank=True,
+                    validators=[validate_image_size, validate_image_type],
+                    upload_to=materials_images_path,
+                    help_text=images_help_text)
     thumbnail     = ImageSpecField(source='image', processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
     family        = models.CharField(_("Familia"), max_length=3, choices=categories.MATERIALS_BY_FAMILY, default='MAD',
                     help_text=_("Específica la familia del material."))
@@ -150,8 +170,10 @@ class Space(models.Model):
                     help_text=_("Sólo los contenidos 'publicados' son visibles. Desmarca esta casilla para generar un contenido provisional que podrás hacer público más adelante."))
     nodes         = models.ManyToManyField(Node, verbose_name="Nodos", blank=False, related_name="spaces",
                     help_text=_("¿Qué colectivos de la red participan en este espacio? Mantén presionado 'Control' o 'Command' en un Mac, para deseleccionar o seleccionar más de una opción."))
-    image         = models.ImageField(_("Imagen"), blank=False, upload_to="images/news/",
-                    help_text=_("Una imagen significativa del espacio para las vistas de resúmenes de contenido y el encabezado de la vista completa. Puedes añadir más imágenes al texto completo del reuso."))
+    image         = models.ImageField(_("Imagen"), blank=False,
+                    validators=[validate_image_size, validate_image_type],
+                    upload_to=spaces_images_path,
+                    help_text=images_help_text)
     thumbnail     = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
     agreement     = models.ManyToManyField(Agreement, verbose_name="Acuerdos", related_name="agreement", blank=True,
                     help_text=_("Puedes asociar documentos de acuerdos de cesión al espacio. Mantén presionado 'Control' o 'Command' en un Mac, para deseleccionar o seleccionar más de una opción."))
@@ -194,8 +216,10 @@ class Post(models.Model):
     author        = models.ForeignKey(User, related_name="author", verbose_name=_("Autor-"), null=True, blank=False)
     published     = models.BooleanField(_("Publicado"), default=True, blank=False,
                     help_text=_("Sólo los contenidos publicados serán visibles. Desmarca esta casilla para generar un borrador que podrás publicar más adelante, cuando esté acabado."))
-    image         = models.ImageField(_("Imagen"), blank=True, upload_to="images/blog/",
-                                      help_text="Una imagen representativa para las vistas de contenido y para la cabecera de la vista del post completo.")
+    image         = models.ImageField(_("Imagen"), blank=True,
+                    validators=[validate_image_size, validate_image_type],
+                    upload_to=posts_images_path,
+                    help_text=images_help_text)
     thumbnail     = ImageSpecField(source="image", processors=[ResizeToFill(200, 200)], format='JPEG', options={'quality': 85})
     summary       = models.TextField(_("Resumen"), blank=True,
                     help_text=_("Un resumen de la noticia para las vistas de contenidos, si no lo usas se usará un recorte del cuerpo."))
@@ -222,8 +246,10 @@ class Reference(models.Model):
                 help_text=_("Nombre de la referencia."))
     summary   = models.TextField(_("Resumen"), blank=False,
                 help_text=_("Resume en uno o dos párrafos la referencia."))
-    image     = models.ImageField(_("Imagen"), blank=True, upload_to="images/blog/",
-                help_text="Una imagen representativa de la referencia.")
+    image     = models.ImageField(_("Imagen"), blank=True,
+                validators=[validate_image_size, validate_image_type],
+                upload_to=references_images_path,
+                help_text=images_help_text)
     thumbnail = ImageSpecField(source="image", processors=[ResizeToFill(480, 480)], format='JPEG', options={'quality': 85})
     link      = models.URLField(_("Enlace"), blank=False,
                 help_text=_("Enlace para ampliar la información sobre la referencia"))
@@ -254,7 +280,10 @@ class Batch(models.Model):
                    help_text=_("Fecha de entrada del lote en tu inventario. Usa el formato dd/mm/aaaa, por ejemplo '01/05/2015' para el 1 de Mayo de 2015."))
     material     = models.ForeignKey(Material, verbose_name=_("Material"), blank=False, null=True, on_delete=models.SET_NULL,
                    help_text=_("El material del que se compone el lote"))
-    image        = models.ImageField(_("Imagen"), blank=True, upload_to="images/batches/")
+    image        = models.ImageField(_("Imagen"), blank=True,
+                   validators=[validate_image_size, validate_image_type],
+                   upload_to=batches_images_path,
+                   help_text=images_help_text)
     total        = models.PositiveIntegerField(_("Cantidad total"), blank=True, null=True,
                    help_text=_("En caso de lotes de oferta puedes especificar aquí una cantidad total mayor a la ofertada si se da el caso."))
     quantity     = models.PositiveIntegerField(_("Cantidad"), blank=True, null=True,
