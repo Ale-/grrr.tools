@@ -27,7 +27,8 @@ class NodeCreateForm(forms.ModelForm):
         model   = models.Node
         fields = '__all__'
         widgets = {
-            'geom'        : utils.GeocodedLeafletWidget(submit_text='Localiza el nodo', provider="google", sources="id_place id_address"),
+            #'geom'        : utils.GeocodedLeafletWidget(submit_text='Localiza el nodo', provider="google", sources="id_place id_address"),
+            'geom'        : utils.ReducedLeafletWidget(),
             'image'       : utils.PictureWithPreviewWidget(),
             'description' : utils.LimitedTextareaWidget(limit=500),
         }
@@ -45,7 +46,8 @@ class NodeUpdateForm(forms.ModelForm):
         model = models.Node
         fields = '__all__'
         widgets = {
-            'geom'        : utils.GeocodedLeafletWidget(submit_text='Localiza el nodo', provider="google", sources="id_place id_address"),
+            #'geom'        : utils.GeocodedLeafletWidget(submit_text='Localiza el nodo', provider="google", sources="id_place id_address"),
+            'geom'        : utils.ReducedLeafletWidget(),
             'image'       : utils.PictureWithPreviewWidget(),
             'description' : utils.LimitedTextareaWidget(limit=500),
         }
@@ -96,7 +98,8 @@ class SpaceForm(forms.ModelForm):
         model   = models.Space
         fields = '__all__'
         widgets = {
-            'geom'      : utils.GeocodedLeafletWidget(submit_text='Localiza el reuso', provider="google", sources="id_place id_address"),
+            #'geom'      : utils.GeocodedLeafletWidget(submit_text='Localiza el reuso', provider="google", sources="id_place id_address"),
+            'geom'      : utils.ReducedLeafletWidget(),
             'image'     : utils.PictureWithPreviewWidget(),
             'summary'   : utils.LimitedTextareaWidget(limit=500),
             'agreement' : utils.SelectOrAddMultipleWidget(view_name='models:create_agreement_popup', link_text=_("Añade un acuerdo"))
