@@ -2,9 +2,11 @@
 
 <div class="node-item">
     <div class="inner">
+        {% if item.image %}
         <div class="node-item__field-thumbnail">
             <img src="{{ item.image.url }}" alt="Imagen representativa de {{ item.name }}" />
         </div>
+        {% endif %}
         <p class="node-item__field-place">
             {{ item.place }}
         </p>

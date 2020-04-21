@@ -3,6 +3,8 @@ from django.conf.urls import url
 from . import views
 from .forms import MaterialForm, AgreementForm
 
+app_name = 'models'
+
 urlpatterns = [
     # Add project form
     url(r'^crea/nodo$', views.NodeCreate.as_view(), name="create_node"),

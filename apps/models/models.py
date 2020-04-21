@@ -46,7 +46,7 @@ class Node(models.Model):
 
     name          = models.CharField(_("Nombre del nodo"), max_length=128, unique=True,
                     help_text=_("El nombre con el que nos referiremos al nodo en la plataforma"))
-    manager       = models.ForeignKey(User, related_name="manager", verbose_name=_("Coordinador"), null=True, blank=True,
+    manager       = models.ForeignKey(User, related_name="manager", verbose_name=_("Coordinador"), null=True, blank=True, on_delete=models.SET_NULL,
                     help_text=_("El usuario que crea el nodo es el manager por defecto del mismo. Puedes cambiarlo posteriormente editando el nodo."))
     creation_date = models.DateField(editable=False, blank=True, null=True)
     place         = models.CharField(_("Localidad"), max_length=128, blank=True, null=True,
@@ -212,12 +212,12 @@ class Post(models.Model):
 
     title         = models.CharField(_("Título"), max_length=128,
                     help_text=_("El titulo del post."))
-    space         = models.ForeignKey(Space, verbose_name=_("Blog"), blank=True, null=True,
+    space         = models.ForeignKey(Space, verbose_name=_("Blog"), blank=True, null=True, on_delete=models.SET_NULL,
                     help_text=_("¿A qué blog está asociado este post?"))
     slug          = models.SlugField(editable=False, blank=True)
     creation_date = models.DateField(_("Fecha"), default=date.today,
                     help_text=_("Usa el formato dd/mm/aaaa, por ejemplo: 01/05/2015."))
-    author        = models.ForeignKey(User, related_name="author", verbose_name=_("Autor-"), null=True, blank=False)
+    author        = models.ForeignKey(User, related_name="author", verbose_name=_("Autor-"), null=True, blank=False, on_delete=models.SET_NULL)
     published     = models.BooleanField(_("Publicado"), default=True, blank=False,
                     help_text=_("Sólo los contenidos publicados serán visibles. Desmarca esta casilla para generar un borrador que podrás publicar más adelante, cuando esté acabado."))
     image         = models.ImageField(_("Imagen"), blank=True,
@@ -266,7 +266,7 @@ class Milestone(models.Model):
     """Milestones register batch transfer between spaces. Created automatically not in forms"""
 
     date     = models.DateField(null = True)
-    space    = models.ForeignKey(Space, null = True)
+    space    = models.ForeignKey(Space, null = True, on_delete=models.SET_NULL)
 
     def __str__(self):
         """String representation of model instances."""
@@ -278,7 +278,7 @@ class Batch(models.Model):
 
     category     = models.CharField(_("¿Oferta o demanda?"), max_length=2, choices=categories.BATCH_CATEGORIES, default='of',
                    help_text=_("¿Ofreces o necesitas materiales?"))
-    space        = models.ForeignKey(Space, verbose_name=_("Espacio"), null=True,
+    space        = models.ForeignKey(Space, verbose_name=_("Espacio"), null=True, on_delete=models.SET_NULL,
                    help_text=_("¿Qué espacio ofrece o demanda?"))
     date         = models.DateField(_("Fecha de entrada"), default=date.today,
                    help_text=_("Fecha de entrada del lote en tu inventario. Usa el formato dd/mm/aaaa, por ejemplo '01/05/2015' para el 1 de Mayo de 2015."))
@@ -302,7 +302,7 @@ class Batch(models.Model):
                    help_text=_("¿Es uan oferta única o tiene periodicidad?"))
     milestones   = models.ManyToManyField(Milestone, verbose_name=_("Movimientos"), blank=True)
     # Only for recovered materials, to store target space
-    target       = models.ForeignKey(Space, verbose_name="Objectivo", related_name="source", blank=True, null=True)
+    target       = models.ForeignKey(Space, verbose_name="Objectivo", related_name="source", blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name_plural = "Batches"
@@ -344,17 +344,17 @@ class Batch(models.Model):
 class Sms(models.Model):
     """Messages sent to nodes of the network"""
 
-    author       = models.ForeignKey(User, blank=True, null=True, editable=False)
+    author       = models.ForeignKey(User, blank=True, null=True, editable=False, on_delete=models.SET_NULL)
     datetime     = models.DateTimeField(blank=True, default=now)
-    batch        = models.ForeignKey(Batch, verbose_name=_("Lote relacionado"), null=True, blank=True,
+    batch        = models.ForeignKey(Batch, verbose_name=_("Lote relacionado"), null=True, blank=True, on_delete=models.SET_NULL,
                    help_text=_("Si mandas el mensaje en relación a una oferta/demanda puedes especificarla aquí."))
     emissor      = models.ForeignKey(Space, verbose_name=_("Remitente"), related_name="emissor", null=True, blank=True,
-                   help_text=_("Especifica el espacio al que representas."))
-    receiver     = models.ForeignKey(Space, verbose_name=_("Destinatario"), related_name="receiver", null=True,
+                   help_text=_("Especifica el espacio al que representas."), on_delete=models.SET_NULL)
+    receiver     = models.ForeignKey(Space, verbose_name=_("Destinatario"), related_name="receiver", null=True, on_delete=models.SET_NULL,
                    help_text=_("Espacio al que envias el mensaje"))
     body         = models.TextField(_("Mensaje"), blank=False,
                    help_text=_("Texto del mensaje. No está permitido usar HTML. Las URLs se convertirán directamente en enlaces."))
-    replies      = models.ForeignKey('self', blank=True, null=True)
+    replies      = models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
     notification = models.BooleanField(default=False)
 
     def __str__(self):

@@ -4,11 +4,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.views.generic.base import TemplateView
-from django.contrib.auth.views import password_change
+from django.contrib.auth.views import PasswordResetView
 
-from contact_form.forms import AkismetContactForm
+from .forms import GrrrContactForm
 from contact_form.views import ContactFormView
-
 from apps.users import views as userviews
 from apps.views import views
 
@@ -16,6 +15,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    url(r'^captcha/', include('captcha.urls'))
 ]
 
 urlpatterns += i18n_patterns(
@@ -25,7 +25,7 @@ urlpatterns += i18n_patterns(
     url(r'^mi-cuenta$', userviews.UserAccount.as_view(), name='dashboard'),
 
     # Registration urls
-    url(r'^cambia-tu-pass$', password_change, { 'template_name' : 'registration/password_change.html', }, name='password_change'),
+    url(r'^cambia-tu-pass$', PasswordResetView.as_view(), { 'template_name' : 'registration/password_change.html', }, name='password_change'),
     url(r'^pass-cambiado$', TemplateView.as_view(template_name='registration/password_change_done.html'), name='password_change_done'),
     url(r'', include('registration.backends.default.urls')),
     url(r'^codigo-etico$', TemplateView.as_view(template_name="registration/ethic-code.html"), name='ethic-code'),
@@ -57,11 +57,11 @@ urlpatterns += i18n_patterns(
     url(r'^api/', include('apps.api.urls', namespace='api')),
 
     # Contact form
-    url(r'^contacta$', ContactFormView.as_view(form_class=AkismetContactForm), name='contact_form'),
-    url(r'^contacta/', include('contact_form.urls')),
+    # url(r'^contacta$', ContactFormView.as_view(form_class=GrrrContactForm), name='contact_form'),
+    # url(r'^contacta/', include('contact_form.urls')),
 
     # ratings
-    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
+    url(r'^ratings/', include('star_ratings.urls', 'ratings')),
 )
 
 if settings.DEBUG == True:
