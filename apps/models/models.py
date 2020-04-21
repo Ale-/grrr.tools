@@ -62,7 +62,9 @@ class Node(models.Model):
     description   = models.TextField(_("Descripción"), blank=True,
                     help_text=_("Una descripción corta de la actividad del nodo. Se usará de resumen en el perfil del nodo."))
     geom          = PointField(_("Ubicación"), blank=False, null=True,
-                    help_text=_("Añade la ubicación del nodo. Usa el botón inferior para localizar el punto a partir de la localidad y dirección introducidos anteriormente. Podrás ajustar posteriormente el punto arrastrándolo."))
+                    #help_text=_("Añade la ubicación del nodo. Usa el botón inferior para localizar el punto a partir de la localidad y dirección introducidos anteriormente. Podrás ajustar posteriormente el punto arrastrándolo.")
+                    help_text=_("Añade la ubicación del nodo.")
+                    )
     members       = models.PositiveIntegerField(_("Número de miembros"), default=1, blank=True,
                     help_text=_("Cuánta gente trabaja en el nodo."))
     users         = models.ManyToManyField(User, related_name="users", verbose_name=_("Usuarios del proyecto"), blank=True,
@@ -184,7 +186,9 @@ class Space(models.Model):
     address       = models.CharField(_("Dirección"), max_length=128, blank=True, null=True,
                     help_text=_("Dirección del nodo. No es necesario que incluyas la localidad anterior."))
     geom          = PointField(_("Ubicación"), blank=False, null=True,
-                    help_text=_("Usa el botón inferior para localizar el espacio a partir de los valores de los campos anteriores, 'Localidad' y 'Dirección'."))
+                    #help_text=_("Usa el botón inferior para localizar el espacio a partir de los valores de los campos anteriores, 'Localidad' y 'Dirección'.")
+                    help_text=_("Añade la ubicación del nodo.")
+                    )
     ratings       = GenericRelation(Rating, related_query_name='reuses')
 
     def __str__(self):

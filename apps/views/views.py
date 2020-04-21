@@ -125,7 +125,7 @@ class ReusesView(ListView):
         elif user.is_staff:
             return models.Space.objects.all().order_by('name', '-creation_date')
         published = models.Space.objects.filter(published=True)
-        own       = models.Space.objects.filter(nodes__in=user.node_set)
+        own       = models.Space.objects.filter(nodes__in=user.users.all())
         return (published | own).order_by('name', '-creation_date')
 
 class SpaceItemView(DetailView):
